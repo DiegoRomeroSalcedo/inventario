@@ -1,0 +1,58 @@
+
+
+* {
+    box-sizing: border-box;
+}
+
+.form_insert {
+    width: 500px;
+    margin: 20px auto;
+}
+
+.form_insert h1 {
+    margin: 0;
+    padding-top: 20px;
+    font-size: 1.8em;
+    color: var(--font-color-text);
+}
+
+.container_inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start ;
+    margin: 20px auto;
+    margin-top: 30px;
+    position: relative;
+    text-align: left;
+}
+
+.container_inputs label {
+    margin-right: 5px;
+    color: #222;
+    font-size: 1.3em;
+}
+
+.container_inputs input{
+    margin-top: 15px;
+    padding: 8px;
+    width: 100%;
+    font-size: 1em;
+}
+
+.container__button-form {
+    margin-top: 30px;
+    position: relative;
+}
+
+.button_form {
+    display: block;
+    margin: 0 auto;
+    padding: 4px;
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.hidden {
+    display: none;
+}
