@@ -6,6 +6,37 @@ use Proyecto\Utils\Encryption;
 
 $title = "Buscar Producto";
 
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+    if(isset($_GET['data']) && !empty($_GET['data'])) {
+        $encriptedData = $_GET['data'];
+        $desencrytedData = Encryption::decrypt($encriptedData);
+
+        if($_GET['tipo'] == 'actualizado') {
+            $id = $desencrytedData['id'];
+            $nombre = $desencrytedData['nombre'];
+            $cantidad = $_GET['cantidad'];
+            echo '<div class="success_insertion"> Se actualizo la cantidad del producto' . $nombre . ' con ID: ' . $id . ' a ' . $cantidad . '</div>';
+        } elseif($_GET['tipo'] == 'insertado') {
+            $id = $desencrytedData['id'];
+            $nombre = $desencrytedData['nombre'];
+            $cantidadinsertada = $desencrytedData['cantidad'];
+            echo '<div class="success_insertion">Se inserto la cantidad de: ' . $cantidadinsertada . ' para el producto ' . $nombre . ' con ID: ' . $id . '</div>';
+        }
+    }
+
+    if(isset($_SESSION['error'])) {
+        echo '<section class="error__duplicatedentry">' . $_SESSION['error'] . '</section>';
+        unset($_SESSION['error']);
+    }
+    
+    if(isset($_SESSION['error_sql'])) {
+        echo '<section class="error_sql">' . $_SESSION['error_sql'] . '</section>';
+        unset($_SESSION['error_sql']);
+    }
+}
+
+
 ?>
 
 <form id="search_product_form" class="form_insert" action="<?= BASE_URL . '/get-add-cantidades'?>" method="post">
@@ -31,7 +62,7 @@ $title = "Buscar Producto";
 </form>
 
 <div id="results">
-
+            
 </div>
 
 <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
@@ -50,6 +81,12 @@ $scriptsHtml = '';
 
 foreach ($this->getScripts() as $script) {
     $scriptsHtml .= '<script src="'.$script. '"></script>';
+}
+
+$stylesCss = '';
+
+foreach ($this->getStyles() as $style) {
+    $stylesCss .= '<link rel="stylesheet" href="' . $style . '">';
 }
 
 

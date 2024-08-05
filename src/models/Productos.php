@@ -25,6 +25,16 @@ class Productos {
         }
     }
 
+    public function getIdNombre() {
+        try{
+            $mysql = $this->conexion->prepare("SELECT id_product, no_product FROM productos ORDER BY no_product ASC");
+            $mysql->execute();
+            return $mysql->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     public function insertarProducto($datos) {
 
         try {
@@ -97,9 +107,10 @@ class Productos {
             $mysql = $this->conexion->prepare(
                 "
                 SELECT 
-                    *, b.nombre_marca
+                    *, b.nombre_marca, c.cantidad
                 FROM productos a
                 INNER JOIN marcas b ON a.id_marcapr = b.id_marca
+                LEFT JOIN cantidad_productos c ON a.id_product = c.id_producto
                 WHERE no_product = :no_product AND id_marcapr LIKE :id_marcapr
                 "
             );
@@ -120,6 +131,72 @@ class Productos {
             return $results;
         } catch (PDOException $e) {
             echo "Error en la consulta: " . $e->getMessage();
+        }
+    }
+
+    public function insertCantidadProducto($data, $encriptado) {
+
+        try {
+
+            $checkQuery = "SELECT COUNT(*) AS count FROM cantidad_productos WHERE id_producto = :id_producto";
+            $checkQuery = $this->conexion->prepare($checkQuery);
+            $checkQuery->bindValue(':id_producto', $data[':id_producto'], PDO::PARAM_INT);
+            $checkQuery->execute();
+            $results = $checkQuery->fetch(PDO::FETCH_ASSOC);
+            $exists = isset($results['count']) && $results['count'] > 0;
+
+            if(!$exists) {
+
+                $mysql = $this->conexion->prepare(
+                    "
+                    INSERT INTO cantidad_productos (id_producto, cantidad, user_insert, fech_insert, user_actual, fech_actual) VALUES (:id_producto, :cantidad, :user_insert, CURRENT_TIMESTAMP, :user_actual, CURRENT_TIMESTAMP)
+                    "
+                );
+    
+                foreach($data as $key => $value) {
+    
+                    if(is_int($value)) {
+                        $type = PDO::PARAM_INT;
+                    } else {
+                        $type = PDO::PARAM_STR;
+                    }
+    
+                    $mysql->bindValue($key, $value, $type);
+                }
+    
+                $mysql->execute();
+                $insertado = "insertado";
+
+                header("Location: /inventario/public/get-add-cantidades?data=" . $encriptado ."&tipo=" . urlencode($insertado));
+                exit();
+            } else {
+                $mysql = "UPDATE cantidad_productos SET cantidad = cantidad + :cantidad, user_actual = :user_actual WHERE id_producto = :id_producto";
+                $mysql = $this->conexion->prepare($mysql);
+                $mysql->bindParam(':id_producto', $data[':id_producto'], PDO::PARAM_INT);
+                $mysql->bindParam(':cantidad', $data[':cantidad'], PDO::PARAM_INT);
+                $mysql->bindParam(':user_actual', $data[':user_actual'], PDO::PARAM_STR);
+                $mysql->execute();
+
+                $mysql = "SELECT cantidad FROM cantidad_productos WHERE id_producto = :id_producto";
+                $mysql = $this->conexion->prepare($mysql);
+                $mysql->bindParam(':id_producto', $data[':id_producto'], PDO::PARAM_INT);
+                $mysql->execute();
+                $result = $mysql->fetch();
+
+                $actualizado = "actualizado";
+                header("Location: /inventario/public/get-add-cantidades?data=" . $encriptado . "&tipo=" . $actualizado . '&cantidad=' . $result['cantidad']);
+                exit();
+            }
+        } catch(PDOException $e) {
+            if($e->errorInfo[1] === 1062){
+                $_SESSION['error'] = "El regitro ya existe";
+                header("Location: /inventario/public/get-add-cantidades");
+                exit();
+            } else {
+                $_SESSION['error_sql'] = "Error, porfavor intente luego";
+                header("Location: /inventario/public/get-add-cantidades");
+                exit();
+            }
         }
     }
 }

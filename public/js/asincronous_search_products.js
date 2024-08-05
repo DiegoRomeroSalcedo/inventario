@@ -13,17 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json()) // Asegúrate de que tu servidor responda en formato JSON
             .then(data => {
+
+                console.log(data);
                 // Maneja la respuesta aquí, por ejemplo, actualizando la vista con los resultados
                 let resultsDiv = document.getElementById('results');
                 resultsDiv.innerHTML = ''; // Limpia el contenido anterior
                 
                 if (data.productos && data.productos.length > 0) {
-                    let tableHtml = `<table>
+                    let tableHtml = `<table class="tabla_resultados">
                         <thead>
                             <tr>
                                 <th>Id_Producto</th>
                                 <th>Nombre</th>
                                 <th>Marca</th>
+                                <th>Cantidad</th>
                                 <th>Costo Producto</th>
                                 <th>Costo Final</th>
                                 <th>Precio Venta</th>
@@ -32,11 +35,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         </thead>
                         <tbody>`;
 
+
                     data.productos.forEach(producto => {
+
+                        console.log(producto.encriptados);
                         let row = `<tr>
-                            <td><a href="${BASE_URL}/add-cantidad-product?data=${encodeURIComponent(data.encriptados)}">${producto.id_product}</a></td>
+                            <td><a href="${BASE_URL}/add-cantidad-product?data=${encodeURIComponent(producto.encriptados)}">${producto.id_product}</a></td>
                             <td>${producto.no_product}</td>
                             <td>${data.marca.find(marca => marca.id_marca === producto.id_marcapr)?.nombre_marca || 'Desconocida'}</td>
+                            <td>${producto.cantidad !== null ? producto.cantidad : 0}</td>
                             <td>${producto.cost_produ}</td>
                             <td>${producto.pre_finpro}</td>
                             <td>${producto.pre_ventap}</td>

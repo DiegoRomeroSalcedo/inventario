@@ -18,6 +18,8 @@ use Proyecto\Controller\MarcaController;
 use Proyecto\Controller\ProductoController;
 use Proyecto\Models\Productos;
 use Proyecto\Models\Marcas;
+use Proyecto\Models\Inventario;
+use Proyecto\Controller\InventarioController;
 
 
 // Instancias
@@ -25,6 +27,8 @@ $AuthController = new AuthController();
 $view = new View();
 $productos = new Productos();
 $marcas = new Marcas();
+$inventario = new Inventario;
+$inventarioController = new InventarioController($view, $inventario, $marcas, $productos);
 $marcaController = new MarcaController($view);
 $productoController = new ProductoController($view, $productos, $marcas);
 
@@ -46,6 +50,7 @@ $routes = [
         '/' => [$AuthController, 'showLoginForm'], // Ruta por defecto
         '/login.php' => [$AuthController, 'login'],
         '/logout' => [$AuthController, 'logout'],
+        '/inventario' => [$inventarioController, 'list'],
         '/marcas' => [$marcaController, 'list'],
         '/add-marcas' => [$marcaController, 'addMarca'],
         '/productos' => [$productoController, 'list'],

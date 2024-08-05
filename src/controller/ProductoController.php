@@ -24,6 +24,17 @@ class ProductoController {
         // Obtenemos la lista de los productos, para listar en datatable
         $productos = $this->productosModel->getAll(); // de esta manera nos ahorramos el tener que instanciar con new
 
+
+        $this->view->addScripts('jsdatatables.js');
+        $this->view->addStylesExternos('https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css');
+        $this->view->addStylesExternos('https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.min.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js');
         $this->view->assign('productos', $productos); // No fue necesario el dat, ya que solo pase una variable en concreto.
         $this->view->renderProductoList();
     }
@@ -75,68 +86,95 @@ class ProductoController {
     }
 
     public function search() {
-
         $marca = $this->marcasModel->getIdNombre();
-
+    
         // preparamos los datos por defecto para la vista
-
         $data = [
             'marca' => $marca,
             'productos' => []
         ];
-
+    
         $this->view->addScripts('asincronous_search_products.js');
-
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+        $this->view->addStyles('styles_search_products.css');
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nomProduct = $_POST['nom_product'];
-            $marcaProdu = isset($_POST['marca_producto']) &&  $_POST['marca_producto'] != '0' ? $_POST['marca_producto'] : '%';
-
+            $marcaProdu = isset($_POST['marca_producto']) && $_POST['marca_producto'] != '0' ? $_POST['marca_producto'] : '%';
+    
             $dataPrArr = [
                 ':no_product' => $nomProduct, 
                 ':id_marcapr' => $marcaProdu
             ];
-
+    
             $productos = $this->productosModel->getProductData($dataPrArr);
-
-            
-            $idProducto = $productos[0]['id_product'];
-            $nomProduct = $productos[0]['no_product'];
-            $nomMaraca = $productos[0]['id_marca'];
-
-            $datosaEncriptar = [
-                'id_product' => $idProducto,
-                'no_product' => $nomProduct,
-                'id_marca' => $nomMaraca,
-            ];
-
-            $encriptedData = Encryption::encrypt($datosaEncriptar);
-
-            //Actuliza los datos con los productos enontrados
+    
+            // Encriptar cada producto individualmente
+            foreach ($productos as &$producto) {
+                $datosaEncriptar = [
+                    'id_product' => $producto['id_product'],
+                    'no_product' => $producto['no_product'],
+                    'id_marca' => $producto['id_marca'],
+                ];
+                $producto['encriptados'] = Encryption::encrypt($datosaEncriptar);
+            }
+    
+            // Actualiza los datos con los productos encontrados
             $data['productos'] = $productos;
-            $data['encriptados'] = $encriptedData;
-
-            //Envia la respuesta como JSON
+    
+            // Envía la respuesta como JSON
             header('Content-Type: application/json');
             echo json_encode($data);
             exit();
-        } 
-
-        //Asignamos los datos a la vista
+        }
+    
+        // Asignamos los datos a la vista
         $this->view->assign('data', $data);
         $this->view->render('form_search_products.php');
     }
+    
 
     public function addCantidadProducto(){
 
-        $data = ['data' => []];
+        $data = [
+            'decrypted' => [],
+            'insertion' => []
+        ];
+
+        $this->view->addScripts('insert_cantidad_productos.js');
 
         if(isset($_GET['data']) && !empty($_GET['data'])){
             $encriptedData = $_GET['data'];
             
             $decryptedData = Encryption::decrypt($encriptedData);
 
-            
+            $data['decrypted'] = $decryptedData;
+        }
+
+        if($_SERVER["REQUEST_METHOD"] == 'POST') {
+            $username = $_SESSION['username'];
+            $idProducto = $_POST['id_producto'];
+            $cantidadPro = $_POST['cantidad'];
+            $nom_product = $_POST['nom_product'];
+
+            $dataInsertion = [
+                ':id_producto'  => $idProducto,
+                ':cantidad'     => $cantidadPro,
+                ':user_insert'  => $username,
+                ':user_actual'  => $username
+            ];
+
+            $datosEncriptar = [
+                'id' => $idProducto,
+                'nombre' => $nom_product,
+                'cantidad' => $cantidadPro,
+            ];
+
+            $encriptado = Encryption::encrypt($datosEncriptar);
+
+            $insertProduct = $this->productosModel->insertCantidadProducto($dataInsertion, $encriptado);
+
+            $data['insertion'] = $insertProduct;
+
         }
 
         $this->view->assign('data', $data);

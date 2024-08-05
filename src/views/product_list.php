@@ -8,7 +8,7 @@ $title = "Listado Productos";
 
 <main>
     <h1>Listado de productos</h1>
-    <table id="example">
+    <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>ID_PRODUCTO</th>
@@ -32,6 +32,25 @@ $title = "Listado Productos";
 
 
 <?php
+
+$stylesLibraries = '';
+
+foreach ($this->getStylesLibraries() as $style) {
+    $stylesLibraries .= '<link rel="stylesheet" href="' . $style . '">';
+}
+
+$librariesHtml = '';
+
+foreach($this->getLibraries() as $library) {
+    $librariesHtml  .= '<script src="' .$library.'"></script>';
+}
+
+$scriptsHtml = '';
+
+foreach ($this->getScripts() as $script) {
+    $scriptsHtml .= '<script src="'.$script. '"></script>';
+}
+
 
 $content = ob_get_clean();
 

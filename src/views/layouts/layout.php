@@ -6,7 +6,8 @@
     <title><?= $title ?></title>
     <link rel="stylesheet" href="/inventario/public/css/layout_styles.css">
     <link rel="stylesheet" href="/inventario/public/css/layout_form.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+    <?= isset($stylesCss) ? $stylesCss : '' ?> 
+    <?= isset($stylesLibraries) ? $stylesLibraries:  '' ?> 
 </head>
 <body>
     <section class="page__section">
@@ -26,7 +27,7 @@
                     <ul class="dropdown-menu">
                         <?php 
                             if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
-                                echo '<li><a href="#"> <span class="marca">></span> Inventario</a></li>';
+                                echo '<li><a href="' .BASE_URL . '/inventario"> <span class="marca">></span> Inventario</a></li>';
                             } 
                         ?> 
                         <li><a href="<?= BASE_URL . '/marcas'?>"> <span class="marca">></span> Marcas</a></li>
@@ -58,12 +59,11 @@
             <footer class="footer">Footer</footer>
         </main>
     </section>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
+    <?= isset($librariesHtml) ? $librariesHtml : '' ?> 
+    <?= isset($scriptsHtml) ? $scriptsHtml : '' ?> 
     <script>
-        new DataTable('#example');
-
         document.addEventListener('DOMContentLoaded', function() {
             const dropdownToggle = document.querySelectorAll('.dropdown-toggle');
             
@@ -76,6 +76,5 @@
                 });
         });
     </script>
-    <?= isset($scriptsHtml) ? $scriptsHtml : '' ?> 
 </body>
 </html>

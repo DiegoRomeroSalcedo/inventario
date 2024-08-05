@@ -5,6 +5,9 @@ namespace Views\View;
 class View {
     protected $data = [];
     protected $scripts  = [];
+    protected $styles = [];
+    protected $styleslibraries = [];
+    protected $libraries = [];
 
     public function assign($key, $value) {
         $this->data[$key] = $value;
@@ -32,6 +35,34 @@ class View {
         }, $this->scripts);
 
         return $scripts;
+    }
+
+    public function addStyles($styles) {
+        $this->styles[] = $styles;
+    }
+
+    public function getStyles() {
+        $styles = array_map(function($style) {
+            return BASE_URL . '/css/' . $style;
+        }, $this->styles);
+
+        return $styles;
+    }
+
+    public function addStylesExternos($style) {
+        $this->styleslibraries[] = $style;
+    }
+
+    public function getStylesLibraries() {
+        return $this->styleslibraries;
+    }
+
+    public function addLibraries($libraries) {
+        $this->libraries[] = $libraries;
+    }
+
+    public function getLibraries() {
+        return $this->libraries;
     }
 
     public function renderMarcasList() {
