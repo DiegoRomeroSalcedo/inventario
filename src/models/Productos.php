@@ -45,14 +45,14 @@ class Productos {
                     cost_produ, rte_fuente, flet_produ, 
                     iva_produc, pre_finpro, uti_produc, 
                     pre_ventap, desc_produ, pre_ventades,
-                    ren_product, usuario_insercion, feha_insercion,
+                    ren_product, detalle_product, usuario_insercion, feha_insercion,
                     usuario_actualizacion, feha_actualizacion
                 ) VALUES (
                     :id_product, :no_product, :id_marcapr, 
                     :cost_produ, :rte_fuente, :flet_produ, 
                     :iva_produc, :pre_finpro, :uti_produc, 
                     :pre_ventap, :desc_produ, :pre_ventades,
-                    :ren_product, :usuario_insercion, CURRENT_TIMESTAMP,
+                    :ren_product, :detalle_product, :usuario_insercion, CURRENT_TIMESTAMP,
                     :usuario_actualizacion, CURRENT_TIMESTAMP
                 )"
             );
@@ -94,8 +94,9 @@ class Productos {
                 exit();
             } else {
                 $_SESSION['error_sql'] = "Error, porfavor intente luego";
-                header("Location: /inventario/public/add-productos");
-                exit();
+                echo "Error: " . $e->getMessage();
+                // header("Location: /inventario/public/add-productos");
+                // exit();
             }
         }
     }

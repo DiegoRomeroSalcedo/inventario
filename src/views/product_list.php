@@ -6,6 +6,8 @@ $title = "Listado Productos";
 
 <!-- Contenido HTML -->
 
+<div id="pageIdentifier" data-page="productos">
+
 <main>
     <h1>Listado de productos</h1>
     <table id="example" class="display" style="width:100%">
@@ -30,21 +32,25 @@ $title = "Listado Productos";
     </table>
 </main>
 
+</div>
 
 <?php
 
+//Inclusion de estilos externos
 $stylesLibraries = '';
 
 foreach ($this->getStylesLibraries() as $style) {
     $stylesLibraries .= '<link rel="stylesheet" href="' . $style . '">';
 }
 
+//inclusion de librerias
 $librariesHtml = '';
 
 foreach($this->getLibraries() as $library) {
     $librariesHtml  .= '<script src="' .$library.'"></script>';
 }
 
+//inclusion de scripts
 $scriptsHtml = '';
 
 foreach ($this->getScripts() as $script) {

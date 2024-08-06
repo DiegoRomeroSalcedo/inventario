@@ -7,14 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const BASE_URL = '/inventario/public';
             var formData = new FormData(this);
 
-            fetch('/inventario/public/get-add-cantidades', { // La ruta debe ser la misma que en tu configuración de rutas
+            fetch(`${BASE_URL}/get-add-cantidades`, { // La ruta debe ser la misma que en tu configuración de rutas
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json()) // Asegúrate de que tu servidor responda en formato JSON
             .then(data => {
 
-                console.log(data);
+                // console.log(data);
                 // Maneja la respuesta aquí, por ejemplo, actualizando la vista con los resultados
                 let resultsDiv = document.getElementById('results');
                 resultsDiv.innerHTML = ''; // Limpia el contenido anterior

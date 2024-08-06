@@ -18,9 +18,16 @@ class MarcaController {
         $marcasModel = new Marcas();
         $marcas = $marcasModel->getAll();
 
+        //Js propios
         $this->view->addScripts('jsdatatables.js');
+
+        //estilos externos
         $this->view->addStylesExternos('https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css');
         $this->view->addStylesExternos('https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css');
+        
+        //librerias externas
+        $this->view->addLibraries('https://code.jquery.com/jquery-3.7.1.js');
+        $this->view->addLibraries('https://cdn.datatables.net/2.1.3/js/dataTables.js');
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js');
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js');
         $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');

@@ -1,4 +1,4 @@
 /vendor/
-composer.log
+composer.lock
 tablas.sql
 pruebas.html

@@ -60,6 +60,7 @@ $routes = [
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
+        '/inventario' => [$inventarioController, 'searchData'],
         '/add-marcas' => [$marcaController, 'addMarca'],
         '/add-productos' => [$productoController, 'addProducto'],
         '/get-add-cantidades' => [$productoController, 'search'],

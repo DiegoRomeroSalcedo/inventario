@@ -1,23 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    $(document).ready(function() {
-        // Inicializa el Datepicker
-        $("#startDate, #endDate").datepicker({
-            dateFormat: "yy-mm-dd"
-        });
+    $("#startDate, #endDate").datepicker({
+        dateFormat: "yy-mm-dd",
+        timeFormat: "HH:mm:ss"
+    });
 
-        $("#searchBtninventario").on('click', function() {
-            let startDate = $('#startDate').val();
-            let endDate = $('#endDate').val();
-            let errorMessage = $('#error-message');
+    $("#searchBtninventario").on('click', function() {
+        let startDate = $('#startDate').val();
+        let endDate = $('#endDate').val();
+        let errorMessage = $('#error-message');
 
-            errorMessage.text('').hide();
+        errorMessage.text('').hide();
 
-            // Validación de fechas
-            if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
-                alert("La fecha inial no puede ser mayor a la fecha final");
-                return; // Salimos sin hacer la búsqueda
-            }
-        });
+        //Validamos fechas, para que fecha inial no sea mayor a fecha final
+        if(startDate && endDate && new Date(startDate) > new Date(endDate)) {
+            errorMessage.text('La fecha inicial no puede ser mayor a la fecha final');
+            return; // Salimos sin la busueda
+        }
     });
 });

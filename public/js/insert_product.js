@@ -14,18 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const extrafiledsContainer = document.getElementById('extrafileds');
     const extrafiledsTwoContainer = document.getElementById('extrafileds_two');
 
+    function formatPrice(price) {
+        return price.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    
     const actualizarCostoFinal = () => {
-        const costo = parseFloat(costoInput.value) || 0;
-        const retencion = parseFloat(retencionInput.value) || 0;
-        const flete = parseFloat(fleteInput.value) || 0;
-        const iva = parseFloat(ivaInput.value) || 0;
+        const costo = parseFloat(costoInput.value.replace(/,/g, '')) || 0;
+        const retencion = parseFloat(retencionInput.value.replace(/,/g, '')) || 0;
+        const flete = parseFloat(fleteInput.value.replace(/,/g, '')) || 0;
+        const iva = parseFloat(ivaInput.value.replace(/,/g, '')) || 0;
 
         const reteTotal = costo * (retencion / 100);
         const fleteTotal = costo * (flete / 100);
         const ivaTotal = costo * (iva / 100);
 
         const costoFinal = costo + reteTotal + fleteTotal + ivaTotal;
-        costoFinalInput.value = costoFinal.toFixed(2);
+        costoFinalInput.value = formatPrice(costoFinal);
 
         console.log(`Costo Final Actualizado: ${costoFinal}`);
 
@@ -33,15 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const actualizarPrecioVenta = () => {
-        const costoFinal = parseFloat(costoFinalInput.value) || 0;
-        const utilidad = parseFloat(utilidadInput.value) || 0;
+        const costoFinal = parseFloat(costoFinalInput.value.replace(/,/g, '')) || 0;
+        const utilidad = parseFloat(utilidadInput.value.replace(/,/g, '')) || 0;
 
         const utilidadTotal = costoFinal * (utilidad / 100);
         const ventaFinal = costoFinal + utilidadTotal;
 
-        precioVentaInput.value = ventaFinal.toFixed(2);
-
-        console.log(`Precio Venta Actualizado: ${ventaFinal}`);
+        precioVentaInput.value = formatPrice(ventaFinal);
 
         descuentos();
         updateRentabilidad();
@@ -55,8 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const precioTotal = precioVenta - descuentoTotal;
 
         preciodescuentoInput.value = precioTotal.toFixed(2);
-
-        console.log(`Precio con Descuento Actualizado: ${precioTotal}`);
 
         updateRentabilidad();
     };
@@ -79,8 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
             rentabilidadBruta = (gananciaBruta / costoFinal) * 100;
         }
         rentabilidadInput.value = rentabilidadBruta.toFixed(2);
-
-        console.log(`Rentabilidad Actualizada: ${rentabilidadBruta}`);
     };
 
     const toggleFileds = () => {

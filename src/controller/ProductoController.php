@@ -24,10 +24,16 @@ class ProductoController {
         // Obtenemos la lista de los productos, para listar en datatable
         $productos = $this->productosModel->getAll(); // de esta manera nos ahorramos el tener que instanciar con new
 
-
+        //scripts propios
         $this->view->addScripts('jsdatatables.js');
+
+        //estilos externos
         $this->view->addStylesExternos('https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css');
         $this->view->addStylesExternos('https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css');
+
+        //librerias
+        $this->view->addLibraries('https://code.jquery.com/jquery-3.7.1.js');
+        $this->view->addLibraries('https://cdn.datatables.net/2.1.3/js/dataTables.js');
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js');
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js');
         $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
@@ -53,7 +59,8 @@ class ProductoController {
 
         $descuento = isset($_POST['des_product']) ? $_POST['des_product'] : 0;
         $pre_ventades = isset($_POST['pre_ventades']) ? $_POST['pre_ventades'] : 0;
-
+        $detalle = $_POST['detalle_produc'] ?? null;
+        $det_min = str_replace(' ', ',', strtolower(trim($detalle)));
 
         if($_SERVER["REQUEST_METHOD"] == 'POST') {
 
@@ -71,6 +78,7 @@ class ProductoController {
                 ':desc_produ'            => $descuento ?? null,
                 ':pre_ventades'          => $pre_ventades ?? null,
                 ':ren_product'           => $_POST['rentabilidad'] ?? null,
+                ':detalle_product'       => $det_min,
                 ':usuario_insercion'     => $_SESSION['username'] ?? null,
                 ':usuario_actualizacion' => $_SESSION['username'] ?? null,
             ];

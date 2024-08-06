@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="/inventario/public/css/layout_form.css">
     <?= isset($stylesCss) ? $stylesCss : '' ?> 
     <?= isset($stylesLibraries) ? $stylesLibraries:  '' ?> 
+    <style>
+        div.dt-container {
+            width: 1050px !important;
+            margin: 0 auto !important;
+        }
+    </style>
 </head>
 <body>
     <section class="page__section">
@@ -59,8 +65,6 @@
             <footer class="footer">Footer</footer>
         </main>
     </section>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
     <?= isset($librariesHtml) ? $librariesHtml : '' ?> 
     <?= isset($scriptsHtml) ? $scriptsHtml : '' ?> 
     <script>

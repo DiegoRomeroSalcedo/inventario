@@ -18,7 +18,7 @@ if(isset($_SESSION['error'])) {
 
 if(isset($_SESSION['error_sql'])) {
     echo '<section class="error_sql">' . $_SESSION['error_sql'] . '</section>';
-    unset($_SESSION['error']);
+    unset($_SESSION['error_sql']);
 }
 
 ?>
@@ -57,7 +57,7 @@ if(isset($_SESSION['error_sql'])) {
     </div>
     <div class="container_inputs">
         <label for="costo_final">Costo Final: </label>
-        <input id="costo_final" type="number" name="pre_finpro" readonly>
+        <input id="costo_final" type="text" name="pre_finpro" readonly>
     </div>
     <div class="container_inputs">
         <label for="utilidad">Utilidad: </label>
@@ -65,7 +65,7 @@ if(isset($_SESSION['error_sql'])) {
     </div>
     <div class="container_inputs">
         <label for="precio_venta">Precio de Venta: </label>
-        <input id="precio_venta" type="number" name="pre_ventap" readonly>
+        <input id="precio_venta" type="text" name="pre_ventap" readonly>
     </div>
     <div class="container_inputs">
         <label for="toggleCheckbox">Desea Aplicar descuento</label>
@@ -82,6 +82,10 @@ if(isset($_SESSION['error_sql'])) {
     <div class="container_inputs">
         <label for="rentabilidad">Rentabilidad %: </label>
         <input id="rentabilidad" type="number" min="0" step="0.01" name="rentabilidad">
+    </div>
+    <div class="container_inputs">
+        <label for="detalle">Detalle Producto: </label>
+        <textarea name="detalle_produc" id="detalle"></textarea>
     </div>
     <div class="container__button-form">
         <button class="button_form" type="submit">Insertar</button>

@@ -3,6 +3,9 @@ ob_start();
 
 $title = "Listado de marcas";
 ?>
+
+<div id="pageIdentifier" data-page="marcas">
+
 <main>
     <h1>Listado de Marcas</h1>
     <table id="example" class="display" style="width:100%">
@@ -31,24 +34,26 @@ $title = "Listado de marcas";
     </table>
 </main>
 
+</div>
+
 <?php
 
 $stylesLibraries = '';
 
 foreach ($this->getStylesLibraries() as $style) {
-    $stylesLibraries .= '<link rel="stylesheet" href="' . $style . '"><br>';
+    $stylesLibraries .= '<link rel="stylesheet" href="' . $style . '">';
 }
 
 $librariesHtml = '';
 
 foreach($this->getLibraries() as $library) {
-    $librariesHtml  .= '<script src="' .$library.'"></script><br>';
+    $librariesHtml  .= '<script src="' .$library.'"></script>';
 }
 
 $scriptsHtml = '';
 
 foreach ($this->getScripts() as $script) {
-    $scriptsHtml .= '<script src="'.$script. '"></script><br>';
+    $scriptsHtml .= '<script src="'.$script. '"></script>';
 }
 
 $content = ob_get_clean();
