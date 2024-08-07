@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     data.productos.forEach(producto => {
 
-                        console.log(producto.encriptados);
+                        // console.log(producto.encriptados);
                         let row = `<tr>
                             <td><a href="${BASE_URL}/add-cantidad-product?data=${encodeURIComponent(producto.encriptados)}">${producto.id_product}</a></td>
                             <td>${producto.no_product}</td>

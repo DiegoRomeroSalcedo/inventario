@@ -4,10 +4,6 @@ ob_start();
 
 $title = "Tabla Inventario";
 
-
-// echo "<pre>";
-// print_r($data['defaultData']);
-// echo "</pre";
 ?>
 
 <div id="pageIdentifier" data-page="invenatrio">
@@ -83,33 +79,61 @@ $title = "Tabla Inventario";
             <th>NOMBRE PRODUCTO</th>
             <th>ID MARCA</th>
             <th>NOMBRE MARCA</th>
-            <th>CANTIDAD</th>
+            <th>CANTIDAD PRODUCTO</th>
             <th>COSTO PRODUCTO</th>
-            <th>RETENCION</th>
-            <th>FLETE</th>
-            <th>IVA</th>
-            <th>PRECIO PRODUCTO</th>
-            <th>UTILIDAD</th>
-            <th>PRECIO VENTA</th>
-            <th>DESCUENTO</th>
+            <th>RETENCION PRODUCTO</th>
+            <th>FLETE PRODUCTO</th>
+            <th>IVA PRODUCTO</th>
+            <th>COSTO FINAL PRODUCTO</th>
+            <th>UTILIDAD PRODUCTO</th>
+            <th>PRECIO DE VENTA</th>
+            <th>DESCUENTO PRODUCTO</th>
             <th>PRECIO VENTA DESCUENTO</th>
-            <th>RENTABILIDAD</th>
-            <th>Detalles Producto</th>
-            <th>Total Precio Final</th>
-            <th>Usuario Inserción</th>
-            <th>Fecha Inserción</th>
-            <th>Usuario Actualizacion</th>
-            <th>Fecha Actualizacion</th>
+            <th>RENTABILIDAD PRODUCTO</th>
+            <th>DETALLE PRODUCTO</th>
+            <th>TOTAL COSTO FINAL</th>
+            <th>TOTAL PRECIO VENTA</th>
+            <th>DIF COS/FINAL PRE/VENTA</th>
+            <th>TOTAL PRECIO VENT/DESC</th>
+            <th>DIF COS/FINAL VENT/DESC</th>
+            <th>USUARIO INSERCIÓN</th>
+            <th>FECHA INSERCION</th>
+            <th>USUARIO ACTUALIZACION</th>
+            <th>FECHA ACTUALIZACION</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach($data['defaultData'] as $data): ?>
             <?php 
-                if(!isset($data['cantidad'])) {
-                    $costoFinal = $data['pre_finpro'];
+
+                // Elimina las comas del costo del producto y convierte a número flotante
+                $precioFinProstr = (float) str_replace(',', '', $data['pre_finpro']);
+                $precioVentaString = (float) str_replace(',', '', $data['pre_ventap']);
+                $precioVentaDescue = (float) str_replace(',', '', $data['pre_ventades']);
+
+                // Convierte la cantidad a número flotante, manejando posibles valores nulos o vacíos
+                $cantidad = isset($data['cantidad']) ? (float) $data['cantidad'] : 0;
+
+                if ($cantidad === 0) {
+                    $totalprecioFinPro = $precioFinProstr;
+                    $totalPrecioVenPro = $precioVentaString;
+                    $difeCostoFinPrecioVen = $totalPrecioVenPro - $totalprecioFinPro;
+                    $totalPrecioVentDescue = $precioVentaDescue;
+                    $difCostFinPrecVenDesc = $totalPrecioVentDescue - $totalprecioFinPro;
                 } else {
-                    $costoFinal = $data['pre_finpro'] * $data['cantidad'];
+                    $totalprecioFinPro = $precioFinProstr * $cantidad;
+                    $totalPrecioVenPro = $precioVentaString * $cantidad;
+                    $difeCostoFinPrecioVen = $totalPrecioVenPro - $totalprecioFinPro;
+                    $totalPrecioVentDescue = $precioVentaDescue * $cantidad;
+                    $difCostFinPrecVenDesc = $totalPrecioVentDescue - $totalprecioFinPro;
                 }
+
+                // Formatea el total con comas y dos decimales
+                $formattedTotalprecioFinPro = number_format($totalprecioFinPro, 2, '.', ',');
+                $formatttedTotalPrecioVenPro = number_format($totalPrecioVenPro, 2, '.', ',');
+                $formttedDifCostFinPrecVenta = number_format($difeCostoFinPrecioVen, 2, '.', ',');
+                $formattedTotalPrecioVentDescue = number_format($totalPrecioVentDescue, 2, '.', ',');
+                $formattedDifCostFinPrecVenDesc = number_format($difCostFinPrecVenDesc, 2, '.', ',');
             ?>
             <tr>
                 <td><?= htmlspecialchars($data['id_product'])?></td>
@@ -117,20 +141,24 @@ $title = "Tabla Inventario";
                 <td><?= htmlspecialchars($data['id_marca'])?></td>
                 <td><?= htmlspecialchars($data['nombre_marca'])?></td>
                 <td><?= htmlspecialchars($data['cantidad'])?></td>
-                <td><?= htmlspecialchars($data['cost_produ'])?></td>
+                <td><?= htmlspecialchars(number_format((float) str_replace(',', '', $data['cost_produ']), 2, '.', ',')) ?></td>
                 <td><?= htmlspecialchars($data['rte_fuente'])?></td>
                 <td><?= htmlspecialchars($data['flet_produ'])?></td>
                 <td><?= htmlspecialchars($data['iva_produc'])?></td>
-                <td><?= htmlspecialchars($data['pre_finpro'])?></td>
+                <td><?= htmlspecialchars(number_format((float) str_replace(',', '', $data['pre_finpro']), 2, '.', ',')) ?></td>
                 <td><?= htmlspecialchars($data['uti_produc'])?></td>
-                <td><?= htmlspecialchars($data['pre_ventap'])?></td>
+                <td><?= htmlspecialchars(number_format((float) str_replace(',', '', $data['pre_ventap']), 2, '.', ',')) ?></td>
                 <td><?= htmlspecialchars($data['desc_produ'])?></td>
-                <td><?= htmlspecialchars($data['pre_ventades'])?></td>
+                <td><?= htmlspecialchars(number_format((float) str_replace(',', '', $data['pre_ventades']), 2, '.', ',')) ?></td>
                 <td><?= htmlspecialchars($data['ren_product'])?></td>
                 <td><?= htmlspecialchars($data['detalle_product'])?></td>
-                <td><?= htmlspecialchars(number_format($costoFinal, 2, '.', ','))?></td>
-                <td><?= htmlspecialchars($data['user_actual'])?></td>
-                <td><?= htmlspecialchars($data['fech_actual'])?></td>
+                <th><?= htmlspecialchars($formattedTotalprecioFinPro) ?></th>
+                <th><?= htmlspecialchars($formatttedTotalPrecioVenPro) ?></th>
+                <th><?= htmlspecialchars($formttedDifCostFinPrecVenta) ?></th>
+                <th><?= htmlspecialchars($formattedTotalPrecioVentDescue) ?></th>
+                <th><?= htmlspecialchars($formattedDifCostFinPrecVenDesc) ?></th>
+                <td><?= htmlspecialchars($data['usuario_insercion'])?></td>
+                <td><?= htmlspecialchars($data['feha_insercion'])?></td>
                 <td><?= htmlspecialchars($data['user_actual'])?></td>
                 <td><?= htmlspecialchars($data['fech_actual'])?></td>
             </tr>

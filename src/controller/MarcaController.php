@@ -3,6 +3,7 @@
 namespace Proyecto\Controller;
 
 use Proyecto\Models\Marcas;
+use Proyecto\Utils\Encryption;
 use Views\View\View;
 
 class MarcaController {
@@ -57,6 +58,79 @@ class MarcaController {
         }
             $this->view->assign('marca', $data);
             $this->view->render('marca_form.php');
+    }
+
+    public function searchUpdate() {
+
+        $data = [
+            'marcas' => [],
+        ];
+
+        $this->view->addStyles('styles_search_products.css');
+        $this->view->addScripts('search_update_marcas.js');
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $id_marca = $_POST['id_marca'];
+            $marca = new Marcas();
+            $searchMarca = $marca->searchMarcaUpdate($id_marca);
+
+            // print_r($searchMarca);
+
+            foreach($searchMarca as &$marca) {
+                $datosEncriptar = [
+                    'id_marca' => $marca['id_marca'],
+                    'nombre_marca' => $marca['nombre_marca']
+                ];
+                $marca['encriptado'] = Encryption::encrypt($datosEncriptar);
+            }
+
+            //Encriptar los datos devueltos para pasarlo en la URL
+
+            $data['marcas'] = $searchMarca;
+
+            header('Content-Type: application/json');
+            echo json_encode($data);
+            exit();
+        }
+
+        $this->view->render('update_form_search_marcas.php');
+    }
+
+    public function updateMarca() {
+
+        $data = [
+            'decrypted' => [],
+            'marca' => []
+        ];
+
+        if(isset($_GET['data']) && !empty($_GET['data'])) {
+            $encryptedData = $_GET['data'];
+
+            $drecryptedData = Encryption::decrypt($encryptedData);
+
+            $data['decrypted'] = $drecryptedData;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $idMarca = $_POST['id_marca'];
+            $nombre = $_POST['nombre_marca'];
+
+            $datosEncriptar = [
+                'id_marca' => $idMarca,
+                'nombre' => $nombre
+            ];
+
+            $dataEncrypted = Encryption::encrypt($datosEncriptar);
+
+            $marcas = new Marcas();
+            $marca = $marcas->updateMarca($idMarca, $nombre, $dataEncrypted);
+
+            $data['marca'] = $marca;
+        }
+
+        $this->view->assign('data', $data);
+        $this->view->render('update_marcas.php');
     }
 
 }

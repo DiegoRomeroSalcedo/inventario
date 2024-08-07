@@ -21,21 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
+    roundToTwoDecimals = (number) => {
+        return Math.round(number * 100) / 100;
+    }
+
     const actualizarCostoFinal = () => {
         const costo = parseFloat(costoInput.value.replace(/,/g, '')) || 0;
         const retencion = parseFloat(retencionInput.value.replace(/,/g, '')) || 0;
         const flete = parseFloat(fleteInput.value.replace(/,/g, '')) || 0;
         const iva = parseFloat(ivaInput.value.replace(/,/g, '')) || 0;
 
-        const reteTotal = costo * (retencion / 100);
-        const fleteTotal = costo * (flete / 100);
-        const ivaTotal = costo * (iva / 100);
+        const reteTotal = roundToTwoDecimals(costo * (retencion / 100));
+        const fleteTotal = roundToTwoDecimals(costo * (flete / 100));
+        const ivaTotal = roundToTwoDecimals(costo * (iva / 100));
 
-        const costoFinal = costo + reteTotal + fleteTotal + ivaTotal;
+        const costoFinal = roundToTwoDecimals(costo + reteTotal + fleteTotal + ivaTotal);
         costoFinalInput.value = formatPrice(costoFinal);
-
-        console.log(`Costo Final Actualizado: ${costoFinal}`);
 
         actualizarPrecioVenta();
     };
@@ -44,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const costoFinal = parseFloat(costoFinalInput.value.replace(/,/g, '')) || 0;
         const utilidad = parseFloat(utilidadInput.value.replace(/,/g, '')) || 0;
 
-        const utilidadTotal = costoFinal * (utilidad / 100);
-        const ventaFinal = costoFinal + utilidadTotal;
+        const utilidadTotal = roundToTwoDecimals(costoFinal * (utilidad / 100));
+        const ventaFinal = roundToTwoDecimals(costoFinal + utilidadTotal);
 
         precioVentaInput.value = formatPrice(ventaFinal);
 
@@ -54,21 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const descuentos = () => {
-        const precioVenta = parseFloat(precioVentaInput.value) || 0;
-        const descuento = parseFloat(descuentoInput.value) || 0;
+        const precioVenta = parseFloat(precioVentaInput.value.replace(/,/g, '')) || 0;
+        const descuento = parseFloat(descuentoInput.value.replace(/,/g, '')) || 0;
 
-        const descuentoTotal = precioVenta * (descuento / 100);
-        const precioTotal = precioVenta - descuentoTotal;
+        const descuentoTotal = roundToTwoDecimals(precioVenta * (descuento / 100));
+        const precioTotal = roundToTwoDecimals(precioVenta - descuentoTotal);
 
-        preciodescuentoInput.value = precioTotal.toFixed(2);
+        preciodescuentoInput.value = formatPrice(precioTotal);
 
         updateRentabilidad();
     };
 
     const updateRentabilidad = () => {
-        const costoFinal = parseFloat(costoFinalInput.value) || 0;
-        const precioVenta = parseFloat(precioVentaInput.value) || 0;
-        const preciodescuento = parseFloat(preciodescuentoInput.value) || 0;
+        const costoFinal = parseFloat(costoFinalInput.value.replace(/,/g, '')) || 0;
+        const precioVenta = parseFloat(precioVentaInput.value.replace(/,/g, '')) || 0;
+        const preciodescuento = parseFloat(preciodescuentoInput.value.replace(/,/g, '')) || 0;
 
         let rentabilidadBruta;
         if (costoFinal === 0) {
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             rentabilidadBruta = (gananciaBruta / costoFinal) * 100;
         }
-        rentabilidadInput.value = rentabilidadBruta.toFixed(2);
+        rentabilidadInput.value = formatPrice(rentabilidadBruta);
     };
 
     const toggleFileds = () => {

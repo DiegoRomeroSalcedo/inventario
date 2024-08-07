@@ -29,16 +29,18 @@ class Inventario {
     public function defaultData() {
         try {
             $mysql = "SELECT
-                        b.id_product,b.no_product,a.id_marca, 
+                        b.id_product, b.no_product, a.id_marca, 
                         a.nombre_marca, c.cantidad, b.cost_produ, 
-                        b.rte_fuente,b.flet_produ, b.iva_produc, 
-                        b.pre_finpro,b.uti_produc, b.pre_ventap, 
-                        b.desc_produ,b.pre_ventades, b.ren_product,
+                        b.rte_fuente, b.flet_produ, b.iva_produc, 
+                        b.pre_finpro, b.uti_produc, b.pre_ventap, 
+                        b.desc_produ, b.pre_ventades, b.ren_product,
                         b.detalle_product,b.usuario_insercion,
                         b.feha_insercion,c.user_actual,c.fech_actual
                     FROM marcas a
                     INNER JOIN productos b ON a.id_marca = b.id_marcapr
-                    LEFT JOIN cantidad_productos c ON b.id_product = id_producto
+                    LEFT JOIN cantidad_productos c ON b.id_product = c.id_producto
+                    LEFT JOIN users d_insercion ON b.usuario_insercion = d_insercion.nombre_usr
+                    LEFT JOIN users d_actualiza ON c.user_actual = d_actualiza.nombre_usr
                     ORDER BY c.fech_actual DESC LIMIT 200";
             $mysql = $this->conexion->prepare($mysql);
             $mysql->execute();
@@ -67,7 +69,8 @@ class Inventario {
                 b.rte_fuente, b.flet_produ, b.iva_produc, 
                 b.pre_finpro, b.uti_produc, b.pre_ventap, 
                 b.desc_produ, b.pre_ventades, b.ren_product,
-                c.fech_actual
+                b.detalle_product,b.usuario_insercion,
+                b.feha_insercion,c.user_actual,c.fech_actual
                 FROM marcas a
                 INNER JOIN productos b ON a.id_marca = b.id_marcapr
                 LEFT JOIN cantidad_productos c ON b.id_product = c.id_producto

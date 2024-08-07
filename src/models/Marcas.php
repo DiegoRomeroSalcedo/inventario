@@ -58,9 +58,45 @@ class Marcas {
                 header("Location: /inventario/public/add-marcas");
                 exit();
             } else {
-                echo "Error de insercion: " . $e->getMessage();
                 $_SESSION['error_sql'] = "Error, porfavor intente luego";
                 header("Location: /inventario/public/add-marcas");
+                exit();
+            }
+        }
+    }
+
+    public function searchMarcaUpdate($id_marca) {
+        try {
+            $query = "SELECT * FROM marcas WHERE id_marca = :id_marca";
+            $query = $this->conexion->prepare($query);
+            $query->bindValue(':id_marca', $id_marca, PDO::PARAM_INT);
+            $query->execute();
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $results;
+        } catch(PDOException $e) {
+            echo "Error :" . $e->getMessage();
+        }
+    }
+
+    public function updateMarca($id, $nombre, $encriptado) {
+
+        try {
+            $mysql = "UPDATE marcas SET nombre_marca = :nombre_marca WHERE id_marca = :id_marca";
+            $mysql = $this->conexion->prepare($mysql);
+            $mysql->bindValue(':id_marca', $id, PDO::PARAM_INT);
+            $mysql->bindValue(':nombre_marca', $nombre, PDO::PARAM_STR);
+            $mysql->execute();
+
+            header('Location: /inventario/public/search-update-marcas?data=' . $encriptado);
+            exit();
+        } catch(PDOException $e) {
+            if($e->errorInfo[1] === 1062) {
+                $_SESSION['error'] = "El registro ya existe";
+                header('Location: /inventario/public/search-update-marcas');
+                exit();
+            } else {
+                $_SESSION['error_sql'] = "Error al actualizar, Porfavor intente mas luego";
+                header('Location: /inventario/public/search-update-marcas');
                 exit();
             }
         }

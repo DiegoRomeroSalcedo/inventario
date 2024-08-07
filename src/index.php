@@ -56,7 +56,11 @@ $routes = [
         '/productos' => [$productoController, 'list'],
         '/add-productos' => [$productoController, 'addProducto'],
         '/get-add-cantidades' => [$productoController, 'search'],
-        '/add-cantidad-product' => [$productoController, 'addCantidadProducto']
+        '/add-cantidad-product' => [$productoController, 'addCantidadProducto'],
+        '/search-update-marcas' => [$marcaController, 'searchUpdate'],
+        '/update-form-marca' => [$marcaController, 'updateMarca'],
+        '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
+        '/update-form-product' => [$productoController, 'updateProduct']
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -64,7 +68,11 @@ $routes = [
         '/add-marcas' => [$marcaController, 'addMarca'],
         '/add-productos' => [$productoController, 'addProducto'],
         '/get-add-cantidades' => [$productoController, 'search'],
-        '/add-cantidad-product' => [$productoController, 'addCantidadProducto']
+        '/add-cantidad-product' => [$productoController, 'addCantidadProducto'],
+        '/search-update-marcas' => [$marcaController, 'searchUpdate'],
+        '/update-form-marca' => [$marcaController, 'updateMarca'],
+        '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
+        '/update-form-product' => [$productoController, 'updateProduct']
     ]
 ];
 

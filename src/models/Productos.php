@@ -200,4 +200,52 @@ class Productos {
             }
         }
     }
+
+    public function searchUpdateProducto($id, $id_marca) {
+        try {
+            $mysql = "SELECT 
+                        a.id_marca, a.nombre_marca,
+                        b.id_product, b.no_product,
+                        b.cost_produ, b.rte_fuente,
+                        b.flet_produ, b.iva_produc,
+                        b.pre_finpro, b.uti_produc,
+                        b.pre_ventap, b.desc_produ,
+                        b.pre_ventades, b.ren_product,
+                        b.detalle_product, c.cantidad,
+                        c.fech_actual
+                    FROM marcas a
+                    INNER JOIN productos b ON a.id_marca = b.id_marcapr
+                    LEFT JOIN cantidad_productos c ON b.id_product = c.id_producto
+                    WHERE 1 = 1";
+                    
+            if ($id) {
+                $mysql .= " AND b.id_product = :id_product";  // Corregido
+            }
+    
+            if ($id_marca) {
+                $mysql .= " AND a.id_marca = :id_marca";
+            }
+    
+            $mysql .= " ORDER BY b.id_product ASC";
+    
+            $mysql = $this->conexion->prepare($mysql);
+    
+            if ($id) {
+                $mysql->bindValue(':id_product', $id, PDO::PARAM_INT);
+            }
+    
+            if ($id_marca) {
+                $mysql->bindValue(':id_marca', $id_marca, PDO::PARAM_INT);
+            }
+    
+            $mysql->execute();
+    
+            return $mysql->fetchAll(PDO::FETCH_ASSOC);
+    
+        } catch (PDOException $e) {
+            // Manejo de errores aquí
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
 }

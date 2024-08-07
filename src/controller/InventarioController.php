@@ -61,7 +61,7 @@ class InventarioController {
         $data['idYprodu'] = $idYprodu;
         $data['usr_insact'] = $usr_insAct;
         $data['defaultData'] = $datadefault;
-
+        
         $this->view->assign('data', $data);
         $this->view->render('invetario_list.php');
     }

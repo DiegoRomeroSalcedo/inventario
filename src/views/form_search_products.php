@@ -65,14 +65,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
             
 </div>
 
-<?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-
-        <div id="results">
-            <!-- Aqui van los resultados -->
-        </div>
-    <!-- Pasar los datos a JavaScript -->
-<?php endif; ?>
-
 <?php 
 
 $content = ob_get_clean();

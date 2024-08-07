@@ -48,6 +48,20 @@
                         <li><a href="<?= BASE_URL . '/get-add-cantidades'?>"> <span class="marca">></span> Cantidades</a></li>
                     </ul>
                 </li>
+                    <?php 
+                        if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
+
+                            echo '<li>
+                                <a href="#" class="dropdown-toggle">Actualizar</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="'. BASE_URL . '/search-update-marcas"> <span class="marca">></span> Marcas</a></li>
+                                    <li><a href="' . BASE_URL . '/search-update-productos"> <span class="marca">></span> Productos</a></li>
+                                    <li><a href="' . BASE_URL . '/updata-cantidades"> <span class="marca">></span> Cantidades</a></li>
+                                </ul>
+                            </li>';
+
+                        }
+                    ?>
                 <li>
                     <a href="#" class="dropdown-toggle">Ventas</a>
                     <ul class="dropdown-menu">

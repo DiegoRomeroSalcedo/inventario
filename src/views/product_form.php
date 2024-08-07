@@ -41,7 +41,7 @@ if(isset($_SESSION['error_sql'])) {
     </div>
     <div class="container_inputs">
         <label for="precio_costo">Precio Costo: </label>
-        <input id="precio_costo" type="number" min="0" step="0.01" name="cost_produ" placeholder="97860.89" required>
+        <input id="precio_costo" type="text" name="cost_produ" placeholder="97860.89" required>
     </div>
     <div class="container_inputs">
         <label for="retefuente">Retención %: </label>
@@ -77,7 +77,7 @@ if(isset($_SESSION['error_sql'])) {
     </div>
     <div id="extrafileds_two" class="container_inputs hidden">
         <label for="precioventa_desc">Precio con Descuento: </label>
-        <input id="precioventa_desc" type="number" name="pre_ventades" readonly>
+        <input id="precioventa_desc" type="text" name="pre_ventades" readonly>
     </div>
     <div class="container_inputs">
         <label for="rentabilidad">Rentabilidad %: </label>

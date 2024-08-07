@@ -188,4 +188,65 @@ class ProductoController {
         $this->view->assign('data', $data);
         $this->view->render('añadir_cantidad_producto.php');
     }
+
+    public function searchUpdateProducto() {
+
+        $data = [
+            'data' => [],
+            'marcas' => [],
+        ];
+
+        $this->view->addScripts('search_update_productos.js');
+
+        $marcas = $this->marcasModel->getIdNombre();
+        $data['marcas'] = $marcas;
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $id_producto = $_POST['id_producto'];
+            $id_marca = $_POST['marca_producto'];
+
+            $productos = new Productos();
+            $producto = $productos->searchUpdateProducto($id_producto, $id_marca);
+
+            foreach($producto as &$produc) {
+                $datosEncriptar = [
+                    'id_product' => $produc['id_product'],
+                    'no_product' => $produc['no_product'],
+                    'id_marca' => $produc['id_marca'],
+                    'nombre_marca' => $produc['nombre_marca'],
+                    'cantidad' => $produc['cantidad'],
+                    'cost_produ' => $produc['cost_produ'],
+                    'rte_fuente' => $produc['rte_fuente'],
+                    'flet_produ' => $produc['flet_produ'],
+                    'iva_produc' => $produc['iva_produc'],
+                    'pre_finpro' => $produc['pre_finpro'],
+                    'uti_produc' => $produc['uti_produc'],
+                    'pre_ventap' => $produc['pre_ventap'],
+                    'desc_produ' => $produc['desc_produ'],
+                    'pre_ventades' => $produc['pre_ventades'],
+                    'ren_product' => $produc['ren_product'],
+                    'detalle_product' => $produc['detalle_product'],
+                    'fech_actual' => $produc['fech_actual'],
+                ];
+
+                $produc['encrypted'] = Encryption::encrypt($datosEncriptar);
+            }
+
+            $data['data'] = $producto;
+            header('Content-Type: application/json');
+            echo json_encode($data);
+            exit();
+        }
+
+        $this->view->assign('data', $data);
+        $this->view->render('update_form_search_productos.php');
+    }
+
+    public function updateProduct() {
+
+
+
+        $this->view->render('update_products.php');
+    }
 }

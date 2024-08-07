@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     $("#startDate, #endDate").datepicker({
-        dateFormat: "yy-mm-dd",
-        timeFormat: "HH:mm:ss"
+        dateFormat: "yy-mm-dd"
     });
 
     $("#searchBtninventario").on('click', function() {
