@@ -21,6 +21,9 @@ body {
 .sidebar {
     grid-area: sidebar;
     background-color: #78f;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 .perfil__section {
@@ -137,6 +140,7 @@ body {
 .error_sql {
     background-color: rgba(218, 17, 17, 0.877) !important;
 }
+
 
 
 

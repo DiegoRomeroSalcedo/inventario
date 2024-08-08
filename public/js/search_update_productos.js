@@ -22,14 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 let data = await response.json();
 
-                console.log(data);
-
                 //Manejamos la respuesta de la solicitud
                 let resultDiv = document.getElementById('results');
                 resultDiv.innerHTML = '';
 
                 if(data && data.data.length > 0) {
-                    console.log("Hola");
                     //Formateamos el template string
                     let tableHTML = `<table class="tabla_resultados">
                         <thead>
@@ -56,24 +53,81 @@ document.addEventListener('DOMContentLoaded', function() {
                         <tbody>`;
 
                     data.data.forEach(producto => {
+
+                        const cantidadStr = producto.cantidad?.replace(/,/g, '') || 0;
+                        const cantidad = parseFloat(cantidadStr);
+
+                        const costProducString = producto.cost_produ.replace(/,/g, '');
+                        const costoProd = parseFloat(costProducString);
+
+                        const preFinProducStr = producto.pre_finpro.replace(/,/g, '');
+                        const precioFinProduc = parseFloat(preFinProducStr);
+
+                        const preVentaStr = producto.pre_ventap.replace(/,/g, '');
+                        const preVenta = parseFloat(preVentaStr);
+
+                        const preVentaDescStr = producto.pre_ventades?.replace(/,/g, '') || 0;
+                        const preVentaDesc = parseFloat(preVentaDescStr);
+
+                        let detalleProduc;
+
+                        if(producto.detalle_product) {
+                            detalleProduc = producto.detalle_product;
+                        } else {
+                            detalleProduc = "Sin Detalle";
+                        }
+
+                        let fecActulizacion;
+
+                        if(producto.fech_actual) {
+                            fecActulizacion = producto.fech_actual;
+                        } else {
+                            fecActulizacion = "0000-00-00 00:00:00";
+                        }
+
+                        const formattedCantidad = cantidad.toLocaleString('en-US', {
+                            minimumFractionDigits: 0, //No mostrar los dos decimales ultimos
+                            maximumFractionDigits: 0
+                        });
+
+                        const formattedCostoProd = costoProd.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        const formattedPrecioFinProduc = precioFinProduc.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        const formattedPreVenta = preVenta.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        const formattedPreVentaDesc = preVentaDesc.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
                         let row = `<tr>
                             <td><a href="${BASE_URL}/update-form-product?data=${encodeURIComponent(producto.encrypted)}">${producto.id_product}</a></td>
                             <td>${producto.no_product}</td>
                             <td>${producto.id_marca}</td>
                             <td>${producto.nombre_marca}</td>
-                            <td>${producto.cantidad}</td>
-                            <td>${producto.cost_produ}</td>
+                            <td>${formattedCantidad}</td>
+                            <td>${formattedCostoProd}</td>
                             <td>${producto.rte_fuente}</td>
                             <td>${producto.flet_produ}</td>
                             <td>${producto.iva_produc}</td>
-                            <td>${producto.pre_finpro}</td>
+                            <td>${formattedPrecioFinProduc}</td>
                             <td>${producto.uti_produc}</td>
-                            <td>${producto.pre_ventap}</td>
+                            <td>${formattedPreVenta}</td>
                             <td>${producto.desc_produ}</td>
-                            <td>${producto.pre_ventades}</td>
+                            <td>${formattedPreVentaDesc}</td>
                             <td>${producto.ren_product}</td>
-                            <td>${producto.detalle_product}</td>
-                            <td>${producto.fech_actual}</td>
+                            <td>${detalleProduc}</td>
+                            <td>${fecActulizacion}</td>
                         </tr>`;
                         tableHTML += row; // concatenamos las filas
                     });

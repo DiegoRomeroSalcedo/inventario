@@ -56,7 +56,6 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="'. BASE_URL . '/search-update-marcas"> <span class="marca">></span> Marcas</a></li>
                                     <li><a href="' . BASE_URL . '/search-update-productos"> <span class="marca">></span> Productos</a></li>
-                                    <li><a href="' . BASE_URL . '/updata-cantidades"> <span class="marca">></span> Cantidades</a></li>
                                 </ul>
                             </li>';
 
@@ -65,7 +64,7 @@
                 <li>
                     <a href="#" class="dropdown-toggle">Ventas</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"> <span class="marca">></span> Ingresar Venta</a></li>
+                        <li><a href="<?= BASE_URL . '/search-add-venta' ?>"> <span class="marca">></span> Ingresar Venta</a></li>
                         <li><a href="#"> <span class="marca">></span> Registro de Ventas</a></li>
                     </ul>
                 </li>
@@ -80,7 +79,7 @@
         </main>
     </section>
     <?= isset($librariesHtml) ? $librariesHtml : '' ?> 
-    <?= isset($scriptsHtml) ? $scriptsHtml : '' ?> 
+    <?= isset($scriptsHtml) ? $scriptsHtml : '' ?>  
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const dropdownToggle = document.querySelectorAll('.dropdown-toggle');

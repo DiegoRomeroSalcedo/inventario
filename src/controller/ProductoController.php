@@ -245,8 +245,58 @@ class ProductoController {
 
     public function updateProduct() {
 
+        $data = [
+            'marcas' => [],
+            'decryptedData' => [],
+        ];
 
+        $this->view->addScripts('insert_product.js');
 
+        $marcas = $this->marcasModel->getIdNombre();
+        $data['marcas'] = $marcas;
+
+        if(isset($_GET['data']) && !empty($_GET['data'])) {
+            $encryptedData = $_GET['data'];
+            $decryptedData = Encryption::decrypt($encryptedData);
+
+            $data['decryptedData'] = $decryptedData;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $idProducto = $_POST['id_producto'];
+
+            $dataInsertion = [
+                'id_product' => $_POST['id_producto'],
+                'nom_produc' => $_POST['nom_produc'],
+                'marca_producto' => $_POST['marca_producto'],
+                'cost_produ' => $_POST['cost_produ'],
+                'porc_rete' => $_POST['porc_rete'],
+                'porc_flete' => $_POST['porc_flete'],
+                'porc_iva' => $_POST['porc_iva'],
+                'pre_finpro' => $_POST['pre_finpro'],
+                'uti_product' => $_POST['uti_product'],
+                'pre_ventap' => $_POST['pre_ventap'],
+                'des_product' => $_POST['des_product'],
+                'pre_ventades' => $_POST['pre_ventades'],
+                'rentabilidad' => $_POST['rentabilidad'],
+                'detalle_produc' => $_POST['detalle_produc'],
+                'cantidad' => $_POST['cantidad'],
+            ];
+
+            $dataEncrypted = [
+                'id_product' => $_POST['id_producto'],
+                'nom_produc' => $_POST['nom_produc'],
+                'marca_producto' => $_POST['marca_producto'],
+            ];
+
+            $encrypted = Encryption::encrypt($dataEncrypted);
+
+            $producto = $this->productosModel->updateProducts($dataInsertion, $encrypted);
+
+        }
+
+        $this->view->assign('data', $data);
         $this->view->render('update_products.php');
     }
 }

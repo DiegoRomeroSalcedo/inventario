@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Principal</title>
+    <style>
+        /* Estilos para la página principal */
+        #printArea {
+            visibility: hidden;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Página Principal</h1>
+    <button onclick="imprimirOtraFactura()">Imprimir Otra Factura</button>
+
+    <div id="printArea"></div>
+
+    <script>
+        function imprimirOtraFactura() {
+            // Cargar el contenido de la factura desde otro archivo
+            fetch('factura.html')
+                .then(response => response.text())
+                .then(data => {
+                    // Insertar el contenido de la factura en el área de impresión
+                    document.getElementById('printArea').innerHTML = data;
+                    // Usar setTimeout para dar tiempo al navegador para renderizar el contenido
+                    setTimeout(() => {
+                        window.print();
+                    }, 500);
+                })
+                .catch(error => console.error('Error cargando la factura:', error));
+        }
+    </script>
+</body>
+</html>

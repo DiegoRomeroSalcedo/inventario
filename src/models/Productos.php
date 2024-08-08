@@ -247,5 +247,85 @@ class Productos {
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function updateProducts($data, $encrypted) {
+        $usr_actualizacion = $_SESSION['username'];
+        try {
+            $mysql = "  UPDATE productos a 
+                        LEFT JOIN cantidad_productos b ON a.id_product = b.id_producto
+                        SET 
+                        a.no_product = :nom_produc,
+                        a.id_marcapr = :id_marcapr,
+                        a.cost_produ = :cost_produ,
+                        a.rte_fuente = :rte_fuente,
+                        a.flet_produ = :flet_produ,
+                        a.iva_produc = :iva_produc,
+                        a.pre_finpro = :pre_finpro,
+                        a.uti_produc = :uti_produc,
+                        a.pre_ventap = :pre_ventap,
+                        a.desc_produ = :desc_produ,
+                        a.pre_ventades = :pre_ventades,
+                        a.ren_product = :ren_product,
+                        a.detalle_product = :detalle_product,
+                        a.usuario_actualizacion = :usuario_actualizacion,
+                        a.feha_actualizacion = CURRENT_TIMESTAMP,
+                        b.cantidad = :cantidad,
+                        b.user_actual = :user_actual,
+                        b.fech_actual = CURRENT_TIMESTAMP
+                        WHERE a.id_product = :id_product";
+            $mysql = $this->conexion->prepare($mysql);
+            $mysql->bindValue(':nom_produc', $data['nom_produc'], PDO::PARAM_STR);
+            $mysql->bindValue(':id_marcapr', $data['marca_producto'], PDO::PARAM_INT);
+            $mysql->bindValue(':cost_produ', $data['cost_produ'], PDO::PARAM_STR);
+            $mysql->bindValue(':rte_fuente', $data['porc_rete'], PDO::PARAM_STR);
+            $mysql->bindValue(':flet_produ', $data['porc_flete'], PDO::PARAM_STR);
+            $mysql->bindValue(':iva_produc', $data['porc_iva'], PDO::PARAM_STR);
+            $mysql->bindValue(':pre_finpro', $data['pre_finpro'], PDO::PARAM_STR);
+            $mysql->bindValue(':uti_produc', $data['uti_product'], PDO::PARAM_STR);
+            $mysql->bindValue(':pre_ventap', $data['pre_ventap'], PDO::PARAM_STR);
+            $mysql->bindValue(':desc_produ', $data['des_product'], PDO::PARAM_STR);
+            $mysql->bindValue(':pre_ventades', $data['pre_ventades'], PDO::PARAM_STR);
+            $mysql->bindValue(':ren_product', $data['rentabilidad'], PDO::PARAM_STR);
+            $mysql->bindValue(':detalle_product', $data['detalle_produc'], PDO::PARAM_STR);
+            $mysql->bindValue(':cantidad', $data['cantidad'], PDO::PARAM_STR);
+            $mysql->bindValue(':usuario_actualizacion', $usr_actualizacion, PDO::PARAM_STR);
+            $mysql->bindValue(':user_actual', $usr_actualizacion, PDO::PARAM_STR);
+            $mysql->bindValue(':id_product', $data['id_product'], PDO::PARAM_INT);
+
+            $mysql->execute();
+
+            header('Location: /inventario/public/search-update-productos?data=' . urlencode($encrypted));
+            exit();
+        }catch(PDOException $e) {   
+            if($e->errorInfo[1] === 1062){
+                $_SESSION['error'] = "El regitro ya existe";
+                header("Location: /inventario/public/search-update-productos");
+                exit();
+            } else {
+                $_SESSION['error_sql'] = "Error, porfavor intente luego";
+                header("Location: /inventario/public/search-update-productos");
+                exit();
+            }
+        } 
+    }
     
+
+    public function serchVentaProducto($id_producto) {
+        try {
+            $mysql = "  SELECT
+                        a.id_product, a.no_product, c.nombre_marca, a.pre_ventap, a.desc_produ, a.pre_ventades, a.detalle_product, b.cantidad
+                        FROM productos a
+                        LEFT JOIN cantidad_productos b ON a.id_product = b.id_producto
+                        INNER JOIN marcas c ON a.id_marcapr = c.id_marca
+                        WHERE a.id_product = :id_product";
+            $mysql = $this->conexion->prepare($mysql);
+            $mysql->bindValue(':id_product', $id_producto);
+            $mysql->execute();
+
+            $results = $mysql->fetchAll(PDO::FETCH_ASSOC);
+            return $results;
+        } catch(PDOException $e) {
+            echo "Error : " . $e->getMessage(); 
+        }
+    }
 }

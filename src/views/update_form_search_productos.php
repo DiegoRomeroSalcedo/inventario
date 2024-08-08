@@ -1,8 +1,27 @@
 <?php
+use Proyecto\Utils\Encryption;
 
 ob_start();
 
 $title = "Buscar Producto";
+
+if(isset($_GET['data']) && !empty($_GET['data'])) {
+    $encryptedData = $_GET['data'];
+    $decryptedData = Encryption::decrypt($encryptedData);
+    $idProducto = $decryptedData['id_product'];
+    $nomProduct = $decryptedData['nom_produc'];
+    echo '<div class="success_insertion">Se actualizo el producto: ' . $nomProduct . ' con id: ' . $idProducto . '</div>';
+}
+
+if(isset($_SESSION['error'])) {
+    echo '<section class="error__duplicatedentry">' . $_SESSION['error'] . '</section>';
+    unset($_SESSION['error']);
+}
+
+if(isset($_SESSION['error_sql'])) {
+    echo '<section class="error_sql">' . $_SESSION['error_sql'] . '</section>';
+    unset($_SESSION['error_sql']);
+}
 
 ?>
 
@@ -10,7 +29,7 @@ $title = "Buscar Producto";
     <form id="search-update-product" action="<?= BASE_URL . '/search-update-productos'?>" method="post">
         <div class="container_inputs">
             <label for="idProduct">Id Producto: </label>
-            <input id="idProduct" type="number" name="id_producto" required>
+            <input id="idProduct" type="number" name="id_producto">
         </div>
         <div class="container_inputs">
             <label for="nom_marca">Marca Producto: </label>

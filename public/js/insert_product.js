@@ -97,6 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             extrafiledsTwoContainer.classList.add('hidden');
             extrafiledsContainer.querySelector('input').required = false;
             extrafiledsTwoContainer.querySelector('input').required = false;
+
+            descuentoInput.value = '';
+            preciodescuentoInput.value = '';
         }
 
         updateRentabilidad();

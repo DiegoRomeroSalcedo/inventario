@@ -20,6 +20,7 @@ use Proyecto\Models\Productos;
 use Proyecto\Models\Marcas;
 use Proyecto\Models\Inventario;
 use Proyecto\Controller\InventarioController;
+use Proyecto\Controller\VentasController;
 
 
 // Instancias
@@ -31,6 +32,7 @@ $inventario = new Inventario;
 $inventarioController = new InventarioController($view, $inventario, $marcas, $productos);
 $marcaController = new MarcaController($view);
 $productoController = new ProductoController($view, $productos, $marcas);
+$ventaController = new VentasController($view, $productos, $marcas);
 
 // Obtener la URI y el metodo de solicitud
 
@@ -60,7 +62,8 @@ $routes = [
         '/search-update-marcas' => [$marcaController, 'searchUpdate'],
         '/update-form-marca' => [$marcaController, 'updateMarca'],
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
-        '/update-form-product' => [$productoController, 'updateProduct']
+        '/update-form-product' => [$productoController, 'updateProduct'],
+        '/search-add-venta' => [$ventaController, 'searchAddVenta']
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -72,17 +75,28 @@ $routes = [
         '/search-update-marcas' => [$marcaController, 'searchUpdate'],
         '/update-form-marca' => [$marcaController, 'updateMarca'],
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
-        '/update-form-product' => [$productoController, 'updateProduct']
+        '/update-form-product' => [$productoController, 'updateProduct'],
+        '/search-add-venta' => [$ventaController, 'searchAddVenta'],
+        '/finalizar-venta' => [$ventaController, 'finalizarVenta']
     ]
 ];
 
 // Definimos las rutas protegidas, esto con el fin de evaluar si estan en el requestUri
 
 $routesProtected = [
+    '/logout',
+    '/inventario',
     '/marcas',
-    '/add-marca',
+    '/add-marcas',
+    '/productos',
     '/add-productos',
-    '/get-add-cantidades'
+    '/get-add-cantidades',
+    '/add-cantidad-product',
+    '/search-update-marcas',
+    '/update-form-marca',
+    '/search-update-productos',
+    '/update-form-product',
+    '/search-add-venta'
 ];
 
 // Verificamos si la ruta actual es una ruta Protegida y si esta logeado el usuario
