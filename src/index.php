@@ -21,6 +21,7 @@ use Proyecto\Models\Marcas;
 use Proyecto\Models\Inventario;
 use Proyecto\Controller\InventarioController;
 use Proyecto\Controller\VentasController;
+use Proyecto\Controller\DevolucionController;
 
 
 // Instancias
@@ -33,6 +34,7 @@ $inventarioController = new InventarioController($view, $inventario, $marcas, $p
 $marcaController = new MarcaController($view);
 $productoController = new ProductoController($view, $productos, $marcas);
 $ventaController = new VentasController($view, $productos, $marcas);
+$devolucionController = new DevolucionController($view);
 
 // Obtener la URI y el metodo de solicitud
 
@@ -63,7 +65,9 @@ $routes = [
         '/update-form-marca' => [$marcaController, 'updateMarca'],
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
         '/update-form-product' => [$productoController, 'updateProduct'],
-        '/search-add-venta' => [$ventaController, 'searchAddVenta']
+        '/search-add-venta' => [$ventaController, 'searchAddVenta'],
+        '/get-factura' => [$ventaController, 'getFacturaData'],
+        '/search-factura-devolucion' => [$devolucionController, 'searchFactura']
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -77,7 +81,9 @@ $routes = [
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
         '/update-form-product' => [$productoController, 'updateProduct'],
         '/search-add-venta' => [$ventaController, 'searchAddVenta'],
-        '/finalizar-venta' => [$ventaController, 'finalizarVenta']
+        '/finalizar-venta' => [$ventaController, 'finalizarVenta'],
+        '/get-factura' => [$ventaController, 'getFacturaData'],
+        '/search-factura-devolucion' => [$devolucionController, 'searchFactura']
     ]
 ];
 
@@ -96,7 +102,8 @@ $routesProtected = [
     '/update-form-marca',
     '/search-update-productos',
     '/update-form-product',
-    '/search-add-venta'
+    '/search-add-venta',
+    '/search-factura-devolucion'
 ];
 
 // Verificamos si la ruta actual es una ruta Protegida y si esta logeado el usuario

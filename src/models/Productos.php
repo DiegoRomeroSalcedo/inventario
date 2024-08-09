@@ -328,4 +328,42 @@ class Productos {
             echo "Error : " . $e->getMessage(); 
         }
     }
+
+    public function getCantidadStock($id_producto) {
+        try {
+            $query = "SELECT cantidad FROM cantidad_productos WHERE id_producto = :id_producto";
+            $mysql = $this->conexion->prepare($query);
+            $mysql->bindValue(':id_producto', $id_producto, PDO::PARAM_INT);
+            $mysql->execute();
+
+            $results = $mysql->fetch(PDO::FETCH_ASSOC);
+
+            return $results;
+        } catch(PDOException $e) {
+            echo "Error en al consulta: " . $e->getMessage();
+        }
+    }
+
+    public function updateCantidadVenta($cantidad , $id_producto) {
+
+        $username = $_SESSION['username'];
+        try {
+            $query = "UPDATE
+                            cantidad_productos
+                        SET
+                            cantidad = :cantidad,
+                            user_actual = :user_actual,
+                            fech_actual = CURRENT_TIMESTAMP 
+                        WHERE
+                            id_producto = :id_producto";
+            $mysql = $this->conexion->prepare($query);
+            $mysql->bindValue(':id_producto', $id_producto, PDO::PARAM_INT);
+            $mysql->bindValue(':cantidad', $cantidad, PDO::PARAM_INT);
+            $mysql->bindValue(':user_actual', $username);
+
+            return $mysql->execute();
+        } catch(PDOException $e) {
+            echo "Error al actualizar la cantidad: " . $e->getMessage();
+        }
+    }
 }

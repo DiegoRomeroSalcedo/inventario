@@ -38,12 +38,12 @@ body {
 }
 
 .img__container {
-    width: 80px;
-    height: 80px;
+    background-size: cover;
+    width: 75px;
+    height: 75px;
 }
 
 .image__user {
-    background-color: #4449;
     width: 80px;
     height: auto;
     border-radius: 50%;

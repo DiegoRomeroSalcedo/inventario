@@ -13,7 +13,7 @@ $title = "Ingresar Venta";
             <input id="ced_cliente" type="number" min="0" name="cedula">
         </div>
         <div class="container_inputs">
-            <label for="idProduct">Nombre Producto: </label>
+            <label for="nom_producto">Nombre Producto: </label>
             <select name="nombre_producto" id="nom_producto" style="background-color: #ededed;" required>
                 <option value="0" style="background-color: #ddd;">Productos</option>
                 <?php foreach($data['productos'] as $p): ?>

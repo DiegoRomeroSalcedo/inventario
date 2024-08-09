@@ -299,4 +299,5 @@ class ProductoController {
         $this->view->assign('data', $data);
         $this->view->render('update_products.php');
     }
+
 }

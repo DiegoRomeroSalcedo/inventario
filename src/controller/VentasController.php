@@ -52,32 +52,72 @@ class VentasController {
     public function finalizarVenta() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
-            print_r($data);
-            die("Aqui");
             $carrito = $data['carrito'] ?? [];
-            $cliente_id = $data['cliente_id'] ?? 1; //quitar el 1 esto por ahora es de prueba
-            $total = array_sum(array_column($carrito, 'precio_total'));
+            $total = (float) $data["total"];
+            $cliente_id = $data['cliente_id'] ?? 0; //quitar el 1 esto por ahora es de prueba
 
-        
             try{
                 $ventasModel = new Ventas();
-                $idFactura = $ventasModel->addFactura($cliente_id, $total); //Recuperamos el id de la factura
+                $idFactura = $ventasModel->addFactura($total, $cliente_id); //Recuperamos el id de la factura
                 
                 foreach($carrito as $producto) {
+                    $preUnitario = (float) str_replace(',', '', $producto['pre_ventades']);
                     $ventasModel->addVenta(
                         $idFactura,
                         $producto['id_product'],
                         $producto['cantidad'],
-                        $producto['precio_unitario']
+                        $preUnitario,
+                        $producto['totalIndCarrito'],
                     );//Metodo para insertar la venta de cada producto
+
+                    $cantidadActual = $this->productos->getCantidadStock($producto['id_product'],);
+
+                    $cantidadStock = $cantidadActual['cantidad'];
+                    $cantidad = $producto['cantidad'];
+
+                    $totalStock = $cantidadStock - $cantidad;
+
+                    $updateCantidad = $this->productos->updateCantidadVenta($totalStock, $producto['id_product'],);
                 }
 
-                echo json_encode(['succes' => true]);
+                if($updateCantidad) {
+                    echo json_encode(['succes' => true, 'invoiceId' => $idFactura]);
+                }
             }catch(Exception $e) {
                 echo json_encode(['Error' => $e->getMessage()]);
             }
             exit();
         }
+    }
+
+    public function getFacturaData() {
+
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+            $facturaid = $_GET['id'] ?? 0;
+
+            if(empty($facturaid)) {
+                echo json_encode(['error' => 'Id de la factura no proporcionado']);
+                exit();
+            }
+
+            try {
+                $ventasModel = new Ventas();
+                $detallesFactura = $ventasModel->getDetallesFactura($facturaid);
+
+                if($detallesFactura) {
+                    header('Content-Type: application/json');
+                    echo json_encode($detallesFactura);
+                } else {
+                    echo json_encode(['error' => 'Factura no Encontrada']);
+                }
+            } catch(Exception $e) {
+                echo json_encode(['Error' => $e->getMessage()]);
+            }
+
+            exit();
+        }
+
     }
 }
 

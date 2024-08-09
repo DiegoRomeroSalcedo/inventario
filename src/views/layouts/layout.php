@@ -20,7 +20,7 @@
         <aside class="sidebar">
             <section class="perfil__section">
                 <div class="img__container">
-                <img class="image__user" src="/inventario/public/images/user_image.svg" alt="Por definir">
+                <img class="image__user" src="/inventario/public/images/logo_empresa.png" alt="Por definir">
                 </div>
                 <p class="perfil__user-name">Usuario</p>
             </section>
@@ -66,6 +66,13 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?= BASE_URL . '/search-add-venta' ?>"> <span class="marca">></span> Ingresar Venta</a></li>
                         <li><a href="#"> <span class="marca">></span> Registro de Ventas</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle">Devoluciones</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?= BASE_URL . '/search-factura-devolucion'?>"> <span class="marca">></span>Insertar Devolucion</a></li>
+                        <li><a href="<?= BASE_URL . '/add-productos'?>"> <span class="marca">></span>Listar Devoluciones</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Contacto</a></li>
