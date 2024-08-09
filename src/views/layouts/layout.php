@@ -34,8 +34,11 @@
                         <?php 
                             if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
                                 echo '<li><a href="' .BASE_URL . '/inventario"> <span class="marca">></span> Inventario</a></li>';
+                                echo '<li><a href="' .BASE_URL . '/facturas"> <span class="marca">></span> Facturas</a></li>';
+                                echo '<li><a href="' .BASE_URL . '/detalles-facturas"> <span class="marca">></span> Detalles Factura</a></li>';
                             } 
                         ?> 
+                        <li><a href="<?= BASE_URL . '/clientes'?>"> <span class="marca">></span> Clientes</a></li>
                         <li><a href="<?= BASE_URL . '/marcas'?>"> <span class="marca">></span> Marcas</a></li>
                         <li><a href="<?= BASE_URL . '/productos'?>"> <span class="marca">></span> Productos</a></li>
                     </ul>

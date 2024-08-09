@@ -53,7 +53,18 @@ if(isset($_SESSION['error_sql'])) {
 
 <?php  
 
-// inclusion de scripts
+$stylesLibraries = '';
+
+foreach ($this->getStylesLibraries() as $style) {
+    $stylesLibraries .= '<link rel="stylesheet" href="' . $style . '">';
+}
+
+$librariesHtml = '';
+
+foreach($this->getLibraries() as $library) {
+    $librariesHtml  .= '<script src="' .$library.'"></script>';
+}
+
 $scriptsHtml = '';
 
 foreach ($this->getScripts() as $script) {
@@ -62,6 +73,6 @@ foreach ($this->getScripts() as $script) {
 
 $content = ob_get_clean();
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';
 
 ?>

@@ -12,6 +12,7 @@ class ProductoController {
     protected $view;
     protected $productosModel;
     protected $marcasModel;
+    public $carpeta = 'productos';
 
     // Aplicamos la inyeccion de dependencias para evitar instanciar clases y metdodos a cada rato
     public function __construct(View $view, Productos $productosModel, Marcas $marcasModel) {
@@ -42,7 +43,7 @@ class ProductoController {
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.min.js');
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js');
         $this->view->assign('productos', $productos); // No fue necesario el dat, ya que solo pase una variable en concreto.
-        $this->view->renderProductoList();
+        $this->view->render('product_list.php', $this->carpeta);
     }
 
     public function addProducto() {
@@ -90,7 +91,7 @@ class ProductoController {
 
         // Asignamos los datos a la vista
         $this->view->assign('data', $data);
-        $this->view->render('product_form.php');
+        $this->view->render('product_form.php', $this->carpeta);
     }
 
     public function search() {
@@ -137,7 +138,7 @@ class ProductoController {
     
         // Asignamos los datos a la vista
         $this->view->assign('data', $data);
-        $this->view->render('form_search_products.php');
+        $this->view->render('form_search_products.php', $this->carpeta);
     }
     
 
@@ -186,7 +187,7 @@ class ProductoController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('añadir_cantidad_producto.php');
+        $this->view->render('añadir_cantidad_producto.php', $this->carpeta);
     }
 
     public function searchUpdateProducto() {
@@ -240,7 +241,7 @@ class ProductoController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('update_form_search_productos.php');
+        $this->view->render('update_form_search_productos.php', $this->carpeta);
     }
 
     public function updateProduct() {
@@ -297,7 +298,7 @@ class ProductoController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('update_products.php');
+        $this->view->render('update_products.php', $this->carpeta);
     }
 
 }

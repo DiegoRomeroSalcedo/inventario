@@ -36,7 +36,7 @@ if(isset($_SESSION['error_sql'])) {
 
 $content = ob_get_clean();
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';
 
 ?>
 

@@ -102,6 +102,6 @@ foreach ($this->getScripts() as $script) {
     $scriptsHtml .= '<script src="'.$script. '"></script>';
 }
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';
 
 ?>

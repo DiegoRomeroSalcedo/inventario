@@ -22,6 +22,8 @@ use Proyecto\Models\Inventario;
 use Proyecto\Controller\InventarioController;
 use Proyecto\Controller\VentasController;
 use Proyecto\Controller\DevolucionController;
+use Proyecto\Controller\FacturasController;
+use Proyecto\Controller\ClientesController;
 
 
 // Instancias
@@ -34,7 +36,9 @@ $inventarioController = new InventarioController($view, $inventario, $marcas, $p
 $marcaController = new MarcaController($view);
 $productoController = new ProductoController($view, $productos, $marcas);
 $ventaController = new VentasController($view, $productos, $marcas);
+$facturasController = new FacturasController($view);
 $devolucionController = new DevolucionController($view);
+$clientesController = new ClientesController($view);
 
 // Obtener la URI y el metodo de solicitud
 
@@ -66,8 +70,12 @@ $routes = [
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
         '/update-form-product' => [$productoController, 'updateProduct'],
         '/search-add-venta' => [$ventaController, 'searchAddVenta'],
-        '/get-factura' => [$ventaController, 'getFacturaData'],
-        '/search-factura-devolucion' => [$devolucionController, 'searchFactura']
+        '/get-factura' => [$facturasController, 'renderFactura'],
+        '/get-data-factura' => [$facturasController, 'getFacturaData'],
+        '/facturas' => [$facturasController, 'listFacturData'],
+        '/detalles-facturas' => [$facturasController, 'listDetalleFactura'],
+        '/clientes' => [$clientesController, 'getDataCliente'],
+        '/search-factura-devolucion' => [$devolucionController, 'searchFactura'],
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -82,8 +90,12 @@ $routes = [
         '/update-form-product' => [$productoController, 'updateProduct'],
         '/search-add-venta' => [$ventaController, 'searchAddVenta'],
         '/finalizar-venta' => [$ventaController, 'finalizarVenta'],
-        '/get-factura' => [$ventaController, 'getFacturaData'],
-        '/search-factura-devolucion' => [$devolucionController, 'searchFactura']
+        '/get-factura' => [$ventaController, 'renderFactura'],
+        '/get-data-factura' => [$ventaController, 'getFacturaData'],
+        '/facturas' => [$facturasController, 'listFacturData'],
+        '/detalles-facturas' => [$facturasController, 'listDetalleFactura'],
+        '/clientes' => [$clientesController, 'getDataCliente'],
+        '/search-factura-devolucion' => [$devolucionController, 'searchFactura'],
     ]
 ];
 
@@ -103,7 +115,9 @@ $routesProtected = [
     '/search-update-productos',
     '/update-form-product',
     '/search-add-venta',
-    '/search-factura-devolucion'
+    '/search-factura-devolucion',
+    '/get-factura',
+    '/get-data-factura'
 ];
 
 // Verificamos si la ruta actual es una ruta Protegida y si esta logeado el usuario

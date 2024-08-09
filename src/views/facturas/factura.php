@@ -28,7 +28,7 @@
 
         .factura {
             background-color: #fff;
-            width: 80mm;
+            width: 80mm; /* Ancho de la factura */
             padding: 10px;
             margin: 0 auto; /* Centrado horizontal */
             position: relative;
@@ -119,7 +119,7 @@
 
         @media print {
             @page {
-                size: auto; /* Adaptar tamaño de página según contenido */
+                size: 80mm auto; /* Establece el ancho de la página y permite altura automática */
                 margin: 0; /* Sin márgenes para aprovechar el espacio */
             }
             body {
@@ -128,9 +128,9 @@
                 padding: 0; /* Eliminar padding del body para impresión */
             }
             .container {
-                width: 100%;
+                width: 80mm; /* Asegura que el ancho de la factura se mantenga igual */
                 height: auto; /* Ajusta la altura según el contenido */
-                margin: 0;
+                margin: 0 auto; /* Centrado horizontal */
                 padding: 0;
                 overflow: visible; /* Asegura que no haya overflow en la impresión */
             }
@@ -150,7 +150,7 @@
     <div class="container">
         <div class="factura">
             <div class="header">
-                <img src="../../public/images/logo_empresa.png" alt="Logo Empresa">
+                <img src="/inventario/public/images/logo_empresa.png" alt="Logo Empresa">
                 <h1>La Guaca</h1>
             </div>
 
@@ -192,7 +192,7 @@
 
         async function loadFacturaDetalles() {
             try {
-                let response = await fetch(`${BASE_URL}/get-factura?id=${invoiceId}`);
+                let response = await fetch(`${BASE_URL}/get-data-factura?id=${invoiceId}`);
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -202,10 +202,10 @@
                 const factura = data;  // La estructura JSON ya es un array de objetos
 
                 // Llenar el nombre de la factura
-                document.getElementById('nombre-factura-dinamico').textContent = `Factura #${invoiceId}`;
+                document.getElementById('nombre-factura-dinamico').textContent = `Factura: FAC${invoiceId}`;
 
                 // Llenar datos del cliente
-                document.getElementById('cliente-nombre').textContent = factura[0].id_cliente || 'Sin Nombre'; // Asumimos que el cliente es el mismo para todos los productos
+                document.getElementById('cliente-nombre').textContent = factura[0].identificacion || 'No reporta'; // Asumimos que el cliente es el mismo para todos los productos
                 
                 // Obtener la fecha y hora actual
                 const now = new Date();
@@ -218,19 +218,37 @@
                 productosDiv.innerHTML = '';  // Limpiar contenido anterior
 
                 factura.forEach(item => {
+
+                    let montoVentaStr = item.monto_venta.replace(/,/g, '');
+                    let montoVenta = parseFloat(montoVentaStr);
+
+                    const formattedMontoVenta = montoVenta.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+
+
                     total += parseFloat(item.monto_venta);
 
                     const productoDiv = document.createElement('div');
                     productoDiv.classList.add('producto');
                     productoDiv.innerHTML = `
                         <p class="descripcion">${item.no_product} - ${item.id_producto} Cantidad: ${item.cantidad}</p>
-                        <p class="monto">${item.monto_venta}</p>
+                        <p class="monto">${formattedMontoVenta}</p>
                     `;
                     productosDiv.appendChild(productoDiv);
                 });
 
+                let totalVentaStr = factura[0].total_venta.replace(/,/g, '');
+                let totalVenta = parseFloat(totalVentaStr);
+
+                const formattedTotalVenta = totalVenta.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
                 // Llenar total de la factura
-                document.getElementById('total-factura').textContent = `$${total.toFixed(2)}`;
+                document.getElementById('total-factura').textContent = `$${formattedTotalVenta}`;
 
                 // Generar código QR
                 const qrData = `Factura: ${invoiceId}\nTotal: $${total.toFixed(2)}`;

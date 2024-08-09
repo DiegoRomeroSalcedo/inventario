@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     let form = document.getElementById('search-add-venta');
     let carritoList = document.getElementById('carrito-list');
+    let toggelDataCliente = document.getElementById('data-control');
+    let extraFiledsContainer = document.querySelectorAll('#container-data');
     let carrito = [];
-    let ced_cliente = document.getElementById('ced_cliente');
     const BASE_URL = '/inventario/public';
     const productStockMap = {};
 
@@ -157,15 +158,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const clienteID = ced_cliente.value;
             const total = carrito.reduce((sum, product) => sum + product.totalIndCarrito, 0);
+            let clienteData = {};
+
+            if (toggelDataCliente.checked) {
+                clienteData = {
+                    cedulaCliente: document.getElementById('id-client').value,
+                    nomCliente: document.getElementById('nombre').value,
+                    nroCelular: document.getElementById('nro-celular').value,
+                    emailCliente: document.getElementById('email-cliente').value,
+                    dirCliente: document.getElementById('direccion-cliente').value
+                };
+            }
             try {
                 let response = await fetch(`${BASE_URL}/finalizar-venta`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ carrito, cliente_id: clienteID, total })
+                    body: JSON.stringify({ carrito, total, clienteData })
                 });
 
                 if (!response.ok) {
@@ -177,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.succes) {
                     const invoiceId = data.invoiceId;
 
-                    window.location.href = `/inventario/src/views/factura.html?id=${invoiceId}`;
+                    window.location.href = `${BASE_URL}/get-factura?id=${invoiceId}`;
                 } else {
                     alert("Error al insertar Venta intente nuevamente");
                 }
@@ -260,6 +271,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Eliminar el producto del mapa global productStockMap
             productStockMap[productId] = productStockMap[productId] + quantity;
         }
+
+        toggelDataCliente.addEventListener('change', () => {
+            if (toggelDataCliente.checked) {
+
+                extraFiledsContainer.forEach(campos => {
+                    campos.classList.remove('hidden');
+                    campos.querySelector('input').required = true;
+                });
+
+            } else {
+                extraFiledsContainer.forEach(campos => {
+                    campos.classList.add('hidden');
+                    campos.querySelector('input').required = false;
+                });
+            }
+        });
     } else {
         console.error("Formulario no encontrado");
     }

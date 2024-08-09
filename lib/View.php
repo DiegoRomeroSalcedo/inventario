@@ -13,15 +13,78 @@ class View {
         $this->data[$key] = $value;
     }
 
-    public function render($template) {
-        extract($this->data);
-        $file =  __DIR__ . '/../src/views/' . $template;
+    public function render($template, $carpeta) {
 
-        if(file_exists($file)) {
-                extract($this->data);
-                include $file;
-        } else {
-            echo "Error";
+        if($carpeta == "marcas") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/marcas/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
+
+        if($carpeta == "productos") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/productos/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
+
+        if($carpeta == "inventario") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/inventario/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
+
+        if($carpeta == "ventas") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/ventas/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
+
+        if($carpeta == "facturas") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/facturas/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
+
+        if($carpeta == "clientes") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/clientes/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
         }
     }
 
@@ -63,13 +126,5 @@ class View {
 
     public function getLibraries() {
         return $this->libraries;
-    }
-
-    public function renderMarcasList() {
-        $this->render('marca_list.php');
-    }
-
-    public function renderProductoList() {
-        $this->render('product_list.php');
     }
 }

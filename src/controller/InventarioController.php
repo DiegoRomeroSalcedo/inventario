@@ -13,6 +13,7 @@ class InventarioController {
     protected $inventario;
     protected $marcasModel;
     protected $productosModel;
+    public $carpeta = 'inventario';
 
     public function __construct(View $view, Inventario $inventario, Marcas $marcasModel, Productos $productosModel) {
         $this->view = $view;
@@ -63,7 +64,7 @@ class InventarioController {
         $data['defaultData'] = $datadefault;
         
         $this->view->assign('data', $data);
-        $this->view->render('invetario_list.php');
+        $this->view->render('invetario_list.php', $this->carpeta);
     }
 
     public function searchData() {

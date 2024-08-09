@@ -17,7 +17,7 @@ class Productos {
     public function getAll() {
         
         try {
-            $mysql = $this->conexion->prepare("SELECT * FROM `productos` ORDER BY `id_product` ASC");
+            $mysql = $this->conexion->prepare("SELECT *, b.cantidad FROM `productos` a LEFT JOIN cantidad_productos b ON a.id_product = b.id_producto ORDER BY `id_product` ASC");
             $mysql->execute();
             return $mysql->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {

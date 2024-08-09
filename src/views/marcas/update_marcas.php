@@ -28,4 +28,4 @@ $nombre = $data['decrypted']['nombre_marca'];
 
 $content = ob_get_clean();
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';

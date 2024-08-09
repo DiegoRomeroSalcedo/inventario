@@ -54,22 +54,4 @@ class Ventas {
             echo "Error: " . $e->getMessage();
         }
     }
-
-    public function getDetallesFactura($facturaid) {
-        try {
-            $query = "SELECT a.id_cliente, a.total_venta, b.id_producto, b.cantidad, b.precio_unitario, b.monto_venta, c.no_product
-            FROM facturas a
-            INNER JOIN ventas b ON a.id_factura = b.id_factura
-            INNER JOIN productos c ON b.id_producto = c.id_product
-            WHERE a.id_factura = :id_factura";
-            $mysql = $this->conexion->prepare($query);
-            $mysql->bindValue(':id_factura', $facturaid, PDO::PARAM_INT);
-            $mysql->execute();
-            $results = $mysql->fetchAll(PDO::FETCH_ASSOC);
-
-            return $results;
-        } catch(PDOException $e) {
-            echo json_encode(['error: ' => $e->getMessage()]);
-        }
-    }
 }
