@@ -27,7 +27,7 @@ $title = "Ingresar Venta";
     <div id="carrito">
         <h3>Carrito</h3>
         <ul id="carrito-list"></ul>
-        <form action="/search-add-venta" method="post" id="data-client">
+        <form action="<?= BASE_URL . '/search-add-venta'?>" method="post" id="data-client">
             <label for="data-control">Registrar Datos Cliente: </label>
             <input id="data-control" type="checkbox" name="registrar-cliente">
             <div class="hidden" id="container-data">
@@ -50,6 +50,22 @@ $title = "Ingresar Venta";
                 <label for="direccion">Direccion:</label>
                 <input id="direccion-cliente" type="text" name="dir_client">
             </div>
+        </form>
+        <label for="total-input-value">Total: </label>
+        <input id="total-input-value" type="text" min="0" readonly>
+        <form action="<?= BASE_URL . '/search-add-venta'?>" method="post" id="form-valor-recibido-devuelto">
+            <label for="valor-recibido">Valor recibido: </label>
+            <input id="valor-recibido" type="text" name="valor_recibido">
+            <label for="valor-devuelto">Valor devuelto: </label>
+            <input id="valor-devuelto" type="text" name="valor-devuelto" readonly>
+            <label for="tipo-pago">Selcceionar Tipo de Pago: </label>
+            <select name="tipo_pago" id="tipo-pago">
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta-débito">Targeta Débito</option>
+                <option value="tarjeta-crédito">Targeta Crédito</option>
+                <option value="cheque">Cheque</option>
+                <option value="transferencia-electrónica">Transferencia Electrónica</option>
+            </select>
         </form>
         <button id="finalizar-venta">Finalizar Venta</button>
     </div>

@@ -4,43 +4,64 @@ ob_start();
 
 $title = "Listar Clientes";
 
-print_r($data);
+// print_r($data);
 
 ?>
 
-<div id="pageIdentifier" data-page="clientes">
-    <table id="clientes" class="display nowrap" style="width:100%">
+<div id="pageIdentifier" data-page="facturas">
+    <table id="contable" class="display nowrap" style="width:100%">
         <thead>
             <tr>
-                <th>Id cliente</th>
-                <th>Cédula</th>
+                <th>Id factura</th>
+                <th>Factura</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th>Valor Recibido</th>
+                <th>Valor Devuelto</th>
+                <th>Método de Pago</th>
+                <th>id_cliente</th>
+                <th>Identificación</th>
                 <th>Nombre</th>
-                <th>Télefono</th>
-                <th>Email</th>
-                <th>Dirección</th>
-                <th>Compras</th>
-                <th>Total Compras</th>
-                <th>Fecha Ultima Compra</th>
-                <th>Devoluciones</th>
-                <th>Fecha Ultima Devolucion</th>
-                <th>Fecha de Registro</th>
+                <th>Teléfono</th>
+                <th>Fecha inserción</th>
+                <th>Usuario Inserción</th>
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($data['factut'] as $cliente) : ?>
+            <?php 
+                
+                function formatFacturNumber($id) {
+                    return 'FAC' . str_pad($id, 6, '0', STR_PAD_LEFT);
+                }
+
+                function formatMetodoDePago($metodo) {
+                    return mb_strtoupper(str_replace('-', ' ', $metodo), 'UTF-8');
+                }
+            ?>
+            <?php foreach ($data['facturas'] as $facturas) : ?>
+            <?php
+
+            $id = $facturas['id_factura'];
+            $metodo = $facturas['tipo_pago'];
+
+            $formatIdFactur = formatFacturNumber($id);
+            $formatTipoPago = formatMetodoDePago($metodo);
+
+            ?>
             <tr>
-                <td><?= htmlspecialchars($cliente['id_cliente']) ?></td>
-                <td><?= htmlspecialchars($cliente['identificacion']) ?></td>
-                <td><?= !empty($cliente['Nombre']) ? htmlspecialchars($cliente['Nombre']) : 'No reporta' ?></td>
-                <td><?= !empty($cliente['telefono']) ? htmlspecialchars($cliente['telefono']) : 'No reporta' ?></td>
-                <td><?= !empty($cliente['email']) ? htmlspecialchars($cliente['email']) : 'No reporta' ?></td>
-                <td><?= !empty($cliente['direccion']) ? htmlspecialchars($cliente['direccion']) : 'No reporta' ?></td>
-                <td><?= !empty($cliente['cantidad_compras']) ? htmlspecialchars($cliente['cantidad_compras']) : 0 ?></td>
-                <td><?= !empty($cliente['total_compras']) ? number_format((float) $cliente['total_compras'], 2, '.', ',') : 'No reporta' ?></td>
-                <td><?= !empty($cliente['fecha_ultima_compra']) ? htmlspecialchars($cliente['fecha_ultima_compra']) : 'No reporta' ?></td>
-                <td><?= !empty($cliente['devoluciones']) ? htmlspecialchars($cliente['devoluciones']) : 'No reporta' ?></td>
-                <td><?= !empty($cliente['ultima_devolucion']) ? htmlspecialchars($cliente['ultima_devolucion']) : 'No reporta' ?></td>
-                <td><?= htmlspecialchars($cliente['fecha_registro']) ?></td>
+                <td><?= htmlspecialchars($facturas['id_factura']) ?></td>
+                <td><?= htmlspecialchars($formatIdFactur) ?></td>
+                <td><?= htmlspecialchars($facturas['total_productos']) ?></td>
+                <td><?= !empty($facturas['total_venta']) ? htmlspecialchars(number_format((float) str_replace(',', '', $facturas['total_venta']), 2, '.', ',')) : 0?></td>
+                <td><?= !empty($facturas['valor_recibido']) ? htmlspecialchars(number_format((float) str_replace(',', '', $facturas['valor_recibido']), 2, '.', ',')) : 0?></td>
+                <td><?= !empty($facturas['valor_devuelto']) ? htmlspecialchars(number_format((float) str_replace(',', '', $facturas['valor_devuelto']), 2, '.', ',')) : 0?></td>
+                <td><?= !empty($formatTipoPago) ? htmlspecialchars($formatTipoPago) : 'No reporta' ?></td>
+                <td><?= !empty($facturas['id_cliente']) ? htmlspecialchars($facturas['id_cliente']) : 'No reporta' ?></td>
+                <td><?= !empty($facturas['identificacion']) ? htmlspecialchars($facturas['identificacion']) : 'No reporta' ?></td>
+                <td><?= !empty($facturas['Nombre']) ? htmlspecialchars($facturas['Nombre']) : 'No reporta' ?></td>
+                <td><?= !empty($facturas['telefono']) ? htmlspecialchars($facturas['telefono']) : 'No reporta' ?></td>
+                <td><?= !empty($facturas['fecha']) ? htmlspecialchars($facturas['fecha']) : 'No reporta'?></td>
+                <td><?= !empty($facturas['usuario_insercion']) ? htmlspecialchars($facturas['usuario_insercion']) : 'No reporta' ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -24,7 +24,8 @@ use Proyecto\Controller\VentasController;
 use Proyecto\Controller\DevolucionController;
 use Proyecto\Controller\FacturasController;
 use Proyecto\Controller\ClientesController;
-
+use Proyecto\Controller\DescuentosController;
+use Proyecto\Models\Facturas;
 
 // Instancias
 $AuthController = new AuthController();
@@ -32,14 +33,15 @@ $view = new View();
 $productos = new Productos();
 $marcas = new Marcas();
 $inventario = new Inventario;
+$facturas = new Facturas();
 $inventarioController = new InventarioController($view, $inventario, $marcas, $productos);
 $marcaController = new MarcaController($view);
 $productoController = new ProductoController($view, $productos, $marcas);
 $ventaController = new VentasController($view, $productos, $marcas);
 $facturasController = new FacturasController($view);
-$devolucionController = new DevolucionController($view);
+$devolucionController = new DevolucionController($view, $facturas);
 $clientesController = new ClientesController($view);
-
+$descuentosController = new DescuentosController($view);
 // Obtener la URI y el metodo de solicitud
 
 
@@ -70,12 +72,16 @@ $routes = [
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
         '/update-form-product' => [$productoController, 'updateProduct'],
         '/search-add-venta' => [$ventaController, 'searchAddVenta'],
+        '/ventas' => [$ventaController, 'listVentas'],
         '/get-factura' => [$facturasController, 'renderFactura'],
         '/get-data-factura' => [$facturasController, 'getFacturaData'],
         '/facturas' => [$facturasController, 'listFacturData'],
         '/detalles-facturas' => [$facturasController, 'listDetalleFactura'],
         '/clientes' => [$clientesController, 'getDataCliente'],
-        '/search-factura-devolucion' => [$devolucionController, 'searchFactura'],
+        '/search-factura-devolucion' => [$devolucionController, 'searchFacturaDevolucion'],
+        '/add-devolucion' => [$devolucionController, 'addDevolucion'],
+        '/list-devoluciones' => [$devolucionController, 'listDevoluciones'],
+        '/validate-descuentos'     => [$descuentosController, 'listDescuentosVencidos'],
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -89,13 +95,18 @@ $routes = [
         '/search-update-productos' => [$productoController, 'searchUpdateProducto'],
         '/update-form-product' => [$productoController, 'updateProduct'],
         '/search-add-venta' => [$ventaController, 'searchAddVenta'],
+        '/ventas' => [$ventaController, 'listVentas'],
         '/finalizar-venta' => [$ventaController, 'finalizarVenta'],
         '/get-factura' => [$ventaController, 'renderFactura'],
         '/get-data-factura' => [$ventaController, 'getFacturaData'],
         '/facturas' => [$facturasController, 'listFacturData'],
         '/detalles-facturas' => [$facturasController, 'listDetalleFactura'],
         '/clientes' => [$clientesController, 'getDataCliente'],
-        '/search-factura-devolucion' => [$devolucionController, 'searchFactura'],
+        '/search-factura-devolucion' => [$devolucionController, 'searchFacturaDevolucion'],
+        '/add-devolucion' => [$devolucionController, 'addDevolucion'],
+        '/list-devoluciones' => [$devolucionController, 'listDevoluciones'],
+        '/validate-descuentos'     => [$descuentosController, 'listDescuentosVencidos'],
+        '/quitar-descuentos'        => [$descuentosController, 'quitarDescuento']
     ]
 ];
 

@@ -86,6 +86,18 @@ class View {
                 echo "Error";
             }
         }
+
+        if($carpeta == "devoluciones") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/devoluciones/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
     }
 
     public function addScripts($script) {

@@ -35,7 +35,8 @@
                             if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
                                 echo '<li><a href="' .BASE_URL . '/inventario"> <span class="marca">></span> Inventario</a></li>';
                                 echo '<li><a href="' .BASE_URL . '/facturas"> <span class="marca">></span> Facturas</a></li>';
-                                echo '<li><a href="' .BASE_URL . '/detalles-facturas"> <span class="marca">></span> Detalles Factura</a></li>';
+                                echo '<li><a href="' .BASE_URL . '/ventas"> <span class="marca">></span> Ventas</a></li>';
+                                echo '<li><a href="' .BASE_URL . '/validate-descuentos"> <span class="marca">></span> Descuentos Vencidos</a></li>';
                             } 
                         ?> 
                         <li><a href="<?= BASE_URL . '/clientes'?>"> <span class="marca">></span> Clientes</a></li>
@@ -75,7 +76,7 @@
                     <a href="#" class="dropdown-toggle">Devoluciones</a>
                     <ul class="dropdown-menu">
                         <li><a href="<?= BASE_URL . '/search-factura-devolucion'?>"> <span class="marca">></span>Insertar Devolucion</a></li>
-                        <li><a href="<?= BASE_URL . '/add-productos'?>"> <span class="marca">></span>Listar Devoluciones</a></li>
+                        <li><a href="<?= BASE_URL . '/list-devoluciones'?>"> <span class="marca">></span>Listar Devoluciones</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Contacto</a></li>

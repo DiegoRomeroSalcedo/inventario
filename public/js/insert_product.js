@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const extrafiledsContainer = document.getElementById('extrafileds');
     const extrafiledsTwoContainer = document.getElementById('extrafileds_two');
 
+    const endDateInput = document.getElementById('endDate');
+
     function formatPrice(price) {
         return price.toLocaleString('en-US', {
             minimumFractionDigits: 2,
@@ -100,6 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             descuentoInput.value = '';
             preciodescuentoInput.value = '';
+
+            endDateInput.value = ''; //Cuando esta oculto limpiamos el valor
         }
 
         updateRentabilidad();
@@ -112,4 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ivaInput.addEventListener('input', actualizarCostoFinal);
     utilidadInput.addEventListener('input', actualizarPrecioVenta);
     descuentoInput.addEventListener('input', descuentos);
+
+    //Inicialiamos el datePicker
+
+    $('#endDate').datepicker({
+        dateFormat: "yy-mm-dd",
+        timeFromat: "HH:mm:ss"
+    });
+
+    toggleFileds();
 });

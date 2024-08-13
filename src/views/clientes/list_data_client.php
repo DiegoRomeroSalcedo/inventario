@@ -7,7 +7,7 @@ $title = "Listar Clientes";
 ?>
 
 <div id="pageIdentifier" data-page="clientes">
-    <table id="clientes" class="display nowrap" style="width:100%">
+    <table id="contable" class="display nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>Id cliente</th>

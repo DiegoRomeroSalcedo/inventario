@@ -22,6 +22,38 @@ class VentasController {
         $this->marcas = $marcasModel;
     }
 
+    public function listVentas() {
+        $data = [
+            'ventas' => [],
+        ];
+
+        //scripts propios
+        $this->view->addScripts('jsdatatables.js');
+
+        //estilos externos
+        $this->view->addStylesExternos('https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css');
+        $this->view->addStylesExternos('https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css');
+
+        //librerias
+        $this->view->addLibraries('https://code.jquery.com/jquery-3.7.1.js');
+        $this->view->addLibraries('https://cdn.datatables.net/2.1.3/js/dataTables.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.min.js');
+        $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js');
+
+        $venta = new Ventas();
+        $ventas = $venta->getDataVentas();
+
+        $data['ventas'] = $ventas;
+
+        $this->view->assign('data', $data);
+        $this->view->render('list_data_ventas.php', $this->carpeta);
+    }
+
     public function searchAddVenta() {
 
         $data = [
@@ -60,6 +92,9 @@ class VentasController {
             $total = (float) $data["total"];
             $cliente_id = $data['cliente_id'] ?? 0; //quitar el 1 esto por ahora es de prueba
             $clienteData = $data['clienteData'] ?? null;
+            $totalRecibido = (float) $data['totalesRecibidoDevuelto']['valorRecibido'];
+            $valorDevuelto = (float) $data['totalesRecibidoDevuelto']['valorDevuelto'];
+            $tipoPago = (string) $data['tipoPagoData']['tipoDePago'];
 
             if($clienteData) {
                 $cedulaCliente = (string) $data['clienteData']['cedulaCliente'];
@@ -98,7 +133,7 @@ class VentasController {
                 } 
                 
                 $ventasModel = new Ventas();
-                $idFactura = $ventasModel->addFactura($total, $data['id_cliente']); //Recuperamos el id de la factura
+                $idFactura = $ventasModel->addFactura($total, $data['id_cliente'], $totalRecibido, $valorDevuelto, $tipoPago); //Recuperamos el id de la factura
                 
                 foreach($carrito as $producto) {
                     $preUnitario = (float) str_replace(',', '', $producto['pre_ventades']);
@@ -108,6 +143,7 @@ class VentasController {
                         $producto['cantidad'],
                         $preUnitario,
                         $producto['totalIndCarrito'],
+                        $producto['desc_produ'],
                     );//Metodo para insertar la venta de cada producto
 
                     $cantidadActual = $this->productos->getCantidadStock($producto['id_product'],);

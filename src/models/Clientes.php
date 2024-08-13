@@ -125,4 +125,24 @@ class Clientes {
         }
     }
 
+    public function updateDevoluciones($identificacion) {
+        date_default_timezone_set('America/Bogota'); // Ajusta la zona horaria a Bogotá, Colombia
+
+        $cedula = (string) $identificacion;
+        $fecha_actual = date('Y-m-d');
+
+        try {
+            $query = "  UPDATE clientes
+                        SET
+                            devoluciones = COALESCE(devoluciones, 0) + 1,
+                            ultima_devolucion = CURRENT_TIMESTAMP
+                        WHERE identificacion = :identificacion";
+            $mysql = $this->conexion->prepare($query);
+            $mysql->bindValue(':identificacion', $cedula, PDO::PARAM_STR);
+            $mysql->execute();
+        }catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 }
