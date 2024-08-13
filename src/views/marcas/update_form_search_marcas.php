@@ -55,4 +55,4 @@ foreach ($this->getScripts() as $script) {
 $content = ob_get_clean();
 
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';

@@ -18,6 +18,7 @@ class MarcaController {
         // Obtener la lista de productos del modelo
         $marcasModel = new Marcas();
         $marcas = $marcasModel->getAll();
+        $carpeta = "marcas";
 
         //Js propios
         $this->view->addScripts('jsdatatables.js');
@@ -38,7 +39,7 @@ class MarcaController {
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js');
 
         $this->view->assign('marcas', $marcas); // No fue necesario el dat, ya que solo pase una variable en concreto.
-        $this->view->renderMarcasList();
+        $this->view->render('marca_list.php', $carpeta);
     }
 
     public function addMarca() {
@@ -46,6 +47,7 @@ class MarcaController {
         $data = [
             'marca' => []
         ];
+        $carpeta = "marcas";
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $nombreMarca = $_POST['nombre_marca'];
@@ -57,7 +59,7 @@ class MarcaController {
 
         }
             $this->view->assign('marca', $data);
-            $this->view->render('marca_form.php');
+            $this->view->render('marca_form.php', $carpeta);
     }
 
     public function searchUpdate() {
@@ -65,6 +67,7 @@ class MarcaController {
         $data = [
             'marcas' => [],
         ];
+        $carpeta = "marcas";
 
         $this->view->addStyles('styles_search_products.css');
         $this->view->addScripts('search_update_marcas.js');
@@ -94,7 +97,7 @@ class MarcaController {
             exit();
         }
 
-        $this->view->render('update_form_search_marcas.php');
+        $this->view->render('update_form_search_marcas.php', $carpeta);
     }
 
     public function updateMarca() {
@@ -103,6 +106,7 @@ class MarcaController {
             'decrypted' => [],
             'marca' => []
         ];
+        $carpeta = "marcas";
 
         if(isset($_GET['data']) && !empty($_GET['data'])) {
             $encryptedData = $_GET['data'];
@@ -130,7 +134,7 @@ class MarcaController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('update_marcas.php');
+        $this->view->render('update_marcas.php', $carpeta);
     }
 
 }

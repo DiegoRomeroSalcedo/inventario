@@ -17,7 +17,7 @@ class Productos {
     public function getAll() {
         
         try {
-            $mysql = $this->conexion->prepare("SELECT * FROM `productos` ORDER BY `id_product` ASC");
+            $mysql = $this->conexion->prepare("SELECT *, b.cantidad FROM `productos` a LEFT JOIN cantidad_productos b ON a.id_product = b.id_producto ORDER BY `id_product` ASC");
             $mysql->execute();
             return $mysql->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
@@ -44,14 +44,14 @@ class Productos {
                     id_product, no_product, id_marcapr, 
                     cost_produ, rte_fuente, flet_produ, 
                     iva_produc, pre_finpro, uti_produc, 
-                    pre_ventap, desc_produ, pre_ventades,
+                    pre_ventap, descuento, desc_produ, pre_ventades, fec_fin_descu,
                     ren_product, detalle_product, usuario_insercion, feha_insercion,
                     usuario_actualizacion, feha_actualizacion
                 ) VALUES (
                     :id_product, :no_product, :id_marcapr, 
                     :cost_produ, :rte_fuente, :flet_produ, 
                     :iva_produc, :pre_finpro, :uti_produc, 
-                    :pre_ventap, :desc_produ, :pre_ventades,
+                    :pre_ventap, :descuento, :desc_produ, :pre_ventades, :fec_fin_descu,
                     :ren_product, :detalle_product, :usuario_insercion, CURRENT_TIMESTAMP,
                     :usuario_actualizacion, CURRENT_TIMESTAMP
                 )"
@@ -63,7 +63,7 @@ class Productos {
                 if(is_int($value)) {
                     $type = PDO::PARAM_INT;
                 } elseif(is_float($value)) {
-                    $type = PDO::PARAM_STR; //pdo no tiene un tipo especifico
+                    $type = PDO::PARAM_STR; //pdo no tiene un tipo especifico para float, por eso coloco str
                 }
 
                 $mysql->bindValue($key, $value, $type);
@@ -364,6 +364,23 @@ class Productos {
             return $mysql->execute();
         } catch(PDOException $e) {
             echo "Error al actualizar la cantidad: " . $e->getMessage();
+        }
+    }
+
+    public function updateCantidadDevolucion($cantidad, $idProducto) {
+        try {
+            $query = "  UPDATE cantidad_productos
+                        SET
+                            cantidad = cantidad + :cantidad
+                        WHERE 
+                            id_producto = :id_producto";
+            $mysql = $this->conexion->prepare($query);
+            $mysql->bindValue(':cantidad', $cantidad);
+            $mysql->bindValue(':id_producto', $idProducto);
+
+            return $mysql->execute();
+        }catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
 }

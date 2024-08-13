@@ -1,8 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
     let form = document.getElementById('search-add-venta');
     let carritoList = document.getElementById('carrito-list');
+    let toggelDataCliente = document.getElementById('data-control');
+    let extraFiledsContainer = document.querySelectorAll('#container-data');
+
+    let totalInputValue = document.getElementById('total-input-value');
+    let formValueRecibidoVuelto = document.getElementById('form-valor-recibido-devuelto'); //Esto es para el envio de datos al server
+    let valorRecibido = document.getElementById('valor-recibido');
+    let valorDevuelto = document.getElementById('valor-devuelto');
+
+    let tipoPago = document.getElementById('tipo-pago');
+
+    valorRecibido.addEventListener('blur', ()=> {
+
+        let valor = parseFloat(valorRecibido.value.replace(/,/g, ''));
+
+        if(!isNaN(valor)) {
+
+            const formattedValorrecibidoInput = valor.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+    
+            valorRecibido.value = formattedValorrecibidoInput;
+        }
+    });
+
     let carrito = [];
-    let ced_cliente = document.getElementById('ced_cliente');
     const BASE_URL = '/inventario/public';
     const productStockMap = {};
 
@@ -157,15 +181,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const clienteID = ced_cliente.value;
             const total = carrito.reduce((sum, product) => sum + product.totalIndCarrito, 0);
+
+            //Valores que se enviaran a la BD
+
+            let valorRecibiBd = parseFloat(valorRecibido.value.replace(/,/g, ''));
+            let valorDevueltoBd = parseFloat(valorDevuelto.value.replace(/,/g, ''));
+            console.log(valorDevueltoBd);
+
+            let totalesRecibidoDevuelto = {
+                valorRecibido: valorRecibiBd,
+                valorDevuelto: valorDevueltoBd,
+            };
+
+            let clienteData = {};
+
+            let tipoPagoData = {
+                tipoDePago: tipoPago.value
+            };
+
+            if (toggelDataCliente.checked) {
+                clienteData = {
+                    cedulaCliente: document.getElementById('id-client').value,
+                    nomCliente: document.getElementById('nombre').value,
+                    nroCelular: document.getElementById('nro-celular').value,
+                    emailCliente: document.getElementById('email-cliente').value,
+                    dirCliente: document.getElementById('direccion-cliente').value
+                };
+            }
             try {
                 let response = await fetch(`${BASE_URL}/finalizar-venta`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ carrito, cliente_id: clienteID, total })
+                    body: JSON.stringify({ carrito, total, clienteData, totalesRecibidoDevuelto, tipoPagoData})
                 });
 
                 if (!response.ok) {
@@ -177,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.succes) {
                     const invoiceId = data.invoiceId;
 
-                    window.location.href = `/inventario/src/views/factura.html?id=${invoiceId}`;
+                    window.location.href = `${BASE_URL}/get-factura?id=${invoiceId}`;
                 } else {
                     alert("Error al insertar Venta intente nuevamente");
                 }
@@ -189,8 +239,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function actualizarCarrito() {
             carritoList.innerHTML = '';
+            let totalValue = 0;
+
+
             carrito.forEach(product => {
                 let listItem = document.createElement('li');
+
                 let totalIndividual = parseFloat(product.totalIndCarrito);
 
                 let formatTotalIndividual = totalIndividual.toLocaleString('en-US', {
@@ -202,9 +256,38 @@ document.addEventListener('DOMContentLoaded', function() {
                     Producto: ${product.no_product} - Marca: ${product.nombre_marca} - ${product.pre_ventades} - Cantidad: ${product.cantidad} - Total: ${formatTotalIndividual}
                     <button class="remove-from-cart" data-product='${JSON.stringify(product)}'>Quitar</button>
                 `;
+
+                totalValue += totalIndividual;
+
                 carritoList.appendChild(listItem);
             });
 
+            totalValue = parseFloat(totalValue);
+
+            const formattedTotalValue = totalValue.toLocaleString('en-US', {
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2
+            });
+
+            totalInputValue.value = formattedTotalValue;
+
+            // Hermos el calculo para dar el valor devuelto
+
+            valorRecibido.addEventListener('blur', () => {
+
+                const valorRecibidoNumber = parseFloat(valorRecibido.value.replace(/,/g, ''));
+
+                const totalDevueltoNumber = valorRecibidoNumber - totalValue;
+
+                // Vlor devuelto formateado para el input.
+                const formattedTotalDevueltoInput = totalDevueltoNumber.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
+                valorDevuelto.value = formattedTotalDevueltoInput;
+            });
+            
             document.querySelectorAll('.remove-from-cart').forEach(button => {
                 button.addEventListener('click', function() {
                     let product = JSON.parse(this.getAttribute('data-product'));
@@ -260,6 +343,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Eliminar el producto del mapa global productStockMap
             productStockMap[productId] = productStockMap[productId] + quantity;
         }
+
+        toggelDataCliente.addEventListener('change', () => {
+            if (toggelDataCliente.checked) {
+
+                extraFiledsContainer.forEach(campos => {
+                    campos.classList.remove('hidden');
+                    campos.querySelector('input').required = true;
+                });
+
+            } else {
+                extraFiledsContainer.forEach(campos => {
+                    campos.classList.add('hidden');
+                    campos.querySelector('input').required = false;
+                });
+            }
+        });
     } else {
         console.error("Formulario no encontrado");
     }

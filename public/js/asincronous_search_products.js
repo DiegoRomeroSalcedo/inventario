@@ -38,16 +38,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     data.productos.forEach(producto => {
 
+                        let costoProStr = producto.cost_produ.replace(/,/g, '');
+                        let costoPro = parseFloat(costoProStr);
+
+                        const formattedCostoPro = costoPro.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        let preFinproStr = producto.pre_finpro.replace(/,/g, '');
+                        let preFinpro = parseFloat(preFinproStr);
+
+                        const formattedPreFinpro = preFinpro.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        let preVentapStr = producto.pre_ventap.replace(/,/g, '');
+                        let preVenta = parseFloat(preVentapStr);
+
+                        const formattedPreVenta = preVenta.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        let preVentadesStr = producto.pre_ventades.replace(/,/g, '');
+                        let preVentades = parseFloat(preVentadesStr);
+
+                        const formattedPreVentades = preVentades.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+
                         // console.log(producto.encriptados);
                         let row = `<tr>
                             <td><a href="${BASE_URL}/add-cantidad-product?data=${encodeURIComponent(producto.encriptados)}">${producto.id_product}</a></td>
                             <td>${producto.no_product}</td>
                             <td>${data.marca.find(marca => marca.id_marca === producto.id_marcapr)?.nombre_marca || 'Desconocida'}</td>
                             <td>${producto.cantidad !== null ? producto.cantidad : 0}</td>
-                            <td>${producto.cost_produ}</td>
-                            <td>${producto.pre_finpro}</td>
-                            <td>${producto.pre_ventap}</td>
-                            <td>${producto.pre_ventades}</td>
+                            <td>${formattedCostoPro}</td>
+                            <td>${formattedPreFinpro}</td>
+                            <td>${formattedPreVenta}</td>
+                            <td>${formattedPreVentades}</td>
                         </tr>`;
                         tableHtml += row; // Agrega cada fila de producto
                     });

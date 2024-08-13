@@ -69,6 +69,7 @@ if(isset($_SESSION['error_sql'])) {
     </div>
     <div class="container_inputs">
         <label for="toggleCheckbox">Desea Aplicar descuento</label>
+        <input type="hidden" name="aplica_descuento" value="0">
         <input id="toggleCheckbox" type="checkbox" value="1" name="aplica_descuento">
     </div>
     <div id="extrafileds" class="container_inputs hidden">
@@ -78,6 +79,8 @@ if(isset($_SESSION['error_sql'])) {
     <div id="extrafileds_two" class="container_inputs hidden">
         <label for="precioventa_desc">Precio con Descuento: </label>
         <input id="precioventa_desc" type="text" name="pre_ventades" readonly>
+        <label for="endDate">Fecha Fin:</label>
+        <input type="text" id="endDate" name="endDate">
     </div>
     <div class="container_inputs">
         <label for="rentabilidad">Rentabilidad %: </label>
@@ -96,12 +99,27 @@ if(isset($_SESSION['error_sql'])) {
 
 $content = ob_get_clean();
 
+//Inclusion de estilos externos
+$stylesLibraries = '';
+
+foreach ($this->getStylesLibraries() as $style) {
+    $stylesLibraries .= '<link rel="stylesheet" href="' . $style . '">';
+}
+
+//inclusion de librerias externas
+$librariesHtml = '';
+
+foreach($this->getLibraries() as $libraries) {
+    $librariesHtml .= '<script src="' .$libraries.'"></script>';
+}
+
+//inclusion de scripts
 $scriptsHtml = '';
 
 foreach ($this->getScripts() as $script) {
     $scriptsHtml .= '<script src="'.$script. '"></script>';
 }
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';
 
 ?>

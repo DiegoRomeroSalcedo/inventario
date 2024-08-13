@@ -3,7 +3,7 @@ function initializeExampleTable() {
     let table = $('#example').DataTable({
         scrollX: true,
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'excel', 'pdf'
         ],
         language: {
             "decimal": "",
@@ -31,23 +31,84 @@ function initializeExampleTable() {
     table.buttons().container().prependTo(table.table().container());
 }
 
-// Función para inicializar la tabla #inventoryTable //Lo quitamos ya que esta carga la estamos haciedno desde el js de inventario
-// function initializeInventoryTable() {
-//     let table = new DataTable('#inventoryTable');
-//     new DataTable.Buttons(table, {
-//         buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-//     });
-//     table.buttons(0, null).container().prependTo(table.table().container());
-// }
+function inicializeDataTableClientes() {
+    let table = $('#contable').DataTable({
+        scrollX: true,
+        buttons: [
+            'excel', 'pdf',
+        ],
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        },
+    });
 
-// Inicializa las tablas cuando el documento está listo
+    table.buttons().container().prependTo(table.table().container());
+}
+
+function initializeDescuentosVencidos() {
+    let table = $('#descuento-vencidos').DataTable();
+    
+    if ($.fn.DataTable.isDataTable('#descuento-vencidos')) {
+        table.destroy();
+    }
+
+    table = $('#descuento-vencidos').DataTable({
+        columnDefs: [
+            { 
+                targets: -1, // Última columna
+                orderable: false // Deshabilitar el ordenamiento
+            }
+        ],
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const pageIdentifier = document.getElementById('pageIdentifier');
     const page = pageIdentifier ? pageIdentifier.getAttribute('data-page'): '';
 
-    if(page === 'invenatrio') {
-        // initializeInventoryTable();
-    } else {
+    if(page === 'clientes' || page === 'facturas' || page === 'ventas' || page == 'devoluciones') {
+        inicializeDataTableClientes();
+    } else if (page === 'descuentos-vencidos') {
+        initializeDescuentosVencidos();
+    }else {
         initializeExampleTable();
     }
 });

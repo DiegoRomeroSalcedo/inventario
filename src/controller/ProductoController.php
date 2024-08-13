@@ -12,6 +12,7 @@ class ProductoController {
     protected $view;
     protected $productosModel;
     protected $marcasModel;
+    public $carpeta = 'productos';
 
     // Aplicamos la inyeccion de dependencias para evitar instanciar clases y metdodos a cada rato
     public function __construct(View $view, Productos $productosModel, Marcas $marcasModel) {
@@ -42,7 +43,7 @@ class ProductoController {
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.min.js');
         $this->view->addLibraries('https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js');
         $this->view->assign('productos', $productos); // No fue necesario el dat, ya que solo pase una variable en concreto.
-        $this->view->renderProductoList();
+        $this->view->render('product_list.php', $this->carpeta);
     }
 
     public function addProducto() {
@@ -57,12 +58,25 @@ class ProductoController {
         // Siempre agregamos el script, para que sea en tiempo real
         $this->view->addScripts('insert_product.js');
 
-        $descuento = isset($_POST['des_product']) ? $_POST['des_product'] : 0;
-        $pre_ventades = isset($_POST['pre_ventades']) ? $_POST['pre_ventades'] : 0;
-        $detalle = $_POST['detalle_produc'] ?? null;
-        $det_min = str_replace(' ', ',', strtolower(trim($detalle)));
+        $this->view->addStylesExternos('https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css');
+        $this->view->addStylesExternos('https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css');
+
+
+        //librearias externas
+        $this->view->addLibraries('https://code.jquery.com/jquery-3.7.1.js');
+        $this->view->addLibraries('https://code.jquery.com/ui/1.13.2/jquery-ui.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js');
+
 
         if($_SERVER["REQUEST_METHOD"] == 'POST') {
+
+            $descuento = isset($_POST['des_product']) ? $_POST['des_product'] : 0;
+            $pre_ventades = isset($_POST['pre_ventades']) ? $_POST['pre_ventades'] : 0;
+            $detalle = $_POST['detalle_produc'] ?? null;
+            $det_min = str_replace(' ', ',', strtolower(trim($detalle)));
+            $aplicaDescuento = isset($_POST['aplica_descuento']) ? $_POST['aplica_descuento'] : 0;
+            // print_r($_POST['endDate']);
+            print_r($aplicaDescuento);
 
             $datos = [
                 ':id_product'            => "",
@@ -75,8 +89,10 @@ class ProductoController {
                 ':pre_finpro'            => $_POST['pre_finpro'] ?? null,
                 ':uti_produc'            => $_POST['uti_product'] ?? null,
                 ':pre_ventap'            => $_POST['pre_ventap'] ?? null,
+                ':descuento'             => $aplicaDescuento,
                 ':desc_produ'            => $descuento ?? null,
                 ':pre_ventades'          => $pre_ventades ?? null,
+                ':fec_fin_descu'               => $_POST['endDate'] ?? null,
                 ':ren_product'           => $_POST['rentabilidad'] ?? null,
                 ':detalle_product'       => $det_min,
                 ':usuario_insercion'     => $_SESSION['username'] ?? null,
@@ -90,7 +106,7 @@ class ProductoController {
 
         // Asignamos los datos a la vista
         $this->view->assign('data', $data);
-        $this->view->render('product_form.php');
+        $this->view->render('product_form.php', $this->carpeta);
     }
 
     public function search() {
@@ -137,7 +153,7 @@ class ProductoController {
     
         // Asignamos los datos a la vista
         $this->view->assign('data', $data);
-        $this->view->render('form_search_products.php');
+        $this->view->render('form_search_products.php', $this->carpeta);
     }
     
 
@@ -186,7 +202,7 @@ class ProductoController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('añadir_cantidad_producto.php');
+        $this->view->render('añadir_cantidad_producto.php', $this->carpeta);
     }
 
     public function searchUpdateProducto() {
@@ -240,7 +256,7 @@ class ProductoController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('update_form_search_productos.php');
+        $this->view->render('update_form_search_productos.php', $this->carpeta);
     }
 
     public function updateProduct() {
@@ -297,7 +313,7 @@ class ProductoController {
         }
 
         $this->view->assign('data', $data);
-        $this->view->render('update_products.php');
+        $this->view->render('update_products.php', $this->carpeta);
     }
 
 }

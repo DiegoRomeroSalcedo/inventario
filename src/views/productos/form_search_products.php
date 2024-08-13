@@ -82,6 +82,6 @@ foreach ($this->getStyles() as $style) {
 }
 
 
-include __DIR__ . '/layouts/layout.php';
+include __DIR__ . '/../layouts/layout.php';
 
 ?>
