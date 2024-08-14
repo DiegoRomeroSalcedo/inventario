@@ -182,11 +182,15 @@ class Devolucion {
                             b.precio_unitario,
                             b.subtotal,
                             c.no_product,
-                            d.nombre_marca
+                            d.nombre_marca,
+                            f.identificacion,
+                            f.Nombre
                         FROM devoluciones a
                         INNER JOIN detalle_devolucion b ON a.id_devolucion = b.id_devolucion
                         INNER JOIN productos c ON b.id_producto = c.id_product
                         INNER JOIN marcas d ON c.id_marcapr = d.id_marca
+                        INNER JOIN facturas e ON a.id_factura = e.id_factura
+                        INNER JOIN clientes f ON e.id_cliente = f.id_cliente
                         ORDER BY
                             a.id_factura,
                             a.motivo,
@@ -199,7 +203,7 @@ class Devolucion {
                             c.no_product,
                             d.nombre_marca";
             $mysql = $this->conexion->prepare($query);
-            $mysql->execute();
+            $mysql->execute();  
             return $mysql->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();

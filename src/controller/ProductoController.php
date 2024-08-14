@@ -75,8 +75,6 @@ class ProductoController {
             $detalle = $_POST['detalle_produc'] ?? null;
             $det_min = str_replace(' ', ',', strtolower(trim($detalle)));
             $aplicaDescuento = isset($_POST['aplica_descuento']) ? $_POST['aplica_descuento'] : 0;
-            // print_r($_POST['endDate']);
-            print_r($aplicaDescuento);
 
             $datos = [
                 ':id_product'            => "",
@@ -212,6 +210,7 @@ class ProductoController {
             'marcas' => [],
         ];
 
+        $this->view->addStyles('styles_search_products.css');
         $this->view->addScripts('search_update_productos.js');
 
         $marcas = $this->marcasModel->getIdNombre();
@@ -241,6 +240,7 @@ class ProductoController {
                     'pre_ventap' => $produc['pre_ventap'],
                     'desc_produ' => $produc['desc_produ'],
                     'pre_ventades' => $produc['pre_ventades'],
+                    'fec_fin_descu' => $produc['fec_fin_descu'],
                     'ren_product' => $produc['ren_product'],
                     'detalle_product' => $produc['detalle_product'],
                     'fech_actual' => $produc['fech_actual'],
@@ -266,7 +266,17 @@ class ProductoController {
             'decryptedData' => [],
         ];
 
+        // Siempre agregamos el script, para que sea en tiempo real
         $this->view->addScripts('insert_product.js');
+
+        $this->view->addStylesExternos('https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css');
+        $this->view->addStylesExternos('https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css');
+
+
+        //librearias externas
+        $this->view->addLibraries('https://code.jquery.com/jquery-3.7.1.js');
+        $this->view->addLibraries('https://code.jquery.com/ui/1.13.2/jquery-ui.js');
+        $this->view->addLibraries('https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js');
 
         $marcas = $this->marcasModel->getIdNombre();
         $data['marcas'] = $marcas;
@@ -295,6 +305,7 @@ class ProductoController {
                 'pre_ventap' => $_POST['pre_ventap'],
                 'des_product' => $_POST['des_product'],
                 'pre_ventades' => $_POST['pre_ventades'],
+                'fec_fin_descu' => $_POST['endDate'] ?? null,
                 'rentabilidad' => $_POST['rentabilidad'],
                 'detalle_produc' => $_POST['detalle_produc'],
                 'cantidad' => $_POST['cantidad'],

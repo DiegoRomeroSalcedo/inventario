@@ -1,58 +1,101 @@
-/* 
 
 * {
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.form_insert {
-    width: 500px;
-    margin: 20px auto;
+h1 {
+    padding: 6px;
+    font-size: 23px;
 }
 
-.form_insert h1 {
-    margin: 0;
-    padding-top: 20px;
-    font-size: 1.8em;
-    color: var(--font-color-text);
+h2 {
+    padding: 6px;
+    font-size: 19px;
+}
+
+.container__major {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 30px;
+    padding: 6px;
 }
 
 .container_inputs {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: start ;
-    margin: 20px auto;
-    margin-top: 30px;
-    position: relative;
-    text-align: left;
+    gap: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    max-width: 100%;
+    min-width: 30%;
 }
 
-.container_inputs label {
-    margin-right: 5px;
-    color: #222;
-    font-size: 1.3em;
-}
-
-.container_inputs input{
-    margin-top: 15px;
-    padding: 8px;
-    width: 100%;
-    font-size: 1em;
-}
-
-.container__button-form {
-    margin-top: 30px;
-    position: relative;
-}
-
-.button_form {
-    display: block;
-    margin: 0 auto;
+.form__inputs {
     padding: 4px;
-    width: 100%;
-    font-size: 1.2em;
+    font-size: 0.7em;
 }
-*/
+
+.form__inputs-text-area {
+    resize: vertical;
+    max-height: 25px;
+    overflow: auto;
+}
+
+.text-areatwo {
+    min-height: 40px;
+    max-height: 250px;
+}
+
+.container__major-button {
+    width: 15%;
+    margin: 15px auto;
+}
+
+.search__btn {
+    padding: 6px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.container__major h3 {
+    margin: 0;
+}
+
+.aplica_descuento_input {
+    background-color: red;
+    margin-left: 0;
+    width: 15px;
+}
+
+.container__inputs-ydate {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+    width: 63%;
+    gap: 30px;
+}
+
+.data-venta-product, .data-devo-product {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.container-data-venta-product {
+    margin-bottom: 4px;
+}
+
+.data-product-carrito, .list-data-product-devo {
+    padding-left: 4px;
+    list-style: none;
+}
+
+
+.remove-from-cart {
+    margin-left: 10px;
+}
 
 .hidden {
     display: none;

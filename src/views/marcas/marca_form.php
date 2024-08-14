@@ -23,12 +23,14 @@ if(isset($_SESSION['error_sql'])) {
 ?>
 <form class="form_insert" action="<?= BASE_URL . '/add-marcas'?>" method="post">
     <h1>Insertar Marca</h1>
-    <div class="container_inputs">
-        <label for="nom_marca">Nombre: </label>
-        <input type="text" name="nombre_marca" placeholder="Everestt" required>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label class="label__input" for="nom_marca">Nombre: </label>
+            <input class="form__inputs" type="text" name="nombre_marca" placeholder="Everestt" required>
+        </div>
     </div>
-    <div class="container__button-form">
-        <button class="button_form" type="submit">Insertar</button>
+    <div class="container__major-button">
+            <button class="search__btn" type="submit">Insertar</button>
     </div>
 </form>
 

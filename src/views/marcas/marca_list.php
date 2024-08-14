@@ -11,12 +11,12 @@ $title = "Listado de marcas";
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Id Marca</th>
                 <th>Nombre</th>
-                <th>usuarioInsercion</th>
-                <th>FechaInsercion</th>
-                <th>UsuarioActualizacion</th>
-                <th>FechaActualizacion</th>
+                <th>usuario Inserción</th>
+                <th>Fecha Inserción</th>
+                <th>Usuario Actualización</th>
+                <th>Fecha Actualización</th>
             </tr>
         </thead>
         <tbody>

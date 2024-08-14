@@ -19,11 +19,11 @@ $title = "Listar Clientes";
                 <th>Valor Recibido</th>
                 <th>Valor Devuelto</th>
                 <th>Método de Pago</th>
-                <th>id_cliente</th>
+                <th>Id Cliente</th>
                 <th>Identificación</th>
                 <th>Nombre</th>
                 <th>Teléfono</th>
-                <th>Fecha inserción</th>
+                <th>Fecha Inserción</th>
                 <th>Usuario Inserción</th>
             </tr>
         </thead>

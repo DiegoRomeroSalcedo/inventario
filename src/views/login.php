@@ -18,6 +18,12 @@
                 <label for="password">Contraseña: </label>
                 <input id="password" type="password" name="password">
             </div>
+            <?php if (isset($_SESSION['error_login'])): ?>
+                <div class="error-login">
+                    <?php echo $_SESSION['error_login']; ?>
+                    <?php unset($_SESSION['error_login']); ?>
+                </div>
+            <?php endif; ?>
             <div class="container__button">
                 <button type="submit">Ingresar</button>
             </div>

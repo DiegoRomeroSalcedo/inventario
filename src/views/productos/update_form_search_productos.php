@@ -27,23 +27,26 @@ if(isset($_SESSION['error_sql'])) {
 
 <div id="pageIdentifier" data-page="search-update-producto">
     <form id="search-update-product" action="<?= BASE_URL . '/search-update-productos'?>" method="post">
-        <div class="container_inputs">
-            <label for="idProduct">Id Producto: </label>
-            <input id="idProduct" type="number" name="id_producto">
+        <h1>Actualizar Productos</h1>
+        <div class="container__major">
+            <div class="container_inputs">
+                <label for="idProduct">Id Producto: </label>
+                <input class="form__inputs" id="idProduct" type="number" name="id_producto">
+            </div>
+            <div class="container_inputs">
+                <label for="nom_marca">Marca Producto: </label>
+                <select class="form__inputs" name="marca_producto" id="nom_marca">
+                    <option value="0">Marcas</option>
+                    <?php foreach($data['marcas'] as $m): ?>
+                        <option value="<?= $m['id_marca'] ?>">
+                            <?= htmlspecialchars($m['nombre_marca'])?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </div>
-        <div class="container_inputs">
-            <label for="nom_marca">Marca Producto: </label>
-            <select name="marca_producto" id="nom_marca">
-                <option value="0">Marcas</option>
-                <?php foreach($data['marcas'] as $m): ?>
-                    <option value="<?= $m['id_marca'] ?>">
-                        <?= htmlspecialchars($m['nombre_marca'])?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="container__button-form">
-            <button class="button_form" type="submit">Buscar</button>
+        <div class="container__major-button">
+            <button class="search__btn" type="submit">Buscar</button>
         </div>
     </form>
     <div id="results">
@@ -52,6 +55,12 @@ if(isset($_SESSION['error_sql'])) {
 </div>
 
 <?php  
+
+$stylesCss = '';
+
+foreach ($this->getStyles() as $style) {
+    $stylesCss .= '<link rel="stylesheet" href="' . $style . '">';
+}
 
 $stylesLibraries = '';
 

@@ -15,6 +15,18 @@ class View {
 
     public function render($template, $carpeta) {
 
+        if($carpeta == "Autenticacion") {
+            extract($this->data);
+            $file =  __DIR__ . '/../src/views/' . $template;
+
+            if(file_exists($file)) {
+                    extract($this->data);
+                    include $file;
+            } else {
+                echo "Error";
+            }
+        }
+
         if($carpeta == "marcas") {
             extract($this->data);
             $file =  __DIR__ . '/../src/views/marcas/' . $template;

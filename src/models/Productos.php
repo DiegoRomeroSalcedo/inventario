@@ -209,7 +209,7 @@ class Productos {
                         b.cost_produ, b.rte_fuente,
                         b.flet_produ, b.iva_produc,
                         b.pre_finpro, b.uti_produc,
-                        b.pre_ventap, b.desc_produ,
+                        b.pre_ventap, b.fec_fin_descu, b.desc_produ,
                         b.pre_ventades, b.ren_product,
                         b.detalle_product, c.cantidad,
                         c.fech_actual
@@ -265,6 +265,7 @@ class Productos {
                         a.pre_ventap = :pre_ventap,
                         a.desc_produ = :desc_produ,
                         a.pre_ventades = :pre_ventades,
+                        a.fec_fin_descu = :fec_fin_descu,
                         a.ren_product = :ren_product,
                         a.detalle_product = :detalle_product,
                         a.usuario_actualizacion = :usuario_actualizacion,
@@ -285,6 +286,7 @@ class Productos {
             $mysql->bindValue(':pre_ventap', $data['pre_ventap'], PDO::PARAM_STR);
             $mysql->bindValue(':desc_produ', $data['des_product'], PDO::PARAM_STR);
             $mysql->bindValue(':pre_ventades', $data['pre_ventades'], PDO::PARAM_STR);
+            $mysql->bindValue(':fec_fin_descu', $data['fec_fin_descu']);
             $mysql->bindValue(':ren_product', $data['rentabilidad'], PDO::PARAM_STR);
             $mysql->bindValue(':detalle_product', $data['detalle_produc'], PDO::PARAM_STR);
             $mysql->bindValue(':cantidad', $data['cantidad'], PDO::PARAM_STR);

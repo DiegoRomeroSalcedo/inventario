@@ -5,7 +5,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    --font-color-text: #222;
+    --font-color-text: rgba(189, 189, 189, 0.767);
 }
 
 .page__section {
@@ -20,7 +20,7 @@ body {
 
 .sidebar {
     grid-area: sidebar;
-    background-color: #78f;
+    background-color: #4e73df;
     max-height: 100vh;
     position: sticky;
     top: 0;
@@ -34,7 +34,7 @@ body {
     align-items: center;
     color: var(--font-color-text);
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1em;
     margin: 10px;
 }
 
@@ -50,8 +50,19 @@ body {
     border-radius: 50%;
 }
 
+.perfil_section {
+    font-size: 1em;
+    margin-left: 8px;
+}
+
 .perfil__user-name {
+    font-size: 20px;
     margin-left: 5px;
+    text-decoration: underline;
+}
+
+.perfil__user-name:hover {
+    color: #fffc
 }
 
 .categories__list {
@@ -74,11 +85,11 @@ body {
     display: block;
     padding: 10px;
     text-decoration: none;
-    color: var(--font-color-text);
+    color: #3a3b45;
 }
 
 .sidebar ul li a:hover {
-    background-color: rgb(193, 199, 241);
+    color: #fffc;
 }
 
 .dropdown-menu {
@@ -91,7 +102,7 @@ body {
 .dropdown-menu li a {
     padding: 10px;
     color: #666;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 .dropdown-menu li a:hover {
@@ -100,7 +111,7 @@ body {
 
 .marca {
     color: #111;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -126,7 +137,7 @@ body {
 
 .success_insertion, .error__duplicatedentry , .error_sql{
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1em;
     margin: 0 auto;
     border-radius: 5px;
     padding: 20px;
@@ -140,6 +151,40 @@ body {
 
 .error_sql {
     background-color: rgba(218, 17, 17, 0.877) !important;
+}
+
+
+a {
+    color: #3a3b45;
+    text-decoration: underline;
+}
+
+a:hover{
+    color: rgba(25, 0, 117, 0.8);
+}
+
+a:visited {
+    color: #3a3b45;
+    text-decoration: underline;
+}
+
+.logout {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.update__user_link {
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgb(218, 99, 55);
+}
+
+#chart-container {
+    width: 100%;
+    min-height: 100%;
+    margin: auto;
 }
 
 

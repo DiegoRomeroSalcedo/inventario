@@ -82,6 +82,10 @@ $routes = [
         '/add-devolucion' => [$devolucionController, 'addDevolucion'],
         '/list-devoluciones' => [$devolucionController, 'listDevoluciones'],
         '/validate-descuentos'     => [$descuentosController, 'listDescuentosVencidos'],
+        '/update-user' => [$AuthController, 'updateUser'],
+        '/form-update-user' => [$AuthController, 'formUpdate'],
+        '/dashboard' => [$ventaController, 'renderDasboard'],
+        '/dasboard-ventas' => [$ventaController, 'getdataDashboard']
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -106,7 +110,11 @@ $routes = [
         '/add-devolucion' => [$devolucionController, 'addDevolucion'],
         '/list-devoluciones' => [$devolucionController, 'listDevoluciones'],
         '/validate-descuentos'     => [$descuentosController, 'listDescuentosVencidos'],
-        '/quitar-descuentos'        => [$descuentosController, 'quitarDescuento']
+        '/quitar-descuentos'        => [$descuentosController, 'quitarDescuento'],
+        '/update-user' => [$AuthController, 'updateUser'],
+        '/form-update-user' => [$AuthController, 'formUpdate'],
+        '/dashboard' => [$ventaController, 'renderDasboard'],
+        '/dasboard-ventas' => [$ventaController, 'getdataDashboard']
     ]
 ];
 
@@ -128,8 +136,21 @@ $routesProtected = [
     '/search-add-venta',
     '/search-factura-devolucion',
     '/get-factura',
-    '/get-data-factura'
-];
+    '/get-data-factura',
+    '/ventas',
+    '/facturas',
+    '/detalles-facturas',
+    '/clientes',
+    '/search-factura-devolucion',
+    '/add-devolucion',
+    '/list-devoluciones',
+    '/validate-descuentos',
+    '/validate-descuentos',
+    '/update-user',
+    '/form-update-user',
+    '/dashboard',
+    '/dasboard-ventas'
+];  
 
 // Verificamos si la ruta actual es una ruta Protegida y si esta logeado el usuario
 

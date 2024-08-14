@@ -41,28 +41,30 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 <form id="search_product_form" class="form_insert" action="<?= BASE_URL . '/get-add-cantidades'?>" method="post">
     <h1>Buscar Productos</h1>
-    <div class="container_inputs">
-        <label for="nom_product">Buscar Producto: </label>
-        <input id="nom_product" type="text" name="nom_product" placeholder="Bujía" required>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="nom_product">Buscar Producto: </label>
+            <input class="form__inputs" id="nom_product" type="text" name="nom_product" placeholder="Bujía" required>
+        </div>
+        <div class="container_inputs">
+            <label for="nom_marca">Marca Producto: </label>
+            <select class="form__inputs" name="marca_producto" id="nom_marca">
+                <option value="0">Marcas</option>
+                <?php foreach($data['marca'] as $m): ?>
+                    <option value="<?= $m['id_marca'] ?>" <?= (isset($_POST['marca_producto']) && $_POST['marca_producto'] == $m['id_marca']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($m['nombre_marca'])?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
-    <div class="container_inputs">
-        <label for="nom_marca">Marca Producto: </label>
-        <select name="marca_producto" id="nom_marca">
-            <option value="0">Marcas</option>
-            <?php foreach($data['marca'] as $m): ?>
-                <option value="<?= $m['id_marca'] ?>" <?= (isset($_POST['marca_producto']) && $_POST['marca_producto'] == $m['id_marca']) ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($m['nombre_marca'])?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div class="container__button-form">
-        <button class="button_form" type="submit">Buscar</button>
+    <div class="container__major-button">
+            <button class="search__btn" type="submit">Buscar</button>
     </div>
 </form>
 
 <div id="results">
-            
+    <!-- Resultados de la busqueda con JS -->
 </div>
 
 <?php 
