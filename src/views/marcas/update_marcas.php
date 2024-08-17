@@ -9,18 +9,21 @@ $nombre = $data['decrypted']['nombre_marca'];
 
 ?>
 
-    <form id="update_form" action="<?= BASE_URL . '/update-form-marca'?>" method="post">
-    <div class="container_inputs">
-        <label for="nom_marca">Nombre Marca</label>
-        <input id="nom_marca" type="text" name="nombre_marca" value="<?= $nombre ?>">
+<form id="update_form" action="<?= BASE_URL . '/update-form-marca'?>" method="post">
+    <h1>Actualizar Marca</h1>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="nom_marca">Nombre Marca</label>
+            <input class="form__inputs" id="nom_marca" type="text" name="nombre_marca" value="<?= $nombre ?>">
+        </div>
     </div>
     <div class="container_inputs">
         <input id="id_marca" type="hidden" name="id_marca" value="<?= $id_marca ?>">
     </div>
-    <div class="container__button-form">
-        <button class="button_form" type="submit">Actualizar</button>
+    <div class="container__major-button">
+            <button class="search__btn" type="submit">Actualizar</button>
     </div>
-    </form>
+</form>
 
 </div>
 

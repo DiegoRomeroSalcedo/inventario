@@ -10,7 +10,7 @@ $title = "Listar Clientes";
     <table id="contable" class="display nowrap" style="width:100%">
         <thead>
             <tr>
-                <th>Id cliente</th>
+                <th>Id Cliente</th>
                 <th>Cédula</th>
                 <th>Nombre</th>
                 <th>Télefono</th>

@@ -101,9 +101,12 @@ class Productos {
         }
     }
 
-    public function getProductData($data) {
+    public function getProductData($nomProduct, $marcaProdu) {
 
         try {
+
+            $nomProduct = '%' . $nomProduct . '%';
+            $marcaProdu = '%' . $marcaProdu . '%';
 
             $mysql = $this->conexion->prepare(
                 "
@@ -112,23 +115,20 @@ class Productos {
                 FROM productos a
                 INNER JOIN marcas b ON a.id_marcapr = b.id_marca
                 LEFT JOIN cantidad_productos c ON a.id_product = c.id_producto
-                WHERE no_product = :no_product AND id_marcapr LIKE :id_marcapr
+                WHERE no_product LIKE :no_product AND id_marcapr LIKE :id_marcapr
                 "
             );
 
-            foreach($data as $key => $value) {
-                if(is_int($value)) {
-                    $type = PDO::PARAM_INT;
-                } else {
-                    $type = PDO::PARAM_STR;
-                }
-
-                $mysql->bindValue($key, $value, $type);
-            }
+            $mysql->bindValue(':no_product', $nomProduct);
+            $mysql->bindValue(':id_marcapr', $marcaProdu);
 
             $mysql->execute();
+
+            // $mysql->debugDumpParams(); //Depuramos los paraemtros asi se ve la consulta como se esta ejecutando
+            // die("Hola");
             $lastId = $this->conexion->lastInsertID();
             $results = $mysql->fetchAll(PDO::FETCH_ASSOC);
+
             return $results;
         } catch (PDOException $e) {
             echo "Error en la consulta: " . $e->getMessage();
@@ -209,7 +209,7 @@ class Productos {
                         b.cost_produ, b.rte_fuente,
                         b.flet_produ, b.iva_produc,
                         b.pre_finpro, b.uti_produc,
-                        b.pre_ventap, b.desc_produ,
+                        b.pre_ventap, b.fec_fin_descu, b.desc_produ,
                         b.pre_ventades, b.ren_product,
                         b.detalle_product, c.cantidad,
                         c.fech_actual
@@ -265,6 +265,7 @@ class Productos {
                         a.pre_ventap = :pre_ventap,
                         a.desc_produ = :desc_produ,
                         a.pre_ventades = :pre_ventades,
+                        a.fec_fin_descu = :fec_fin_descu,
                         a.ren_product = :ren_product,
                         a.detalle_product = :detalle_product,
                         a.usuario_actualizacion = :usuario_actualizacion,
@@ -285,6 +286,7 @@ class Productos {
             $mysql->bindValue(':pre_ventap', $data['pre_ventap'], PDO::PARAM_STR);
             $mysql->bindValue(':desc_produ', $data['des_product'], PDO::PARAM_STR);
             $mysql->bindValue(':pre_ventades', $data['pre_ventades'], PDO::PARAM_STR);
+            $mysql->bindValue(':fec_fin_descu', $data['fec_fin_descu']);
             $mysql->bindValue(':ren_product', $data['rentabilidad'], PDO::PARAM_STR);
             $mysql->bindValue(':detalle_product', $data['detalle_produc'], PDO::PARAM_STR);
             $mysql->bindValue(':cantidad', $data['cantidad'], PDO::PARAM_STR);

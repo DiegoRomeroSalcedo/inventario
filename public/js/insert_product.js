@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    roundToTwoDecimals = (number) => {
+    function roundToTwoDecimals(number) {
         return Math.round(number * 100) / 100;
     }
 
-    const actualizarCostoFinal = () => {
+    function actualizarCostoFinal() {
         const costo = parseFloat(costoInput.value.replace(/,/g, '')) || 0;
         const retencion = parseFloat(retencionInput.value.replace(/,/g, '')) || 0;
         const flete = parseFloat(fleteInput.value.replace(/,/g, '')) || 0;
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
         costoFinalInput.value = formatPrice(costoFinal);
 
         actualizarPrecioVenta();
-    };
+    }
 
-    const actualizarPrecioVenta = () => {
+    function actualizarPrecioVenta() {
         const costoFinal = parseFloat(costoFinalInput.value.replace(/,/g, '')) || 0;
         const utilidad = parseFloat(utilidadInput.value.replace(/,/g, '')) || 0;
 
@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         descuentos();
         updateRentabilidad();
-    };
+    }
 
-    const descuentos = () => {
+    function descuentos() {
         const precioVenta = parseFloat(precioVentaInput.value.replace(/,/g, '')) || 0;
         const descuento = parseFloat(descuentoInput.value.replace(/,/g, '')) || 0;
 
@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
         preciodescuentoInput.value = formatPrice(precioTotal);
 
         updateRentabilidad();
-    };
+    }
 
-    const updateRentabilidad = () => {
+    function updateRentabilidad() {
         const costoFinal = parseFloat(costoFinalInput.value.replace(/,/g, '')) || 0;
         const precioVenta = parseFloat(precioVentaInput.value.replace(/,/g, '')) || 0;
         const preciodescuento = parseFloat(preciodescuentoInput.value.replace(/,/g, '')) || 0;
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rentabilidadBruta = 0;
         } else {
             let gananciaBruta;
-            if (window.getComputedStyle(extrafiledsContainer).display === 'none') {
+            if (extrafiledsContainer.classList.contains('hidden')) {
                 gananciaBruta = precioVenta - costoFinal;
             } else {
                 gananciaBruta = preciodescuento - costoFinal;
@@ -86,9 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
             rentabilidadBruta = (gananciaBruta / costoFinal) * 100;
         }
         rentabilidadInput.value = formatPrice(rentabilidadBruta);
-    };
+    }
 
-    const toggleFileds = () => {
+    function toggleFileds() {
         if (toggleCheckboxInput.checked) {
             extrafiledsContainer.classList.remove('hidden');
             extrafiledsTwoContainer.classList.remove('hidden');
@@ -103,11 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
             descuentoInput.value = '';
             preciodescuentoInput.value = '';
 
-            endDateInput.value = ''; //Cuando esta oculto limpiamos el valor
+            endDateInput.value = ''; // Limpiamos el valor cuando está oculto
         }
 
+        actualizarCostoFinal();
         updateRentabilidad();
-    };
+    }
 
     toggleCheckboxInput.addEventListener('change', toggleFileds);
     costoInput.addEventListener('input', actualizarCostoFinal);
@@ -117,12 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
     utilidadInput.addEventListener('input', actualizarPrecioVenta);
     descuentoInput.addEventListener('input', descuentos);
 
-    //Inicialiamos el datePicker
-
+    // Inicializamos el datePicker
     $('#endDate').datepicker({
         dateFormat: "yy-mm-dd",
         timeFromat: "HH:mm:ss"
     });
 
-    toggleFileds();
+    toggleFileds(); // Llamada inicial para configurar el estado correcto
 });

@@ -42,16 +42,13 @@ $facturasController = new FacturasController($view);
 $devolucionController = new DevolucionController($view, $facturas);
 $clientesController = new ClientesController($view);
 $descuentosController = new DescuentosController($view);
+
+
 // Obtener la URI y el metodo de solicitud
-
-
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 $requestUri = str_replace(BASE_URL, '', $path);
-
-// echo "Original Request URI: " . $_SERVER['REQUEST_URI'] . "<br>";
-// echo "Processed Request URI: " . $requestUri . "<br>";
 
 // Definimos las rutas y los metodos correspondientes
 
@@ -82,6 +79,10 @@ $routes = [
         '/add-devolucion' => [$devolucionController, 'addDevolucion'],
         '/list-devoluciones' => [$devolucionController, 'listDevoluciones'],
         '/validate-descuentos'     => [$descuentosController, 'listDescuentosVencidos'],
+        '/update-user' => [$AuthController, 'updateUser'],
+        '/form-update-user' => [$AuthController, 'formUpdate'],
+        '/dashboard' => [$ventaController, 'renderDasboard'],
+        '/dasboard-ventas' => [$ventaController, 'getdataDashboard']
     ],
     'POST' => [
         '/login.php' => [$AuthController, 'login'],
@@ -106,7 +107,12 @@ $routes = [
         '/add-devolucion' => [$devolucionController, 'addDevolucion'],
         '/list-devoluciones' => [$devolucionController, 'listDevoluciones'],
         '/validate-descuentos'     => [$descuentosController, 'listDescuentosVencidos'],
-        '/quitar-descuentos'        => [$descuentosController, 'quitarDescuento']
+        '/quitar-descuentos'        => [$descuentosController, 'quitarDescuento'],
+        '/update-user' => [$AuthController, 'updateUser'],
+        '/form-update-user' => [$AuthController, 'formUpdate'],
+        '/dashboard' => [$ventaController, 'renderDasboard'],
+        '/dasboard-ventas' => [$ventaController, 'getdataDashboard'],
+        '/check-client' => [$clientesController, 'checkExistClient']
     ]
 ];
 
@@ -128,8 +134,22 @@ $routesProtected = [
     '/search-add-venta',
     '/search-factura-devolucion',
     '/get-factura',
-    '/get-data-factura'
-];
+    '/get-data-factura',
+    '/ventas',
+    '/facturas',
+    '/detalles-facturas',
+    '/clientes',
+    '/search-factura-devolucion',
+    '/add-devolucion',
+    '/list-devoluciones',
+    '/validate-descuentos',
+    '/validate-descuentos',
+    '/update-user',
+    '/form-update-user',
+    '/dashboard',
+    '/dasboard-ventas',
+    '/check-client'
+];  
 
 // Verificamos si la ruta actual es una ruta Protegida y si esta logeado el usuario
 

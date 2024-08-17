@@ -31,23 +31,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     let tableHTML = `<table class="tabla_resultados">
                         <thead>
                             <tr>
-                                <th>Id Producto</th>
-                                <th>Nombre Producto</th>
-                                <th>Id Marca</th>
-                                <th>Nombre Marca</th>
-                                <th>Cantidad</th>
-                                <th>Costo Producto</th>
-                                <th>Retencion Producto</th>
-                                <th>Flete Producto</th>
-                                <th>Iva Producto</th>
-                                <th>Costo Fin/Pro</th>
-                                <th>Utilidad Producto</th>
-                                <th>Precio Venta</th>
-                                <th>Descuento Producto</th>
-                                <th>Precio Vent/Desc</th>
-                                <th>Rentabilida Producto</th>
-                                <th>Detalle Producto</th>
-                                <th>Fecha Acutlizacion</th>
+                                <th class="th_results">Id Producto</th>
+                                <th class="th_results">Nombre Producto</th>
+                                <th class="th_results">Id Marca</th>
+                                <th class="th_results">Nombre Marca</th>
+                                <th class="th_results">Cantidad</th>
+                                <th class="th_results">Costo Producto</th>
+                                <th class="th_results">Retencion Producto</th>
+                                <th class="th_results">Flete Producto</th>
+                                <th class="th_results">Iva Producto</th>
+                                <th class="th_results">Costo Fin/Pro</th>
+                                <th class="th_results">Utilidad Producto</th>
+                                <th class="th_results">Precio Venta</th>
+                                <th class="th_results">Descuento Producto</th>
+                                <th class="th_results">Precio Vent/Desc</th>
+                                <th class="th_results">Rentabilida Producto</th>
+                                <th class="th_results">Detalle Producto</th>
+                                <th class="th_results">Fecha Acutlizacion</th>
                             <tr>
                         <thead>
                         <tbody>`;
@@ -111,23 +111,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
 
                         let row = `<tr>
-                            <td><a href="${BASE_URL}/update-form-product?data=${encodeURIComponent(producto.encrypted)}">${producto.id_product}</a></td>
-                            <td>${producto.no_product}</td>
-                            <td>${producto.id_marca}</td>
-                            <td>${producto.nombre_marca}</td>
-                            <td>${formattedCantidad}</td>
-                            <td>${formattedCostoProd}</td>
-                            <td>${producto.rte_fuente}</td>
-                            <td>${producto.flet_produ}</td>
-                            <td>${producto.iva_produc}</td>
-                            <td>${formattedPrecioFinProduc}</td>
-                            <td>${producto.uti_produc}</td>
-                            <td>${formattedPreVenta}</td>
-                            <td>${producto.desc_produ}</td>
-                            <td>${formattedPreVentaDesc}</td>
-                            <td>${producto.ren_product}</td>
-                            <td>${detalleProduc}</td>
-                            <td>${fecActulizacion}</td>
+                            <td class="td_results"><a href="${BASE_URL}/update-form-product?data=${encodeURIComponent(producto.encrypted)}">${producto.id_product}</a></td>
+                            <td class="td_results">${producto.no_product}</td>
+                            <td class="td_results">${producto.id_marca}</td>
+                            <td class="td_results">${producto.nombre_marca}</td>
+                            <td class="td_results">${formattedCantidad}</td>
+                            <td class="td_results">${formattedCostoProd}</td>
+                            <td class="td_results">${producto.rte_fuente}</td>
+                            <td class="td_results">${producto.flet_produ}</td>
+                            <td class="td_results">${producto.iva_produc}</td>
+                            <td class="td_results">${formattedPrecioFinProduc}</td>
+                            <td class="td_results">${producto.uti_produc}</td>
+                            <td class="td_results">${formattedPreVenta}</td>
+                            <td class="td_results">${producto.desc_produ}</td>
+                            <td class="td_results">${formattedPreVentaDesc}</td>
+                            <td class="td_results">${producto.ren_product}</td>
+                            <td class="td_results">${detalleProduc}</td>
+                            <td class="td_results">${fecActulizacion}</td>
                         </tr>`;
                         tableHTML += row; // concatenamos las filas
                     });

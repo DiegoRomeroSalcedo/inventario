@@ -87,4 +87,31 @@ class Ventas {
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function getDataGrafic($year, $start_date, $end_date) {
+
+        try {
+            $query = "  SELECT 
+                            DATE_FORMAT(fecha, '%Y-%m') AS mes, 
+                            SUM(total_venta) AS total
+                        FROM
+                            facturas
+                        WHERE
+                            fecha BETWEEN :start_date AND :end_date
+                            GROUP BY DATE_FORMAT(fecha, '%Y-%m')
+                            ORDER BY DATE_FORMAT(fecha, '%Y-%m')";
+            $mysql = $this->conexion->prepare($query);
+            $mysql->bindParam(':start_date', $start_date);
+            $mysql->bindParam(':end_date', $end_date);
+
+            $mysql->execute();
+
+            //Obtenemos los datos
+            $salesData = $mysql->fetchAll(PDO::FETCH_ASSOC);
+
+            return $salesData;
+        }catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }

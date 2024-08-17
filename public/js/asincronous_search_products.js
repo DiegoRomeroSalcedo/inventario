@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     let tableHtml = `<table class="tabla_resultados">
                         <thead>
                             <tr>
-                                <th>Id_Producto</th>
-                                <th>Nombre</th>
-                                <th>Marca</th>
-                                <th>Cantidad</th>
-                                <th>Costo Producto</th>
-                                <th>Costo Final</th>
-                                <th>Precio Venta</th>
-                                <th>Precio con Descuento</th>
+                                <th class="th_results">Id_Producto</th>
+                                <th class="th_results">Nombre</th>
+                                <th class="th_results">Marca</th>
+                                <th class="th_results">Cantidad</th>
+                                <th class="th_results">Costo Producto</th>
+                                <th class="th_results">Costo Final</th>
+                                <th class="th_results">Precio Venta</th>
+                                <th class="th_results">Precio con Descuento</th>
                             </tr>
                         </thead>
                         <tbody>`;
@@ -73,14 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         // console.log(producto.encriptados);
                         let row = `<tr>
-                            <td><a href="${BASE_URL}/add-cantidad-product?data=${encodeURIComponent(producto.encriptados)}">${producto.id_product}</a></td>
-                            <td>${producto.no_product}</td>
-                            <td>${data.marca.find(marca => marca.id_marca === producto.id_marcapr)?.nombre_marca || 'Desconocida'}</td>
-                            <td>${producto.cantidad !== null ? producto.cantidad : 0}</td>
-                            <td>${formattedCostoPro}</td>
-                            <td>${formattedPreFinpro}</td>
-                            <td>${formattedPreVenta}</td>
-                            <td>${formattedPreVentades}</td>
+                            <td class="td_results"><a href="${BASE_URL}/add-cantidad-product?data=${encodeURIComponent(producto.encriptados)}">${producto.id_product}</a></td>
+                            <td class="td_results">${producto.no_product}</td>
+                            <td class="td_results">${data.marca.find(marca => marca.id_marca === producto.id_marcapr)?.nombre_marca || 'Desconocida'}</td>
+                            <td class="td_results">${producto.cantidad !== null ? producto.cantidad : 0}</td>
+                            <td class="td_results">${formattedCostoPro}</td>
+                            <td class="td_results">${formattedPreFinpro}</td>
+                            <td class="td_results">${formattedPreVenta}</td>
+                            <td class="td_results">${formattedPreVentades}</td>
                         </tr>`;
                         tableHtml += row; // Agrega cada fila de producto
                     });

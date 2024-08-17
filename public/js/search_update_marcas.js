@@ -30,12 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     let tableHTML = `<table class="tabla_resultados">
                         <thead>
                             <tr>
-                                <th>ID MARCA</th>
-                                <th>NOMBRE MARCA</th>
-                                <th>USUARIO INSERCIÓN</th>
-                                <th>FECHA INSERCIÓN</th>
-                                <th>USUARIO ACTUALIZACIÓN</th>
-                                <th>FECHA ACTUALIZACIÓN</th>
+                                <th class="th_results">Id Marca</th>
+                                <th class="th_results">Nombre Marca</th>
+                                <th class="th_results">Usuario Inserción</th>
+                                <th class="th_results">Fecha Inserción</th>
+                                <th class="th_results">Usuario Actualización</th>
+                                <th class="th_results">Fecha Actualización</th>
                             </tr>
                         </thead>
                         <tbody>`;

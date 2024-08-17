@@ -69,7 +69,7 @@ class MarcaController {
         ];
         $carpeta = "marcas";
 
-        $this->view->addStyles('styles_search_products.css');
+        $this->view->addStyles('style_search_data.css');
         $this->view->addScripts('search_update_marcas.js');
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {

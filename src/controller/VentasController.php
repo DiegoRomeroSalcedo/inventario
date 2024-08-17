@@ -163,6 +163,54 @@ class VentasController {
         }
     }
 
+    public function renderDasboard() {
+
+        $this->view->addScripts('dashboard_ventas.js');
+
+        $this->view->addLibraries('https://cdn.jsdelivr.net/npm/chart.js');
+
+        $this->view->render('dashboard_ventas.php', $this->carpeta);
+    }
+
+    public function getdataDashboard() {
+        date_default_timezone_set('America/Bogota');
+
+        $year = date('Y');
+        $start_date = "$year-01-01 00:00:00";
+        $end_date = "$year-12-31 23:59:59";
+
+        $venta = new Ventas();
+        $ventas = $venta->getDataGrafic($year, $start_date, $end_date);
+
+         //Creamos el array para todos los mese del año
+        $meses = [];
+
+        for($m = 1; $m <= 12; $m++) {
+            $mes = sprintf('%04d-%02d', $year, $m);
+            $meses[$mes] = 0; //Inicializamos los mese con 0 ventas
+        }
+
+        //Asignar los datos obntenidos a los mese correspondientes
+
+        foreach($ventas as $data) {
+            $meses[$data['mes']] = $data['total'];
+        }
+
+         //Asignamos los datos en formato adecuado.
+
+        $results = [];
+
+        foreach($meses as $mes=>$total) {
+            $results[] = [
+                'mes' => $mes,
+                'total' => $total
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($results);
+        exit();
+    }
 }
 
 ?>

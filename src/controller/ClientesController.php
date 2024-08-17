@@ -50,4 +50,35 @@ class ClientesController {
         $this->view->assign('data', $data);
         $this->view->render('list_data_client.php', $this->carpeta);
     }
+
+    public function checkExistClient() {
+
+        try {
+
+            $datos = [
+                'cliente' => [],
+            ];
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = (int) json_decode(file_get_contents('php://input'), true);
+    
+                if($data) {
+                    $cliente = new Clientes();
+                    $clientedata = $cliente->getDataCliente($data);
+                    $datos['cliente'] = $clientedata;
+                    
+
+                    header('Content-Type: application/json');
+                    echo json_encode($datos);
+                    exit();
+                } else {
+                    echo json_encode(['Error' => 'No existe data']);
+                }
+            } else {
+                echo json_encode(['Error' => 'Método no permitido']);
+            }
+        }catch(Exception $e) {
+            echo json_encode(['Error' => $e->getMessage()]);
+        }
+    }
 }

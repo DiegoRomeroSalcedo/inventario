@@ -14,12 +14,13 @@ $title = "Listado Productos";
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Id prodiucto</th>
+                <th>Id Producto</th>
                 <th>Nombre</th>
                 <th>Marca</th>
                 <th>Stock</th>
-                <th>Precio producto</th>
-                <th>Descuento producto</th>
+                <th>Detalle Producto</th>
+                <th>Precio Producto</th>
+                <th>Descuento Producto</th>
                 <th>Precio Descuento</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@ $title = "Listado Productos";
                     <td><?= htmlspecialchars($producto['no_product']) ?></td>
                     <td><?= htmlspecialchars($producto['id_marcapr']) ?></td>
                     <td><?= htmlspecialchars($producto['cantidad'] ?? 0) ?></td>
+                    <td><?= htmlspecialchars($producto['detalle_product'] ?? 'No reporta') ?></td>
                     <td><?= htmlspecialchars(number_format((float) str_replace(',', '', $producto['pre_ventap']), 2, '.', ',')) ?></td>
                     <td><?= htmlspecialchars($producto['desc_produ']) ?></td>
                     <td><?= htmlspecialchars(number_format((float) str_replace(',', '', $producto['pre_ventades']), 2, '.', ',')) ?></td>

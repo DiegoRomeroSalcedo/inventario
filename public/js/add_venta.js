@@ -82,14 +82,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         let productDiv = document.createElement('div');
                         productDiv.classList.add('product-item'); // Añadimos la clase
                         productDiv.innerHTML = `
-                            <div>Nombre: ${producto.no_product}</div>
-                            <div>Marca: ${producto.nombre_marca}</div>
-                            <div>Precio: ${formattedPreVenta}</div>
-                            <div>Descuento: ${producto.desc_produ}<span>%</span></div>
-                            <div>Precio Final: ${formattedPreVentaFin}</div>
-                            <div>Detalle: ${producto.detalle_product}</div>
-                            <div>Cantidad Stock: <span class="stock">${cantidadStock}</span></div>
-                            <div>Cantidad: <span class="cantidad">${cantidad}</span></div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Nombre:</span> ${producto.no_product}</div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Marca:</span> ${producto.nombre_marca}</div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Precio:</span> ${formattedPreVenta}</div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Descuento:</span> ${producto.desc_produ}<span>%</span></div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Precio Final:</span> ${formattedPreVentaFin}</div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Detalle:</span> ${producto.detalle_product ?? 'Sin detalle'}</div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Cantidad Stock:</span> <span class="stock">${cantidadStock}</span></div>
+                            <div class="container-data-venta-product"><span class="data-venta-product">Cantidad:</span> <span class="cantidad">${cantidad}</span></div>
                             <button class="add-cantidad" data-stock="${cantidadStock}">+</button>
                             <button class="remove-cantidad">-</button>
                             <button class="add-to-cart" data-product='${JSON.stringify(producto)}'>Añadir al carrito</button>
@@ -175,6 +175,47 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        let cedulaClienteInput = document.getElementById('id-client');
+
+            cedulaClienteInput.addEventListener('blur', async function() {
+                const cedula = cedulaClienteInput.value;
+
+                if(cedula) {
+                    try {
+                        let response = await fetch(`${BASE_URL}/check-client`, {
+                            method: 'POST', 
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(cedula)
+                        });
+
+                        if(!response.ok) {
+                            throw new Error('Network response was not');
+                        }
+
+                        let data = await response.json();
+
+                        console.log(data.cliente);
+
+                        let cedulaClienteInput = document.getElementById('id-client');
+                        let nombreClienteInput = document.getElementById('nombre');
+                        let numCelularInput = document.getElementById('nro-celular');
+                        let emailClienteInput = document.getElementById('email-cliente');
+                        let direccionClienteInput = document.getElementById('direccion-cliente');
+
+                        cedulaClienteInput.value = data.cliente[0].identificacion;
+                        nombreClienteInput.value = data.cliente[0].Nombre;
+                        numCelularInput.value = data.cliente[0].telefono;
+                        emailClienteInput.value = data.cliente[0].email;
+                        direccionClienteInput.value = data.cliente[0].direccion;
+
+                    } catch (error) {
+                        console.error("Error: ", error);
+                    }
+                }
+            });
+
         document.getElementById('finalizar-venta').addEventListener('click', async function() {
             if (carrito.length === 0) {
                 alert('El carrito está vacío.');
@@ -200,15 +241,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 tipoDePago: tipoPago.value
             };
 
-            if (toggelDataCliente.checked) {
-                clienteData = {
-                    cedulaCliente: document.getElementById('id-client').value,
-                    nomCliente: document.getElementById('nombre').value,
-                    nroCelular: document.getElementById('nro-celular').value,
-                    emailCliente: document.getElementById('email-cliente').value,
-                    dirCliente: document.getElementById('direccion-cliente').value
-                };
-            }
+
+            clienteData = {
+                cedulaCliente: document.getElementById('id-client').value,
+                nomCliente: document.getElementById('nombre').value,
+                nroCelular: document.getElementById('nro-celular').value,
+                emailCliente: document.getElementById('email-cliente').value,
+                dirCliente: document.getElementById('direccion-cliente').value
+            };
+
+            
             try {
                 let response = await fetch(`${BASE_URL}/finalizar-venta`, {
                     method: 'POST',
@@ -253,8 +295,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 listItem.innerHTML = `
-                    Producto: ${product.no_product} - Marca: ${product.nombre_marca} - ${product.pre_ventades} - Cantidad: ${product.cantidad} - Total: ${formatTotalIndividual}
+                    <span class="data-venta-product">Producto:</span> ${product.no_product} <span class="data-venta-product">- Marca:</span> ${product.nombre_marca} <span class="data-venta-product">- Precio:</span> ${product.pre_ventades} <span class="data-venta-product">- Cantidad:</span> ${product.cantidad} <span class="data-venta-product">- Total:</span> ${formatTotalIndividual}
                     <button class="remove-from-cart" data-product='${JSON.stringify(product)}'>Quitar</button>
+                    <span class="line__separator"><hr></span>
                 `;
 
                 totalValue += totalIndividual;

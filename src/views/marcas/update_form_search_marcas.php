@@ -30,12 +30,15 @@ if(isset($_SESSION['error_sql'])) {
 
 <div id="pageIdentifier" data-page="search-update-marca">
     <form id="update_form_marcas" action="<?= BASE_URL . '/search-update-marcas'?>" method="post">
-    <div class="container_inputs">
-        <label for="id_marca">ID MARCA</label>
-        <input id="id_marca" type="number" name="id_marca" required>
+    <h1>Actualizar Marca</h1>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="id_marca">Id Marca</label>
+            <input class="form__inputs" id="id_marca" type="number" name="id_marca" required>
+        </div>
     </div>
-    <div class="container__button-form">
-        <button class="button_form" type="submit">Buscar</button>
+    <div class="container__major-button">
+            <button class="search__btn" type="submit">Buscar</button>
     </div>
     </form>
     <div id="results">
@@ -50,6 +53,12 @@ $scriptsHtml = '';
 
 foreach ($this->getScripts() as $script) {
     $scriptsHtml .= '<script src="'.$script. '"></script>';
+}
+
+$stylesCss = '';
+
+foreach ($this->getStyles() as $style) {
+    $stylesCss .= '<link rel="stylesheet" href="' . $style . '">';
 }
 
 $content = ob_get_clean();

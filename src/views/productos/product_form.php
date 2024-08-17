@@ -22,76 +22,91 @@ if(isset($_SESSION['error_sql'])) {
 }
 
 ?>
-
 <form class="form_insert" action="<?= BASE_URL . '/add-productos'?>" method="post">
     <h1>Insertar Producto</h1>
-    <div class="container_inputs">
-        <label for="nom_produc">Nombre Producto: </label>
-        <input id="nom_produc" type="text" name="nom_produc" placeholder="Bujía" required>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="nom_produc">Nombre Producto: </label>
+            <input class="form__inputs" id="nom_produc" type="text" name="nom_produc" placeholder="Bujía" required>
+        </div>
+        <div class="container_inputs">
+            <label for="nom_marca">Marca Producto: </label>
+            <select class="form__inputs" name="marca_producto" id="nom_marca">
+                <?php foreach($data['marca'] as $marca): ?>
+                <option value="<?= $marca['id_marca'] ?>">
+                    <?= $marca['nombre_marca']?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="container_inputs">
+            <label for="precio_costo">Precio Costo: </label>
+            <input class="form__inputs" id="precio_costo" type="text" name="cost_produ" placeholder="97,860.89" required>
+        </div>
     </div>
-    <div class="container_inputs">
-        <label for="nom_marca">Marca Producto: </label>
-        <select name="marca_producto" id="nom_marca">
-            <?php foreach($data['marca'] as $marca): ?>
-            <option value="<?= $marca['id_marca'] ?>">
-                <?= $marca['nombre_marca']?>
-            </option>
-            <?php endforeach; ?>
-        </select>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="retefuente">Retención %: </label>
+            <input class="form__inputs" id="retefuente" type="number" min="0" step="0.01" name="porc_rete" placeholder="2.5" required>
+        </div>
+        <div class="container_inputs">
+            <label for="costo_flete">Flete %: </label>
+            <input class="form__inputs" id="costo_flete" type="number" min="0" step="0.01" name="porc_flete" placeholder="3" required>
+        </div>
+        <div class="container_inputs">
+            <label for="costo_iva">IVA %: </label>
+            <input class="form__inputs" id="costo_iva" type="number" min="0" step="0.01" name="porc_iva" placeholder="19" required>
+        </div>
     </div>
-    <div class="container_inputs">
-        <label for="precio_costo">Precio Costo: </label>
-        <input id="precio_costo" type="text" name="cost_produ" placeholder="97860.89" required>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="costo_final">Costo Final: </label>
+            <input class="form__inputs" id="costo_final" type="text" name="pre_finpro" readonly>
+        </div>
+        <div class="container_inputs">
+            <label for="utilidad">Utilidad: </label>
+            <input class="form__inputs" id="utilidad" type="number" name="uti_product" placeholder="50" required>
+        </div>
+        <div class="container_inputs">
+            <label for="precio_venta">Precio de Venta: </label>
+            <input class="form__inputs" id="precio_venta" type="text" name="pre_ventap" readonly>
+        </div>
     </div>
-    <div class="container_inputs">
-        <label for="retefuente">Retención %: </label>
-        <input id="retefuente" type="number" min="0" step="0.01" name="porc_rete" placeholder="2.5" required>
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="toggleCheckbox">Desea Aplicar Descuento</label>
+            <input type="hidden" name="aplica_descuento" value="0">
+            <input class="aplica_descuento_input" id="toggleCheckbox" type="checkbox" value="1" name="aplica_descuento">
+        </div>
     </div>
-    <div class="container_inputs">
-        <label for="costo_flete">Flete %: </label>
-        <input id="costo_flete" type="number" min="0" step="0.01" name="porc_flete" placeholder="3" required>
+    <div class="container__major">
+        <div id="extrafileds" class="container_inputs hidden">
+            <label for="descuento">Descuento %: </label>
+            <input class="form__inputs" id="descuento" type="number" min="0" step="0.01" name="des_product" placeholder="10">
+        </div>
+        <div id="extrafileds_two" class="container_inputs container__inputs-ydate hidden">
+            <div class="container_inputs">
+                <label for="precioventa_desc">Precio con Descuento: </label>
+                <input class="form__inputs" id="precioventa_desc" type="text" name="pre_ventades" readonly>
+            </div>
+            <div class="container_inputs">
+                <label for="endDate">Fecha Fin:</label>
+                <input class="form__inputs" type="text" id="endDate" name="endDate">
+            </div>
+        </div>
     </div>
-    <div class="container_inputs">
-        <label for="costo_iva">IVA %: </label>
-        <input id="costo_iva" type="number" min="0" step="0.01" name="porc_iva" placeholder="19" required>
-    </div>
-    <div class="container_inputs">
-        <label for="costo_final">Costo Final: </label>
-        <input id="costo_final" type="text" name="pre_finpro" readonly>
-    </div>
-    <div class="container_inputs">
-        <label for="utilidad">Utilidad: </label>
-        <input id="utilidad" type="number" name="uti_product" placeholder="50" required>
-    </div>
-    <div class="container_inputs">
-        <label for="precio_venta">Precio de Venta: </label>
-        <input id="precio_venta" type="text" name="pre_ventap" readonly>
-    </div>
-    <div class="container_inputs">
-        <label for="toggleCheckbox">Desea Aplicar descuento</label>
-        <input type="hidden" name="aplica_descuento" value="0">
-        <input id="toggleCheckbox" type="checkbox" value="1" name="aplica_descuento">
-    </div>
-    <div id="extrafileds" class="container_inputs hidden">
-        <label for="descuento">Descuento %: </label>
-        <input id="descuento" type="number" min="0" step="0.01" name="des_product" placeholder="10">
-    </div>
-    <div id="extrafileds_two" class="container_inputs hidden">
-        <label for="precioventa_desc">Precio con Descuento: </label>
-        <input id="precioventa_desc" type="text" name="pre_ventades" readonly>
-        <label for="endDate">Fecha Fin:</label>
-        <input type="text" id="endDate" name="endDate">
-    </div>
-    <div class="container_inputs">
-        <label for="rentabilidad">Rentabilidad %: </label>
-        <input id="rentabilidad" type="number" min="0" step="0.01" name="rentabilidad">
-    </div>
-    <div class="container_inputs">
+    <div class="container__major">
+        <div class="container_inputs">
+            <label for="rentabilidad">Rentabilidad %: </label>
+            <input class="form__inputs" id="rentabilidad" type="number" min="0" step="0.01" name="rentabilidad">
+        </div>
+        <div class="container_inputs">
         <label for="detalle">Detalle Producto: </label>
-        <textarea name="detalle_produc" id="detalle"></textarea>
+        <textarea class="form__inputs-text-area" name="detalle_produc" id="detalle"></textarea>
+        </div>
     </div>
-    <div class="container__button-form">
-        <button class="button_form" type="submit">Insertar</button>
+    <div class="container__major-button">
+            <button class="search__btn" type="submit">Insertar</button>
     </div>
 </form>
 
