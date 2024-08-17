@@ -175,6 +175,47 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        let cedulaClienteInput = document.getElementById('id-client');
+
+            cedulaClienteInput.addEventListener('blur', async function() {
+                const cedula = cedulaClienteInput.value;
+
+                if(cedula) {
+                    try {
+                        let response = await fetch(`${BASE_URL}/check-client`, {
+                            method: 'POST', 
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(cedula)
+                        });
+
+                        if(!response.ok) {
+                            throw new Error('Network response was not');
+                        }
+
+                        let data = await response.json();
+
+                        console.log(data.cliente);
+
+                        let cedulaClienteInput = document.getElementById('id-client');
+                        let nombreClienteInput = document.getElementById('nombre');
+                        let numCelularInput = document.getElementById('nro-celular');
+                        let emailClienteInput = document.getElementById('email-cliente');
+                        let direccionClienteInput = document.getElementById('direccion-cliente');
+
+                        cedulaClienteInput.value = data.cliente[0].identificacion;
+                        nombreClienteInput.value = data.cliente[0].Nombre;
+                        numCelularInput.value = data.cliente[0].telefono;
+                        emailClienteInput.value = data.cliente[0].email;
+                        direccionClienteInput.value = data.cliente[0].direccion;
+
+                    } catch (error) {
+                        console.error("Error: ", error);
+                    }
+                }
+            });
+
         document.getElementById('finalizar-venta').addEventListener('click', async function() {
             if (carrito.length === 0) {
                 alert('El carrito está vacío.');
@@ -200,15 +241,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 tipoDePago: tipoPago.value
             };
 
-            if (toggelDataCliente.checked) {
-                clienteData = {
-                    cedulaCliente: document.getElementById('id-client').value,
-                    nomCliente: document.getElementById('nombre').value,
-                    nroCelular: document.getElementById('nro-celular').value,
-                    emailCliente: document.getElementById('email-cliente').value,
-                    dirCliente: document.getElementById('direccion-cliente').value
-                };
-            }
+
+            clienteData = {
+                cedulaCliente: document.getElementById('id-client').value,
+                nomCliente: document.getElementById('nombre').value,
+                nroCelular: document.getElementById('nro-celular').value,
+                emailCliente: document.getElementById('email-cliente').value,
+                dirCliente: document.getElementById('direccion-cliente').value
+            };
+
+            
             try {
                 let response = await fetch(`${BASE_URL}/finalizar-venta`, {
                     method: 'POST',

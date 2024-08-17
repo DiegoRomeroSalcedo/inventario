@@ -18,77 +18,79 @@
 <body>
     <section class="page__section">
         <aside class="sidebar">
-            <section class="perfil__section">
-                <div class="img__container">
-                <img class="image__user" src="/inventario/public/images/logo_empresa.png" alt="Por definir">
-                </div>
-            </section>
-            <section class="perfil_section">
-                <?php 
-                    if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
-                        echo '<p class="perfil__user-name"><a href="' . BASE_URL . '/update-user">' . $_SESSION['username'] . '</a></p>';
-                    } else {
-                        echo '<p class="perfil__user-name">' . $_SESSION['username'] . '</p>';
-                    }
-                ?> 
-            </section>
-            <ul class="categories__list">
-                <li>
-                    <a href="#" class="dropdown-toggle">Listar</a>
-                    <ul class="dropdown-menu">
-                        <?php 
-                            if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
-                                echo '<li><a href="' .BASE_URL . '/inventario"> Inventario</a></li>';
-                                echo '<li><a href="' .BASE_URL . '/facturas"> Facturas</a></li>';
-                                echo '<li><a href="' .BASE_URL . '/ventas"> Ventas</a></li>';
-                                echo '<li><a href="' .BASE_URL . '/validate-descuentos"> Descuentos Vencidos</a></li>';
-                            } 
-                        ?> 
-                        <li><a href="<?= BASE_URL . '/clientes'?>"> Clientes</a></li>
-                        <li><a href="<?= BASE_URL . '/marcas'?>"> Marcas</a></li>
-                        <li><a href="<?= BASE_URL . '/productos'?>"> Productos</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="dropdown-toggle">Insertar</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?= BASE_URL . '/add-marcas'?>"> Marcas</a></li>
-                        <li><a href="<?= BASE_URL . '/add-productos'?>"> Productos</a></li>
-                        <li><a href="<?= BASE_URL . '/get-add-cantidades'?>"> Cantidades</a></li>
-                    </ul>
-                </li>
+            <div class="sidebar-contente">
+                <section class="perfil__section">
+                    <div class="img__container">
+                    <img class="image__user" src="/inventario/public/images/logo_empresa.png" alt="Por definir">
+                    </div>
+                </section>
+                <section class="perfil_section">
                     <?php 
                         if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
-
-                            echo '<li>
-                                <a href="#" class="dropdown-toggle">Actualizar</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="'. BASE_URL . '/search-update-marcas"> Marcas</a></li>
-                                    <li><a href="' . BASE_URL . '/search-update-productos"> Productos</a></li>
-                                </ul>
-                            </li>';
-
+                            echo '<p class="perfil__user-name"><a class="sidebar-sections-links" href="' . BASE_URL . '/update-user">' . $_SESSION['username'] . '</a></p>';
+                        } else {
+                            echo '<p class="perfil__user-name">' . $_SESSION['username'] . '</p>';
                         }
-                    ?>
-                <li>
-                    <a href="#" class="dropdown-toggle">Ventas</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?= BASE_URL . '/search-add-venta' ?>"> Ingresar Venta</a></li>
+                    ?> 
+                </section>
+                <ul class="categories__list">
+                    <li>
+                        <a href="#" class="dropdown-toggle link-toggle-menu">Listar</a>
+                        <ul class="dropdown-menu">
+                            <?php 
+                                if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
+                                    echo '<li><a class="sidebar-sections-links" href="' .BASE_URL . '/inventario"> Inventario</a></li>';
+                                    echo '<li><a class="sidebar-sections-links" href="' .BASE_URL . '/facturas"> Facturas</a></li>';
+                                    echo '<li><a class="sidebar-sections-links" href="' .BASE_URL . '/ventas"> Ventas</a></li>';
+                                    echo '<li><a class="sidebar-sections-links" href="' .BASE_URL . '/validate-descuentos"> Descuentos Vencidos</a></li>';
+                                } 
+                            ?> 
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/clientes'?>"> Clientes</a></li>
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/marcas'?>"> Marcas</a></li>
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/productos'?>"> Productos</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle link-toggle-menu">Insertar</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/add-marcas'?>"> Marcas</a></li>
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/add-productos'?>"> Productos</a></li>
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/get-add-cantidades'?>"> Cantidades</a></li>
+                        </ul>
+                    </li>
                         <?php 
-                        if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
-                            echo '<li><a href="'.BASE_URL.'/dashboard"> Registro de Ventas</a></li>';
-                        }
+                            if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
+
+                                echo '<li>
+                                    <a href="#" class="dropdown-toggle link-toggle-menu">Actualizar</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="sidebar-sections-links" href="'. BASE_URL . '/search-update-marcas"> Marcas</a></li>
+                                        <li><a class="sidebar-sections-links" href="' . BASE_URL . '/search-update-productos"> Productos</a></li>
+                                    </ul>
+                                </li>';
+
+                            }
                         ?>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="dropdown-toggle">Devoluciones</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?= BASE_URL . '/search-factura-devolucion'?>">Insertar Devolucion</a></li>
-                        <li><a href="<?= BASE_URL . '/list-devoluciones'?>">Listar Devoluciones</a></li>
-                    </ul>
-                </li>
-            </ul>
+                    <li>
+                        <a href="#" class="dropdown-toggle link-toggle-menu">Ventas</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/search-add-venta' ?>"> Ingresar Venta</a></li>
+                            <?php 
+                            if(isset($_SESSION['role_user']) && $_SESSION['role_user'] == 1) {
+                                echo '<li><a class="sidebar-sections-links" href="'.BASE_URL.'/dashboard"> Registro de Ventas</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle link-toggle-menu">Devoluciones</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/search-factura-devolucion'?>">Insertar Devolucion</a></li>
+                            <li><a class="sidebar-sections-links" href="<?= BASE_URL . '/list-devoluciones'?>">Listar Devoluciones</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
             <section class="logout">
                 <a href="<?= BASE_URL . '/logout'?>"><img src="/inventario/public/images/logout.svg" alt="Logout_image"></a>
             </section>
@@ -97,8 +99,7 @@
             <section class="content">
                 <?= $content ?>
             </section>
-            <footer class="footer">COMERCIALIADORA DE LA ESPRIELLA © NIT: 901656873-7 CL 19 24 05 BRR 7 DE AGOSTO
-                Teléfono: 3003087223
+            <footer class="footer">Copyright © LaGuaca 2024
             </footer>
         </main>
     </section>

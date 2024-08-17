@@ -66,6 +66,11 @@
             margin: 5px 0;
         }
 
+        .data__empresa {
+            margin: 6px 0 6px 0;
+            font-size: 11px;
+        }
+
         .productos .producto {
             display: flex;
             justify-content: space-between;
@@ -93,7 +98,7 @@
             margin-top: 20px; /* Separación del contenido superior */
         }
 
-        .footer #qrcode {
+        .footer #container-qrcode {
             margin-bottom: 10px;
         }
 
@@ -102,7 +107,7 @@
             margin: 3px 0;
         }
 
-        #print-button {
+        #print-button, #back-button {
             margin-top: 20px; /* Separación de 20px entre la factura y el botón de impresión */
             padding: 10px 20px;
             font-size: 14px;
@@ -111,6 +116,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        #print-button {
+            margin-right: 60px;
+            margin-bottom: 80px;
         }
 
         #print-button:hover {
@@ -140,7 +150,7 @@
                 width: 80mm;
                 position: relative; /* Permite que el footer esté en el flujo normal */
             }
-            #print-button {
+            #print-button, #back-button {
                 display: none;
             }
         }
@@ -151,7 +161,13 @@
         <div class="factura">
             <div class="header">
                 <img src="/inventario/public/images/logo_empresa.png" alt="Logo Empresa">
-                <h1>La Guaca</h1>
+                <h1>LA GUACA</h1>
+                <p class="data__empresa">COMERCIALIZADORA DE LA ESPRIELLA SAS</p>
+                <p class="data__empresa"><span class="nit__empresa">NIT: </span>901656873-7</p>
+                <p class="data__empresa"><span class="direccion__empresa">DIRECCIÓN: </span>CL 19 24 05 BRR 7 DE AGOSTO</p>
+                <p class="data__empresa"><span class="nom__ciudad">CIUDAD: </span>SINCELEJO</p>
+                <p class="data__empresa"><span class="nom_departamento">DEPARTAMENTO: </span>SUCRE</p>
+                <p class="data__empresa"><span class="num_telefono">TELÉFONO: </span>3003087223</p>
             </div>
 
             <h2 id="nombre-factura">Factura de Venta</h2>
@@ -174,7 +190,9 @@
             </div>
 
             <div class="footer">
-                <div id="qrcode"></div>
+                <div id="container-qrcode">
+                    <canvas id="qrcode"></canvas>
+                </div>
                 <p>Nombre de la Empresa</p>
                 <p>Dirección: [Dirección]</p>
                 <p>Teléfono: [Teléfono]</p>
@@ -182,6 +200,7 @@
         </div>
 
         <button id="print-button" onclick="window.print()">Imprimir</button>
+        <button id="back-button" onclick="history.back()">Regresar</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
@@ -201,8 +220,10 @@
                 let data = await response.json();
                 const factura = data;  // La estructura JSON ya es un array de objetos
 
+                facturaFormatted = 'FAC' + invoiceId.toString().padStart(6, '0');
+
                 // Llenar el nombre de la factura
-                document.getElementById('nombre-factura-dinamico').textContent = `Factura: FAC${invoiceId}`;
+                document.getElementById('nombre-factura-dinamico').textContent = `Factura: ${facturaFormatted}`;
 
                 // Llenar datos del cliente
                 document.getElementById('cliente-nombre').textContent = factura[0].identificacion || 'No reporta'; // Asumimos que el cliente es el mismo para todos los productos
@@ -233,7 +254,7 @@
                     const productoDiv = document.createElement('div');
                     productoDiv.classList.add('producto');
                     productoDiv.innerHTML = `
-                        <p class="descripcion">${item.no_product} - ${item.id_producto} Cantidad: ${item.cantidad}</p>
+                        <p class="descripcion">${item.id_producto} - ${item.no_product} - ${item.nombre_marca} - Cantidad: ${item.cantidad}</p>
                         <p class="monto">${formattedMontoVenta}</p>
                     `;
                     productosDiv.appendChild(productoDiv);
@@ -251,9 +272,9 @@
                 document.getElementById('total-factura').textContent = `$${formattedTotalVenta}`;
 
                 // Generar código QR
-                const qrData = `Factura: ${invoiceId}\nTotal: $${total.toFixed(2)}`;
+                const qrData = `LAGUACA\nFactura: ${facturaFormatted}\nTotal: $${formattedTotalVenta}`;
                 const qrcode = document.getElementById('qrcode');
-                QRCode.toCanvas(qrcode, qrData, { width: 60 });
+                QRCode.toCanvas(qrcode, qrData, { width: 120 });
             } catch (error) {
                 console.error("Error: ", error);
             }

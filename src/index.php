@@ -42,16 +42,13 @@ $facturasController = new FacturasController($view);
 $devolucionController = new DevolucionController($view, $facturas);
 $clientesController = new ClientesController($view);
 $descuentosController = new DescuentosController($view);
+
+
 // Obtener la URI y el metodo de solicitud
-
-
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 $requestUri = str_replace(BASE_URL, '', $path);
-
-// echo "Original Request URI: " . $_SERVER['REQUEST_URI'] . "<br>";
-// echo "Processed Request URI: " . $requestUri . "<br>";
 
 // Definimos las rutas y los metodos correspondientes
 
@@ -114,7 +111,8 @@ $routes = [
         '/update-user' => [$AuthController, 'updateUser'],
         '/form-update-user' => [$AuthController, 'formUpdate'],
         '/dashboard' => [$ventaController, 'renderDasboard'],
-        '/dasboard-ventas' => [$ventaController, 'getdataDashboard']
+        '/dasboard-ventas' => [$ventaController, 'getdataDashboard'],
+        '/check-client' => [$clientesController, 'checkExistClient']
     ]
 ];
 

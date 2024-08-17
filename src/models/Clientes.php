@@ -145,4 +145,18 @@ class Clientes {
         }
     }
 
+    public function getDataCliente($cedula) {
+        try {
+            $query = "  SELECT identificacion, Nombre, telefono, email, direccion FROM clientes WHERE identificacion = :identificacion";
+            $mysql = $this->conexion->prepare($query);
+            $mysql->bindValue(':identificacion', $cedula);
+            $mysql->execute();
+
+            return $mysql->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
 }

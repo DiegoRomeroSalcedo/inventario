@@ -36,33 +36,27 @@ $title = "Ingresar Venta";
         <ul class="data-product-carrito" id="carrito-list"></ul>
         <form action="<?= BASE_URL . '/search-add-venta'?>" method="post" id="data-client">
             <div class="container__major">
-                <div class="container_inputs">
-                    <label for="data-control">Registrar Datos Cliente: </label>
-                    <input class="aplica_descuento_input" id="data-control" type="checkbox" name="registrar-cliente">
-                </div>
-            </div>
-            <div class="container__major">
-                <div class="hidden container_inputs" id="container-data">
+                <div class="container_inputs" id="container-data">
                     <label for="id-client">Cédula Cliente:</label>
-                    <input class="form__inputs" class="required" id="id-client" type="number" name="dni_client" required>
+                    <input class="form__inputs" class="required" id="id-client" type="number" name="dni_client" required value="222222222">
                 </div>
-                <div class="hidden container_inputs" id="container-data">
+                <div class="container_inputs" id="container-data">
                     <label for="nombre">Nombre:</label>
-                    <input class="form__inputs" class="required" id="nombre" type="text" name="nom_client" required>
+                    <input class="form__inputs" class="required" id="nombre" type="text" name="nom_client" required value="Cliente Genérico">
                 </div>
-                <div class="hidden container_inputs" id="container-data">
+                <div class="container_inputs" id="container-data">
                     <label for="nro-celular">Nro. Celular:</label>
-                    <input class="form__inputs" id="nro-celular" type="number" name="celular" required>
+                    <input class="form__inputs" id="nro-celular" type="number" name="celular" required value="12121212">
                 </div>
             </div>
             <div class="container__major">
-                <div class="hidden container_inputs" id="container-data">
+                <div class="container_inputs" id="container-data">
                     <label for="email">Email:</label>
-                    <input class="form__inputs" id="email-cliente" type="email" name="email_client">
+                    <input class="form__inputs" id="email-cliente" type="email" name="email_client" value="laguacasahagun@gamil.com">
                 </div>
-                <div class="hidden container_inputs" id="container-data">
+                <div class="container_inputs" id="container-data">
                     <label for="direccion">Direccion:</label>
-                    <input class="form__inputs" id="direccion-cliente" type="text" name="dir_client">
+                    <input class="form__inputs" id="direccion-cliente" type="text" name="dir_client" value="samurái">
                 </div>
             </div>
         </form>
