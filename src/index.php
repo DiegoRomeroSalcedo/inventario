@@ -147,7 +147,8 @@ $routesProtected = [
     '/update-user',
     '/form-update-user',
     '/dashboard',
-    '/dasboard-ventas'
+    '/dasboard-ventas',
+    '/check-client'
 ];  
 
 // Verificamos si la ruta actual es una ruta Protegida y si esta logeado el usuario

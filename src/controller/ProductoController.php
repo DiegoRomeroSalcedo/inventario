@@ -123,12 +123,7 @@ class ProductoController {
             $nomProduct = $_POST['nom_product'];
             $marcaProdu = isset($_POST['marca_producto']) && $_POST['marca_producto'] != '0' ? $_POST['marca_producto'] : '%';
     
-            $dataPrArr = [
-                ':no_product' => $nomProduct, 
-                ':id_marcapr' => $marcaProdu
-            ];
-    
-            $productos = $this->productosModel->getProductData($dataPrArr);
+            $productos = $this->productosModel->getProductData($nomProduct, $marcaProdu);
     
             // Encriptar cada producto individualmente
             foreach ($productos as &$producto) {

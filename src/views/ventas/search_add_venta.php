@@ -16,7 +16,7 @@ $title = "Ingresar Venta";
                     <option value="0" style="background-color: #ddd;">Productos</option>
                     <?php foreach($data['productos'] as $p): ?>
                         <option value="<?= $p['id_product'] ?>">
-                            <?= htmlspecialchars($p['no_product'])?>
+                            <?= htmlspecialchars($p['id_product'] . '-' . $p['no_product'])?>
                         </option>
                     <?php endforeach; ?>
                 </select>

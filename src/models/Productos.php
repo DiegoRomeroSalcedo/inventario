@@ -101,9 +101,12 @@ class Productos {
         }
     }
 
-    public function getProductData($data) {
+    public function getProductData($nomProduct, $marcaProdu) {
 
         try {
+
+            $nomProduct = '%' . $nomProduct . '%';
+            $marcaProdu = '%' . $marcaProdu . '%';
 
             $mysql = $this->conexion->prepare(
                 "
@@ -112,23 +115,20 @@ class Productos {
                 FROM productos a
                 INNER JOIN marcas b ON a.id_marcapr = b.id_marca
                 LEFT JOIN cantidad_productos c ON a.id_product = c.id_producto
-                WHERE no_product = :no_product AND id_marcapr LIKE :id_marcapr
+                WHERE no_product LIKE :no_product AND id_marcapr LIKE :id_marcapr
                 "
             );
 
-            foreach($data as $key => $value) {
-                if(is_int($value)) {
-                    $type = PDO::PARAM_INT;
-                } else {
-                    $type = PDO::PARAM_STR;
-                }
-
-                $mysql->bindValue($key, $value, $type);
-            }
+            $mysql->bindValue(':no_product', $nomProduct);
+            $mysql->bindValue(':id_marcapr', $marcaProdu);
 
             $mysql->execute();
+
+            // $mysql->debugDumpParams(); //Depuramos los paraemtros asi se ve la consulta como se esta ejecutando
+            // die("Hola");
             $lastId = $this->conexion->lastInsertID();
             $results = $mysql->fetchAll(PDO::FETCH_ASSOC);
+
             return $results;
         } catch (PDOException $e) {
             echo "Error en la consulta: " . $e->getMessage();
