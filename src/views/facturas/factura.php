@@ -66,6 +66,14 @@
             margin: 5px 0;
         }
 
+        .factura-data {
+            margin: 0 auto;
+        }
+
+        #nombre-factura-dinamico {
+            text-align: center;
+        }
+
         .data__empresa {
             margin: 6px 0 6px 0;
             font-size: 11px;
@@ -76,21 +84,41 @@
             justify-content: space-between;
             padding: 5px 0; /* Espaciado vertical interno */
             border-bottom: 1px solid #ccc; /* Línea de separación horizontal */
-            margin-bottom: 5px; /* Separación adicional entre productos */
+        }
+
+        .producto {
+            padding: 0 !important;
+        }
+
+        .productos, .total, .footer {
+            padding-left: 10px;
+            padding-right: 10px;
         }
 
         .productos .producto p {
             margin: 2px 0;
         }
 
-        .producto .descripcion {
-            flex: 3;
+        .producto {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        
+        .descripcion {
+            flex: 2;
             text-align: left;
         }
 
-        .producto .cantidad, .producto .monto {
-            width: 20%;
+        .monto {
+            flex: 1;
             text-align: right;
+            min-width: 0;
+        }
+        
+        #text-garantia, .fin {
+            text-align: justify;
+            font-size: 10px;
         }
 
         .footer {
@@ -138,17 +166,25 @@
                 padding: 0; /* Eliminar padding del body para impresión */
             }
             .container {
-                width: 80mm; /* Asegura que el ancho de la factura se mantenga igual */
+                width: 75mm; /* Asegura que el ancho de la factura se mantenga igual */
                 height: auto; /* Ajusta la altura según el contenido */
                 margin: 0 auto; /* Centrado horizontal */
                 padding: 0;
-                overflow: visible; /* Asegura que no haya overflow en la impresión */
+                padding-right: 5mm;
+                position: absolute; /* Posicionamiento absoluto */
+                top: 10mm; /* Ajusta el espacio desde el borde superior */
+                left: 0; /* Alineación a la izquierda */
+                right: 0; /* Alineación a la derecha */
             }
             .factura {
                 margin: 0;
                 padding: 0;
-                width: 80mm;
+                width: 75mm;
                 position: relative; /* Permite que el footer esté en el flujo normal */
+            }
+
+            #nombre-factura-dinamico {
+                margin: 0 auto;
             }
             #print-button, #back-button {
                 display: none;
@@ -164,22 +200,22 @@
                 <h1>LA GUACA</h1>
                 <p class="data__empresa">COMERCIALIZADORA DE LA ESPRIELLA SAS</p>
                 <p class="data__empresa"><span class="nit__empresa">NIT: </span>901656873-7</p>
-                <p class="data__empresa"><span class="direccion__empresa">DIRECCIÓN: </span>CL 19 24 05 BRR 7 DE AGOSTO</p>
-                <p class="data__empresa"><span class="nom__ciudad">CIUDAD: </span>SINCELEJO</p>
-                <p class="data__empresa"><span class="nom_departamento">DEPARTAMENTO: </span>SUCRE</p>
+                <p class="data__empresa"><span class="direccion__empresa">DIRECCIÓN: </span>BRR COROCITO CL 17 B CR</p>
+                <p class="data__empresa"><span class="nom__ciudad">CIUDAD: </span>SAHAGÚN</p>
+                <p class="data__empresa"><span class="nom_departamento">DEPARTAMENTO: </span>CÓRDOBA</p>
                 <p class="data__empresa"><span class="num_telefono">TELÉFONO: </span>3003087223</p>
             </div>
-
-            <h2 id="nombre-factura">Factura de Venta</h2>
+            <div class="factura-data">
+                <h3 id="nombre-factura-dinamico"></h3>
+            </div>
 
             <div class="cliente">
-                <h3 id="nombre-factura-dinamico"></h3>
                 <p>Cliente: <span id="cliente-nombre">[Nombre del Cliente]</span></p>
                 <p>Fecha: <span id="fecha">[Fecha]</span></p>
             </div>
 
             <div class="productos">
-                <h3>Productos</h3>
+                <h3>Productos:</h3>
                 <div id="lista-productos">
                     <!-- Productos serán agregados aquí por JavaScript -->
                 </div>
@@ -187,15 +223,27 @@
 
             <div class="total">
                 <h3>Total: <span id="total-factura" style="float: right;">$0.00</span></h3>
+                <h3>Valor recibido: <span id="valor-recibido" style="float: right;">$0.00</span></h3>
+                <h3>Valor devuelto: <span id="valor-devuelto" style="float: right;">$0.00</span></h3>
+                <!-- <p style="text-align: left;">Metodo de pago: <span id="metodo-pago"></span></p> -->
+                <div class="fin">
+                    Gracias por su compra!...😁
+                </div>
             </div>
-
             <div class="footer">
+                <div class="garantias">
+                    <p id="text-garantia">
+                    Conserve su factura para cualquier cambio, reclamo y/o garantía. Los cambios sin perjuicio de las excepciones aplicables tienen validez durante 8 días calendario después de la compra y se realizarán siempre y cuando se determine que es defecto de fabricación y no por manipulación.  
+                    No aceptamos devoluciones de productos que hayan sido adaptados, cortados, perforados, pintados, o que hayan sido objeto de cualquier tipo de intervención que cambie la dimensión, presentación, acabado, o en general el estado original del producto.
+                    <br />
+                    En el caso de llantas sellomatic, estas deben ser montadas en una prensa, si son montadas con palanca puede dañar el borde, lo que implicaría la pérdida de la garantía.  
+                    <br />
+                    Partes eléctricas no tienen cambio y/o garantía.
+                    </p>
+                </div>
                 <div id="container-qrcode">
                     <canvas id="qrcode"></canvas>
                 </div>
-                <p>Nombre de la Empresa</p>
-                <p>Dirección: [Dirección]</p>
-                <p>Teléfono: [Teléfono]</p>
             </div>
         </div>
 
@@ -223,7 +271,7 @@
                 facturaFormatted = 'FAC' + invoiceId.toString().padStart(6, '0');
 
                 // Llenar el nombre de la factura
-                document.getElementById('nombre-factura-dinamico').textContent = `Factura: ${facturaFormatted}`;
+                document.getElementById('nombre-factura-dinamico').textContent = `Factura de Venta: ${facturaFormatted}`;
 
                 // Llenar datos del cliente
                 document.getElementById('cliente-nombre').textContent = factura[0].identificacion || 'No reporta'; // Asumimos que el cliente es el mismo para todos los productos
@@ -268,11 +316,32 @@
                     maximumFractionDigits: 2
                 });
 
+                let valorRecibidoStr = factura[0].valor_recibido.replace(/,/g, '');
+                let valorRecibido = parseFloat(valorRecibidoStr);
+
+                let formattedValorRecibido = valorRecibido.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
+                let valorDevueltoStr = factura[0].valor_devuelto.replace(/,/g, '');
+                let valorDevuelto = parseFloat(valorDevueltoStr);
+
+                let formattedValorDevuelto = valorDevuelto.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
+                // let formattedMetodoPago = factura[0].tipo_pago.replace(/-/g, ' ');
+
                 // Llenar total de la factura
                 document.getElementById('total-factura').textContent = `$${formattedTotalVenta}`;
+                document.getElementById('valor-recibido').textContent = `$${formattedValorRecibido}`;
+                document.getElementById('valor-devuelto').textContent = `$${formattedValorDevuelto}`;
+                // document.getElementById('metodo-pago').textContent = `${formattedMetodoPago}`;
 
                 // Generar código QR
-                const qrData = `LAGUACA\nFactura: ${facturaFormatted}\nTotal: $${formattedTotalVenta}`;
+                const qrData = `LAGUACA\nFactura: ${facturaFormatted}\nFecha de compra: ${fechaHora}Total: $${formattedTotalVenta}\nValor recibido: ${formattedValorRecibido}\nValor devuelto: ${formattedValorDevuelto}`;
                 const qrcode = document.getElementById('qrcode');
                 QRCode.toCanvas(qrcode, qrData, { width: 120 });
             } catch (error) {

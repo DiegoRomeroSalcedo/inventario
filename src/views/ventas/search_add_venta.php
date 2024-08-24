@@ -52,7 +52,7 @@ $title = "Ingresar Venta";
             <div class="container__major">
                 <div class="container_inputs" id="container-data">
                     <label for="email">Email:</label>
-                    <input class="form__inputs" id="email-cliente" type="email" name="email_client" value="laguacasahagun@gamil.com">
+                    <input class="form__inputs" id="email-cliente" type="email" name="email_client" value="laguacasahagun@gmail.com">
                 </div>
                 <div class="container_inputs" id="container-data">
                     <label for="direccion">Direccion:</label>
@@ -79,11 +79,11 @@ $title = "Ingresar Venta";
                 <div class="container_inputs">
                     <label for="tipo-pago">Selcceionar Tipo de Pago: </label>
                     <select class="form__inputs" name="tipo_pago" id="tipo-pago">
-                        <option value="efectivo">Efectivo</option>
-                        <option value="tarjeta-débito">Targeta Débito</option>
-                        <option value="tarjeta-crédito">Targeta Crédito</option>
-                        <option value="cheque">Cheque</option>
-                        <option value="transferencia-electrónica">Transferencia Electrónica</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta-Débito">Tarjeta Débito</option>
+                        <option value="Tarjeta-Crédito">Tarjeta Crédito</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="Transferencia-Electrónica">Transferencia Electrónica</option>
                     </select>
                 </div>
             </div>

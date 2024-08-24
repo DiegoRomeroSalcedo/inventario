@@ -59,7 +59,7 @@ class Facturas {
 
     public function getDetallesFactura($facturaid) {
         try {
-            $query = "SELECT a.total_venta, a.valor_recibido, a.valor_devuelto, a.tipo_pago, b.id_producto, b.cantidad, b.precio_unitario, b.monto_venta, b.descuento_aplicado, c.no_product, e.nombre_marca, d.identificacion, d.Nombre, d.telefono
+            $query = "SELECT a.total_venta, a.valor_recibido, a.valor_devuelto, a.tipo_pago, b.id_producto, b.cantidad, b.precio_unitario, b.monto_venta, b.descuento_aplicado, c.no_product, e.nombre_marca, d.identificacion, d.Nombre, d.telefono, a.valor_recibido, a.valor_devuelto, a.tipo_pago
             FROM facturas a
             INNER JOIN ventas b ON a.id_factura = b.id_factura
             INNER JOIN productos c ON b.id_producto = c.id_product
