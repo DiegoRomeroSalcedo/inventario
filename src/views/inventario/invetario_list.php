@@ -87,13 +87,13 @@ $title = "Tabla Inventario";
                 <th>Id Marca</th>
                 <th>Nombre Marca</th>
                 <th>Cantidad Producto</th>
-                <th>Costo producto</th>
+                <th>Costo Producto</th>
                 <th>Retención Producto</th>
                 <th>Flete Producto</th>
                 <th>Iva Producto</th>
                 <th>Costo Final Producto</th>
                 <th>Utilidad Producto</th>
-                <th>Precio DE Venta</th>
+                <th>Precio De Venta</th>
                 <th>Descuento Producto</th>
                 <th>Precio Venta Descuento</th>
                 <th>Rentabilidad Producto</th>

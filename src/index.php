@@ -6,11 +6,25 @@
 
 session_start();
 
-// Cragamos las dependencias de composer
+// Catgamos las dependencias de composer
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config/config.php';
 require __DIR__ . '/../lib/View.php';
+
+// Actualizmos la última actividad del usuario
+
+if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    if(isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > MAX_INACTIVITY_TIME) {
+        // Si la inactividad supera el tiempo máximo permitido
+        session_unset();
+        session_destroy();
+        header('Location: /inventario/public');
+        exit();
+    }
+
+    $_SESSION['last_activity'] = time(); // Actualizar la hora de la última actividad
+}
 
 use Views\View\View;
 use Proyecto\Controller\AuthController;
@@ -27,7 +41,7 @@ use Proyecto\Controller\ClientesController;
 use Proyecto\Controller\DescuentosController;
 use Proyecto\Models\Facturas;
 
-// Instancias
+// Instancias e inyecciones
 $AuthController = new AuthController();
 $view = new View();
 $productos = new Productos();

@@ -341,7 +341,7 @@
                 // document.getElementById('metodo-pago').textContent = `${formattedMetodoPago}`;
 
                 // Generar código QR
-                const qrData = `LAGUACA\nFactura: ${facturaFormatted}\nFecha de compra: ${fechaHora}Total: $${formattedTotalVenta}\nValor recibido: ${formattedValorRecibido}\nValor devuelto: ${formattedValorDevuelto}`;
+                const qrData = `COMERCIALIZADORA DE LA ESPRIELLA SAS\nNIT: 901656873-7\nLAGUACA\nFactura: ${facturaFormatted}\nFecha de compra: ${fechaHora}Total: $${formattedTotalVenta}\nValor recibido: ${formattedValorRecibido}\nValor devuelto: ${formattedValorDevuelto}`;
                 const qrcode = document.getElementById('qrcode');
                 QRCode.toCanvas(qrcode, qrData, { width: 120 });
             } catch (error) {
