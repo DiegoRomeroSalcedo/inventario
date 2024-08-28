@@ -57,17 +57,13 @@ class VentasController {
     public function searchAddVenta() {
 
         $data = [
-            'productos' => [],
             'dataVenta' => [],
         ];
 
         $this->view->addScripts('add_venta.js');
 
-        $idProducto = $this->productos->getIdNombre();
-        $data['productos'] = $idProducto;
-
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $idProducto = $_POST['nombre_producto'];
+            $idProducto = $_POST['id_producto'];
             $searchPro = $this->productos->serchVentaProducto($idProducto);
             $data['dataVenta'] = $searchPro;
 

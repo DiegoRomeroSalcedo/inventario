@@ -11,15 +11,8 @@ $title = "Ingresar Venta";
         <h1>Insertar Venta</h1>
         <div class="container__major">
             <div class="container_inputs">
-                <label for="nom_producto">Nombre Producto: </label>
-                <select class="form__inputs" name="nombre_producto" id="nom_producto" style="background-color: #ededed;" required>
-                    <option value="0" style="background-color: #ddd;">Productos</option>
-                    <?php foreach($data['productos'] as $p): ?>
-                        <option value="<?= $p['id_product'] ?>">
-                            <?= htmlspecialchars($p['id_product'] . '-' . $p['no_product'])?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <label for="id_producto">Id Producto </label>
+                <input id="id_producto" type="number" name="id_producto" min="0">
             </div>
         </div>
         <div class="container__major">
