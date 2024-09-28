@@ -179,7 +179,7 @@ body {
 
 .sidebar-sections-links {
     text-decoration: none;
-    color: rgba(24, 24, 24, 0.8)
+    color: rgb(9 9 9);
 }
 
 .sidebar-sections-links:hover {
@@ -191,7 +191,7 @@ body {
 }
 
 .link-toggle-menu {
-    color: rgb(255 255 255 / 40%);
+    color: rgb(9 9 9);
 }
 
 .link-toggle-menu:hover {
