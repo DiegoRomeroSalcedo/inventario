@@ -21,8 +21,10 @@ $title = "Listado de Ventas";
                 <th>Cantidad Unidades</th>
                 <th>Precio Unitario</th>
                 <th>Monto Venta</th>
-                <th>Identificación</th>
-                <th>Nombre</th>
+                <th>Identificación Cliente</th>
+                <th>Nombre Cliente</th>
+                <th>Usuario Inserción</th>
+                <th>Fecha Inserción</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +52,8 @@ $title = "Listado de Ventas";
                 <td><?= htmlspecialchars(number_format( (float) $ventas['monto_venta'], 2, '.', ',')) ?></td>
                 <td><?= !empty($ventas['identificacion']) ? htmlspecialchars($ventas['identificacion']) : 'No reporta'?></td>
                 <td><?= !empty($ventas['Nombre']) ? htmlspecialchars($ventas['Nombre']) : 'No reporta' ?></td>
+                <td><?= !empty($ventas['usuario_insercion']) ? htmlspecialchars($ventas['usuario_insercion']) : 'No reporta' ?></td>
+                <td><?= !empty($ventas['fecha']) ? htmlspecialchars($ventas['fecha']) : 'No reporta' ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

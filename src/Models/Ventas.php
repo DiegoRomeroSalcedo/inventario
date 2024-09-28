@@ -28,7 +28,9 @@ class Ventas {
                             a.monto_venta,
                             b.total_venta,
                             c.identificacion,
-                            c.Nombre
+                            c.Nombre,
+                            b.usuario_insercion,
+                            b.fecha
                         FROM ventas a
                         INNER JOIN facturas b ON a.id_factura = b.id_factura
                         INNER JOIN productos d ON a.id_producto = d.id_product
