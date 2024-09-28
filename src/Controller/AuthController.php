@@ -1,8 +1,5 @@
 <?php
 
-// Creamos el endpoint de Login, este verificará las credenciales de usuario, generará un token JWT y lo devolvera al cliente
-
-
 namespace Proyecto\Controller;
 
 use Proyecto\Models\User;
@@ -14,7 +11,7 @@ class AuthController {
     protected $carpeta = "Autenticacion";
 
     public function showLoginForm() {
-        include __DIR__ . '/../views/login.php';
+        include __DIR__ . '/../Views/login.php';
     }
 
     public function login() {
@@ -42,7 +39,7 @@ class AuthController {
             }
         }
 
-        include __DIR__ . '/../views/login.php';
+        include __DIR__ . '/../Views/login.php';
     }
 
     public function updateUser() {

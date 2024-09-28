@@ -1,6 +1,6 @@
 {
-    "dbHost" : "localHost",
-    "dbName" : "laguacainventario",
-    "dbUser" : "root",
-    "dbPass" : ""
+    "dbHost" : "localhost",
+    "dbName" : "u181165729_devlaguaca",
+    "dbUser" : "u181165729_diegosalcedo",
+    "dbPass" : "5Z*Yce$5@kuAvUq"
 }

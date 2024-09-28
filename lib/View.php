@@ -17,7 +17,7 @@ class View {
 
         if($carpeta == "Autenticacion") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/' . $template;
+            $file =  __DIR__ . '/../src/Views/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -29,7 +29,7 @@ class View {
 
         if($carpeta == "marcas") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/marcas/' . $template;
+            $file =  __DIR__ . '/../src/Views/marcas/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -41,7 +41,7 @@ class View {
 
         if($carpeta == "productos") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/productos/' . $template;
+            $file =  __DIR__ . '/../src/Views/productos/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -53,7 +53,7 @@ class View {
 
         if($carpeta == "inventario") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/inventario/' . $template;
+            $file =  __DIR__ . '/../src/Views/inventario/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -65,7 +65,7 @@ class View {
 
         if($carpeta == "ventas") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/ventas/' . $template;
+            $file =  __DIR__ . '/../src/Views/ventas/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -77,7 +77,7 @@ class View {
 
         if($carpeta == "facturas") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/facturas/' . $template;
+            $file =  __DIR__ . '/../src/Views/facturas/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -89,7 +89,7 @@ class View {
 
         if($carpeta == "clientes") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/clientes/' . $template;
+            $file =  __DIR__ . '/../src/Views/clientes/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
@@ -101,7 +101,7 @@ class View {
 
         if($carpeta == "devoluciones") {
             extract($this->data);
-            $file =  __DIR__ . '/../src/views/devoluciones/' . $template;
+            $file =  __DIR__ . '/../src/Views/devoluciones/' . $template;
 
             if(file_exists($file)) {
                     extract($this->data);
