@@ -47,15 +47,15 @@ if(isset($_SESSION['error_sql'])) {
     <div class="container__major">
         <div class="container_inputs">
             <label for="retefuente">Retención %: </label>
-            <input class="form__inputs" id="retefuente" type="number" min="0" step="0.01" name="porc_rete" placeholder="2.5" required>
+            <input class="form__inputs" id="retefuente" type="number" min="0" step="0.01" name="porc_rete" placeholder="2.5">
         </div>
         <div class="container_inputs">
             <label for="costo_flete">Flete %: </label>
-            <input class="form__inputs" id="costo_flete" type="number" min="0" step="0.01" name="porc_flete" placeholder="3" required>
+            <input class="form__inputs" id="costo_flete" type="number" min="0" step="0.01" name="porc_flete" placeholder="3">
         </div>
         <div class="container_inputs">
             <label for="costo_iva">IVA %: </label>
-            <input class="form__inputs" id="costo_iva" type="number" min="0" step="0.01" name="porc_iva" placeholder="19" required>
+            <input class="form__inputs" id="costo_iva" type="number" min="0" step="0.01" name="porc_iva" placeholder="19">
         </div>
     </div>
     <div class="container__major">
@@ -65,7 +65,7 @@ if(isset($_SESSION['error_sql'])) {
         </div>
         <div class="container_inputs">
             <label for="utilidad">Utilidad: </label>
-            <input class="form__inputs" id="utilidad" type="number" name="uti_product" placeholder="50" required>
+            <input class="form__inputs" id="utilidad" type="number" name="uti_product" placeholder="50">
         </div>
         <div class="container_inputs">
             <label for="precio_venta">Precio de Venta: </label>
